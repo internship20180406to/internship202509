@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+import java.util.Arrays;
+
+
+
 
 @Controller
 public class BankLoanController {
@@ -18,8 +23,19 @@ public class BankLoanController {
 
     @GetMapping("/bankLoan")
     public String bankTransfer(Model model) {
+        List<String> nameOptions = Arrays.asList(
+                "山陰共同銀行",
+                "北海道中央銀行",
+                "東京銀行",
+                "横浜共同銀行");
+        List<String> accountOptions = Arrays.asList(
+                "普通預金",
+                "定期預金",
+                "当座預金",
+                "貯蓄預金");
         model.addAttribute("bankLoanApplication", new BankLoanForm());
-        model.addAttribute("nameOptions", "山陰共同銀行");
+        model.addAttribute("nameOptions", nameOptions);
+        model.addAttribute("accountOptions", accountOptions);
         return "bankLoanMain";
     }
 
