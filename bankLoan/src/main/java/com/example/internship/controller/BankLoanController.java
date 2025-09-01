@@ -41,12 +41,17 @@ public class BankLoanController {
 
     @PostMapping("/bankLoanConfirmation")
     public String confirmation(@ModelAttribute BankLoanForm bankLoanForm, Model model) {
-        bankLoanForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", bankLoanForm.getBankName());
+        model.addAttribute("branchName", bankLoanForm.getBranchName());
+        model.addAttribute("accountName", bankLoanForm.getAccountName());
         model.addAttribute("bankAccountNum", bankLoanForm.getBankAccountNum());
-        model.addAttribute("bankLoanApplication", bankLoanForm);
+        model.addAttribute("debtorName", bankLoanForm.getDebtorName());
+        model.addAttribute("loanAmount", bankLoanForm.getLoanAmount());
+        model.addAttribute("borrowingIncome", bankLoanForm.getBorrowingIncome());
+        model.addAttribute("interestRate", bankLoanForm.getInterestRate());
         return "bankLoanConfirmation";
     }
+
 
     @PostMapping("/bankLoanCompletion")
     public String completion(@ModelAttribute BankLoanForm bankLoanForm, Model model) {
