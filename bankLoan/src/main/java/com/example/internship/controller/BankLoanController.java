@@ -49,6 +49,7 @@ public class BankLoanController {
         model.addAttribute("loanAmount", bankLoanForm.getLoanAmount());
         model.addAttribute("borrowingIncome", bankLoanForm.getBorrowingIncome());
         model.addAttribute("interestRate", bankLoanForm.getInterestRate());
+        model.addAttribute("bankLoanApplication", bankLoanForm);
         return "bankLoanConfirmation";
     }
 
