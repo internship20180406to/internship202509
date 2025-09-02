@@ -1,12 +1,166 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <title>注文完了画面</title>
+    <style>
+        body {
+        background-color: #4169E1;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        justify-content: center;
+        align-items: center;
+        min-height: 85vh;
+        overflow: auto;
+        }
+        .content {
+         font-size: 22px;
+         background-color: #ffffff;
+         width: 600px;
+         padding: 40px;
+         padding-top: 0px;
+         padding-bottom: 0px;
+         border-radius: 10px;
+         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+         height: 850px;
+         overflow: auto;
+
+        }
+        .form-control {
+            width: 100%;
+            padding: 50px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            font-size: 20px;
+
+        }
+        .text-danger {
+        color: blue;
+        }
+        .form-control-button {
+        width: 120px;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        }
+        .form-confirmation-button{
+        color: white;
+        background-color: #2185D0;
+
+
+        }
+        .form-confirmation-button:hover {
+        background-color: #1678c2;
+        }
+        .form-clear-button{
+        color: black;
+        background-color: #E0E1E2;
+        }
+        .form-clear-button:hover {
+        background-color: #CCCCCC;
+        }
+
+        h1 {
+            font-size: 33px;
+            position: relative;
+            padding: 0.1em 0.5em;
+            text-align: center;
+            background: -webkit-linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
+            background: linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
+            color: #495193;
+            margin-bottom: 0;
+        }
+
+        .form-row {
+          font-size: 20px;
+          width: 600px;
+          display: flex;
+          align-items: center;
+          margin: 0 auto;
+          margin-bottom: 14px;
+        }
+
+        .form-row label {
+          min-width: 200px; /* ラベルの幅を固定 */
+          white-space: nowrap;
+        }
+
+        .form-row select {
+          flex: 1; /* セレクトボックスを残りの幅に広げる */
+        }
+
+        h2 {
+          position: relative;
+          padding: 0.25em 0;
+          font-size: 25px;
+          margin-top: 0px;
+
+
+        }
+        h2:after {
+          content: "";
+          display: block;
+          height: 5px;
+          background: -webkit-linear-gradient(to right, #3a86ff, #FFFFFF);
+          background: linear-gradient(to right, #3a86ff, #FFFFFF);
+
+        }
+
+        .button-wrapper {
+          display: flex;
+          justify-content: center; /* 横方向の中央揃え */
+          gap: 20px;               /* ボタン間のスペース */
+          margin-top: 30px;
+        }
+
+        .h3-row {
+          display: flex;
+          justify-content: center; /* 横方向の中央揃え */
+          gap: 20px;               /* 要素間のスペース */
+          margin-top: 0px;
+          margin-bottom: 0;
+        }
+
+        .h3-row h3 {
+          font-size: 18px;
+          text-align: center;
+          padding: 0.1em 0.5em;
+          border-radius: 8px;
+          flex: 1; /* 均等に広げたい場合は追加 */
+        }
+
+        .item-blue {
+          background: linear-gradient(to right, #c5ceff, #89b8ff);
+          color: #1e3c72;
+        }
+
+        .item-gray {
+          background: linear-gradient(to right, #f5f5f5, #dcdcdc);
+          color: #333;
+        }
+
+    </style>
 </head>
 <body>
-<h1>注文完了</h1>
-<p><input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';"/></p>
-</body>
+<div class="content">
+    <h1>投資信託</h1>
+    <div class="h3-row">
+        <h3 class="item-gray">注文入力</h3>
+        <h3 class="item-gray">注文確認</h3>
+        <h3 class="item-blue">注文完了</h3>
+    </div>
 
+
+        <div class="button-wrapper">
+            <input type="button" value="注文に戻る" class="form-control-button form-clear-button" onclick="window.location='/investmentTrust';"/>
+        </div>
+    </form>
+</div>
+<script th:inline="javascript" src="/js/investmentTrustConfirmation.js"></script>
+</body>
 </html>
