@@ -13,6 +13,7 @@ public class BankTransferForm {
     private String bankName;
     @NonNull
     private Integer bankAccountNum;
+
     private String branchName;
 
     public String getBankName() {
@@ -32,11 +33,10 @@ public class BankTransferForm {
         this.bankAccountNum = bankAccountNum;
     }
 
-    public Integer getBranchName() {
-        return bankAccountNum;
-    }
+    public String getBranchName() {return branchName;}
 
-    public void setBranchName(Integer bankAccountNum) {
-        this.bankAccountNum = bankAccountNum;
-    }
+    //エラー出るやつ(勝手に推測してる)
+    //public void setBranchName(Integer bankAccountNum) { this.bankAccountNum = bankAccountNum;}
+
+    public void setBranchName(String branchName) {this.branchName = branchName;}
 }

@@ -31,10 +31,10 @@ public class BankTransferController {
     @PostMapping("/bankTransferConfirmation")
     public String confirmation(@ModelAttribute BankTransferForm bankTransferForm, Model model) {
        // bankTransferForm.setBankName("ながれぼし銀行");
-        System.out.println(bankTransferForm);
-        model.addAttribute("bankName", bankTransferForm.getBankName());
-        model.addAttribute("bankAccountNum", bankTransferForm.getBankAccountNum());
-        model.addAttribute("branchName", bankTransferForm.getBranchName());
+        //System.out.println(bankTransferForm);
+        //model.addAttribute("bankName", bankTransferForm.getBankName());
+        //model.addAttribute("bankAccountNum", bankTransferForm.getBankAccountNum());
+        //model.addAttribute("branchName", bankTransferForm.getBranchName());
         model.addAttribute("bankTransferApplication", bankTransferForm);
         return "bankTransferConfirmation";
     }
