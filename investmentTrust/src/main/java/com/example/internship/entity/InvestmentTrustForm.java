@@ -9,22 +9,23 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvestmentTrustForm {
+
     @NonNull
     private String bankName;
     @NonNull
     private String bankAccountNum;
     @NonNull
-    private String bankBranchName;
+    private String branchName;
     @NonNull
-    private String bankKamokuName;
+    private String bankAccountType;
 
     @NonNull
-    private String bankAccountName;
+    private String name;
     @NonNull
-    private String brandName;
+    private String fundName;
 
     @NonNull
-    private String purchase;
+    private String money;
 
 
     public String getBankName() {
@@ -43,40 +44,40 @@ public class InvestmentTrustForm {
         this.bankAccountNum = bankAccountNum;
     }
 
-    public String getBankBranchName() { return bankBranchName;}
+    public String getBranchName() { return branchName;}
 
-    public void setBankBranchName(String bankBranchName) {
-        this.bankBranchName = bankBranchName;
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
-    public String getBankKamokuName() { return bankKamokuName;}
+    public String getBankAccountType() { return bankAccountType;}
 
-    public void setBankKamokuName(String bankKamokuName) {
-        this.bankKamokuName = bankKamokuName;
+    public void setBankAccountType(String bankAccountType) {
+        this.bankAccountType = bankAccountType;
     }
 
-    public String getBankAccountName() {
-        return bankAccountName;
+    public String getName() {
+        return name;
     }
 
-    public void setBankAccountName(String bankAccountName) {
-        this.bankAccountName = bankAccountName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getBrandName() {
-        return brandName;
+    public String getFundName() {
+        return fundName;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setFundName(String fundName) {
+        this.fundName = fundName;
     }
 
-    public String getPurchase() {
-        return purchase;
+    public String getMoney() {
+        return money;
     }
 
-    public void setPurchase(String purchase) {
-        this.purchase = purchase;
+    public void setMoney(String money) {
+        this.money = money;
     }
 
 

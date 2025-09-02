@@ -5,7 +5,7 @@
     <title>投資信託注文情報入力画面</title>
     <style>
         body {
-        background-color: #f0f0f0;
+        background-color: #4169E1;
         margin: 0;
         padding: 0;
         display: flex;
@@ -57,13 +57,39 @@
         background-color: #CCCCCC;
         }
 
+        h1 {
+            position: relative;
+            padding: 0.3em 0.5em;
+            text-align: center;
+            background: -webkit-linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
+            background: linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
+            color: #495193;
+        }
+
+        .form-row {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+        }
+
+        .form-row label {
+          min-width: 120px; /* ラベルの幅を固定 */
+        }
+
+        .form-row select {
+          flex: 1; /* セレクトボックスを残りの幅に広げる */
+        }
+
+
     </style>
 </head>
 <body>
 <div class="content">
     <h1>投資信託注文情報入力</h1>
     <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
+
         <p>
+            <div class="form-row">
             <label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{bankName}" class="form-control" id="bankSelect">
                 <option value="">-- 選択してください --</option>
@@ -71,43 +97,64 @@
                         th:value="${option}"
                         th:text="${option}">選択肢</option>
             </select>
+            </div>
         </p>
 
         <p>
+            <div class="form-row">
             <label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankBranchName}" class="form-control" id="branchSelect">
+            <select th:field="*{branchName}" class="form-control" id="branchSelect">
                 <option value="">-- 銀行を選択してください --</option>
             </select>
+            </div>
         </p>
 
         <p>
+            <div class="form-row">
             <label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankKamokuName}" class="form-control">
+            <select th:field="*{bankAccountType}" class="form-control">
                 <option value="">-- 選択してください --</option>
                 <option value="普通">普通</option>
                 <option value="当座">当座</option>
                 <option value="貯蓄">貯蓄</option>
             </select>
+            </div>
+
         </p>
 
-        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
+        <p>
+            <div class="form-row">
+            <label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
             <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
+            </div>
 
+        <p>
+            <div class="form-row">
+            <label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="ふくふくたろう"/></p>
+            </div>
 
-        <p><label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>
-            <input type="text" th:field="*{bankAccountName}" class="form-control" placeholder="ふくふくたろう"/></p>
-
+            <div class="form-row">
             <label class="ml-1">銘柄: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{BrandName}" class="form-control">
+            <select th:field="*{fundName}" class="form-control">
                 <option value="">-- 選択してください --</option>
-                <option value="うし">うし</option>
-                <option value="うま">うま</option>
-                <option value="ぶた">ぶた</option>
+                <option value="カモメ商会">カモメ商会</option>
+                <option value="クジラソリューションズ">クジラソリューションズ</option>
+                <option value="イソギンラボ">イソギンラボ</option>
+                <option value="ブーブー製鉄所">ブーブー製鉄所</option>
+                <option value="ヤマネコデザイン株式会社">ヤマネコデザイン株式会社</option>
+                <option value="鹿野ワークス">鹿野ワークス</option>
+
             </select>
+            </div>
         </p>
 
-        <p><label class="ml-1">購入金額 : <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{Purchase}" class="form-control" placeholder="1234567"/></p>
+        <p>
+            <div class="form-row">
+            <label class="ml-1">購入金額 : <small class="text-danger ml-1">※</small></label><br>
+            <input type="number" th:field="*{money}" class="form-control" placeholder="1234567"/>
+            </div>
+        </p>
         <p style="text-align: center;"><input type="submit" value="確認"
                                               class="form-control-button form-confirmation-button"/>
             <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>

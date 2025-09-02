@@ -24,8 +24,8 @@ public class InvestmentTrustController {
     private OrderInvestmentTrustService orderInvestmentTrustService;
 
     private static final Map<String, List<String>> branchMap = Map.of(
-            "山陰共同銀行", List.of("牛肉支店", "豚肉支店", "鶏肉支店"),
-            "海陰共同銀行", List.of("おさかな支店", "海鮮丼支店", "くじら支店")
+            "山陰共同銀行", List.of("うしうし支店", "ぶたぶた支店", "とりとり支店"),
+            "海陰共同銀行", List.of("さんま支店", "いくら支店", "くじら支店")
     );
 
 
@@ -47,9 +47,12 @@ public class InvestmentTrustController {
     public String confirmation(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
         //investmentTrustForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", investmentTrustForm.getBankName());
-        model.addAttribute("bankBranchName", investmentTrustForm.getBankBranchName());
-        model.addAttribute("bankKamokuName", investmentTrustForm.getBankKamokuName());
+        model.addAttribute("branchName", investmentTrustForm.getBranchName());
+        model.addAttribute("bankAccountType", investmentTrustForm.getBankAccountType());
         model.addAttribute("bankAccountNum", investmentTrustForm.getBankAccountNum());
+        model.addAttribute("name", investmentTrustForm.getName());
+        model.addAttribute("fundName", investmentTrustForm.getFundName());
+        model.addAttribute("money", investmentTrustForm.getMoney());
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
         return "investmentTrustConfirmation";
     }
