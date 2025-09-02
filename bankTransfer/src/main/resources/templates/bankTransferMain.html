@@ -74,21 +74,6 @@
         <!--
         ▶th:action="@{/bankTransferConfirmation}"-->
 
-
-<!--        <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <select th:field="*{bankName}" class="form-control">-->
-<!--                <option th:each="option : ${nameOptions3}"-->
-<!--                        th:value="${option}"-->
-<!--                        th:text="${option}">選択肢-->
-<!--                </option>-->
-<!--            </select></p>-->
-
-<!--        <p><label class="ml-1">口座名義: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <input type="text" th:field="*{bankAccountNum}" class="form-control" placeholder="TAROU YAMADA"/></p>-->
-
-        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
-
         <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{branchName}" class="form-control">
                 <option th:each="option : ${nameOptions2}"
@@ -96,6 +81,20 @@
                         th:text="${option}">選択肢
                 </option>
             </select></p>
+
+        <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
+            <select th:field="*{subjectName}" class="form-control">
+                <option th:each="option : ${nameOptions3}"
+                        th:value="${option}"
+                        th:text="${option}">選択肢
+                </option>
+            </select></p>
+
+<!--        <p><label class="ml-1">口座名義: <small class="text-danger ml-1">※</small></label><br>-->
+<!--            <input type="text" th:field="*{bankAccountNum}" class="form-control" placeholder="TAROU YAMADA"/></p>-->
+
+        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
+            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
 
 <!--        <p><label class="ml-1">金額: <small class="text-danger ml-1">※</small></label><br>-->
 <!--            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="○○円"/></p>-->
