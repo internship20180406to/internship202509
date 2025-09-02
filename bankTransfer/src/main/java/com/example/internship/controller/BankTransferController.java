@@ -18,16 +18,21 @@ public class BankTransferController {
 
     @GetMapping("/bankTransfer")
     public String bankTransfer(Model model) {
+        String[] bankName = {"山陰共同銀行", "海光共同銀行"};
+        String[] branchName = {"A支店","B支店"};
+        String[] subjectName = {"普通","定期","当座","貯蓄"};
         model.addAttribute("bankTransferApplication", new BankTransferForm());
-        model.addAttribute("nameOptions", "山陰共同銀行");
+        model.addAttribute("nameOptions", bankName);
+        model.addAttribute("nameOptions2", branchName);
+        model.addAttribute("nameOptions3", subjectName);
         return "bankTransferMain";
     }
 
     @PostMapping("/bankTransferConfirmation")
     public String confirmation(@ModelAttribute BankTransferForm bankTransferForm, Model model) {
-        bankTransferForm.setBankName("ながれぼし銀行");
-        model.addAttribute("bankName", bankTransferForm.getBankName());
-        model.addAttribute("bankAccountNum", bankTransferForm.getBankAccountNum());
+        //bankTransferForm.setBankName("ながれぼし銀行");
+        //model.addAttribute("bankName", bankTransferForm.getBankName());
+        //model.addAttribute("bankAccountNum", bankTransferForm.getBankAccountNum());
         model.addAttribute("bankTransferApplication", bankTransferForm);
         return "bankTransferConfirmation";
     }
