@@ -17,25 +17,31 @@
         overflow: auto;
         }
         .content {
+         font-size: 22px;
          background-color: #ffffff;
-         width: 80%;
-         padding: 20px;
+         width: 600px;
+         padding: 40px;
+         padding-top: 0px;
+         padding-bottom: 0px;
          border-radius: 10px;
          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-         min-height: 50vh;
+         height: 800px;
          overflow: auto;
+
         }
         .form-control {
             width: 100%;
             padding: 8px;
             margin: 5px 0;
             box-sizing: border-box;
+            font-size: 20px;
+
         }
         .text-danger {
-        color: red;
+        color: blue;
         }
         .form-control-button {
-        width: 80px;
+        width: 120px;
         padding: 10px 20px;
         margin-top: 10px;
         border: none;
@@ -58,8 +64,9 @@
         }
 
         h1 {
+            font-size: 33px;
             position: relative;
-            padding: 0.3em 0.5em;
+            padding: 0.1em 0.5em;
             text-align: center;
             background: -webkit-linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
             background: linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
@@ -67,17 +74,36 @@
         }
 
         .form-row {
+          font-size: 20px;
+          width: 600px;
           display: flex;
           align-items: center;
-          margin-bottom: 15px;
+          margin: 0 auto;
+          margin-bottom: 14px;
         }
 
         .form-row label {
-          min-width: 120px; /* ラベルの幅を固定 */
+          min-width: 200px; /* ラベルの幅を固定 */
+          white-space: nowrap;
         }
 
         .form-row select {
           flex: 1; /* セレクトボックスを残りの幅に広げる */
+        }
+
+        h2 {
+          position: relative;
+          padding: 0.25em 0;
+          font-size: 25px;
+
+        }
+        h2:after {
+          content: "";
+          display: block;
+          height: 5px;
+          background: -webkit-linear-gradient(to right, #3a86ff, #FFFFFF);
+          background: linear-gradient(to right, #3a86ff, #FFFFFF);
+
         }
 
 
@@ -87,9 +113,8 @@
 <div class="content">
     <h1>投資信託注文情報入力</h1>
     <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
-
-        <p>
-            <div class="form-row">
+        <h2>口座情報</h2>
+        <div class="form-row">
             <label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{bankName}" class="form-control" id="bankSelect">
                 <option value="">-- 選択してください --</option>
@@ -97,20 +122,20 @@
                         th:value="${option}"
                         th:text="${option}">選択肢</option>
             </select>
-            </div>
-        </p>
+        </div>
 
-        <p>
-            <div class="form-row">
+
+
+        <div class="form-row">
             <label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{branchName}" class="form-control" id="branchSelect">
                 <option value="">-- 銀行を選択してください --</option>
             </select>
-            </div>
-        </p>
+        </div>
 
-        <p>
-            <div class="form-row">
+
+
+        <div class="form-row">
             <label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{bankAccountType}" class="form-control">
                 <option value="">-- 選択してください --</option>
@@ -118,23 +143,23 @@
                 <option value="当座">当座</option>
                 <option value="貯蓄">貯蓄</option>
             </select>
-            </div>
+        </div>
 
-        </p>
 
-        <p>
-            <div class="form-row">
+
+
+        <div class="form-row">
             <label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
             <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
-            </div>
+        </div>
 
-        <p>
-            <div class="form-row">
+
+        <div class="form-row">
             <label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>
             <input type="text" th:field="*{name}" class="form-control" placeholder="ふくふくたろう"/></p>
-            </div>
-
-            <div class="form-row">
+        </div>
+        <h2>購入情報</h2>
+        <div class="form-row">
             <label class="ml-1">銘柄: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{fundName}" class="form-control">
                 <option value="">-- 選択してください --</option>
@@ -146,15 +171,15 @@
                 <option value="鹿野ワークス">鹿野ワークス</option>
 
             </select>
-            </div>
-        </p>
+        </div>
 
-        <p>
-            <div class="form-row">
+
+
+        <div class="form-row">
             <label class="ml-1">購入金額 : <small class="text-danger ml-1">※</small></label><br>
             <input type="number" th:field="*{money}" class="form-control" placeholder="1234567"/>
-            </div>
-        </p>
+        </div>
+
         <p style="text-align: center;"><input type="submit" value="確認"
                                               class="form-control-button form-confirmation-button"/>
             <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
