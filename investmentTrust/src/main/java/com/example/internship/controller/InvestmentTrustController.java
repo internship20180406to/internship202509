@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 @Controller
 public class InvestmentTrustController {
@@ -19,15 +22,24 @@ public class InvestmentTrustController {
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
         model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
-        model.addAttribute("nameOptions", "山陰共同銀行");
+        List<String> nameOptions = Arrays.asList("N銀行", "E銀行", "W銀行", "S銀行");
+        model.addAttribute("nameOptions", nameOptions);
+        List<String> SubjectOptions = Arrays.asList("普通", "貯蓄", "当座", "定期");
+        model.addAttribute("SubjectOptions", SubjectOptions);
+        List<String> BrandOptions = Arrays.asList("PONY", "任天丼", "パナソ肉");
+        model.addAttribute("BrandOptions", BrandOptions);
         return "investmentTrustMain";
     }
 
     @PostMapping("/investmentTrustConfirmation")
     public String confirmation(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
-        investmentTrustForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", investmentTrustForm.getBankName());
+        model.addAttribute("ShopName", investmentTrustForm.getShopName());
+        model.addAttribute("Subject", investmentTrustForm.getSubject());
         model.addAttribute("bankAccountNum", investmentTrustForm.getBankAccountNum());
+        model.addAttribute("Purchaser", investmentTrustForm.getPurchaser());
+        model.addAttribute("BrandName", investmentTrustForm.getBrandName());
+        model.addAttribute("amount", investmentTrustForm.getAmount());
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
         return "investmentTrustConfirmation";
     }

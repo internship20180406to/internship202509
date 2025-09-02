@@ -8,9 +8,22 @@
 <h1>投資信託注文確認画面</h1>
 <form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
     <p>金融機関名: <span th:text="*{bankName}"></span></p>
+    <p>支店名: <span th:text="*{ShopName}"></span></p>
+    <p>科目名: <span th:text="*{Subject}"></span></p>
     <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
-    <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
-    <input type="hidden" name="bankName" th:value="*{bankName}"/>
+    <p>購入者: <span th:text="*{Purchaser}"></span></p>
+    <p>銘柄名: <span th:text="*{BrandName}"></span></p>
+    <p>購入金額: <span th:text="*{amount}"></span></p>
+
+
+    <input type="hidden" id="bankAccountNum" name="bankAccountNum" th:value="*{bankAccountNum}"/>
+    <input type="hidden" id="Subject" name="Subject" th:value="*{Subject}"/>
+    <input type="hidden" id="ShopName" name="ShopName" th:value="*{ShopName}"/>
+    <input type="hidden" id="bankName" name="bankName" th:value="*{bankName}"/>
+    <input type="hidden" id="Purchaser" name="Purchaser" th:value="*{Purchaser}"/>
+    <input type="hidden" id="BrandName" name="BrandName" th:value="*{BrandName}"/>
+    <input type="hidden" id="amount" name="amount" th:value="*{amount}"/>
+
     <p>
         <input type="submit" id="submit" value="申込"/>
         <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>

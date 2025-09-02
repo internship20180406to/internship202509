@@ -11,8 +11,26 @@ import lombok.NonNull;
 public class InvestmentTrustForm {
     @NonNull
     private String bankName;
+
+    @NonNull
+    private String ShopName;
+
+    @NonNull
+    private String Subject;
+
     @NonNull
     private Integer bankAccountNum;
+
+    @NonNull
+    private String Purchaser;
+
+    @NonNull
+    private String BrandName;
+
+    @NonNull
+    private Integer amount;
+
+
 
     public String getBankName() {
         return bankName;
@@ -22,6 +40,23 @@ public class InvestmentTrustForm {
         this.bankName = bankName;
     }
 
+    public String getShopName() {
+        return ShopName;
+    }
+
+    public void setShopName(String ShopName) {
+        this.ShopName = ShopName;
+    }
+
+
+    public String getSubject() {
+        return Subject;
+    }
+
+    public void setSubject(String Subject) {
+        this.Subject = Subject;
+    }
+
     public Integer getBankAccountNum() {
         return bankAccountNum;
     }
@@ -29,4 +64,29 @@ public class InvestmentTrustForm {
     public void setBankAccountNum(Integer bankAccountNum) {
         this.bankAccountNum = bankAccountNum;
     }
+
+    public String getPurchaser() {
+        return Purchaser;
+    }
+
+    public void setPurchaser(String Purchaser) {
+        this.Purchaser = Purchaser;
+    }
+
+    public String getBrandName() {
+        return BrandName;
+    }
+
+    public void setBrandName(String BrandName) {
+        this.BrandName = BrandName;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 }
+
