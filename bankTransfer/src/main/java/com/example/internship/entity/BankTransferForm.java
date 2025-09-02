@@ -20,6 +20,8 @@ public class BankTransferForm {
     private Integer bankAccountNum;
     @NonNull
     private String name;
+    @NonNull
+    private Integer money;
 
     public String getBankName() {
         return bankName;
@@ -44,4 +46,9 @@ public class BankTransferForm {
 
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
+
+    public Integer getMoney() {return money;}
+    public void setMoney(Integer money) {
+        this.money = money;
+    }
 }
