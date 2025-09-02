@@ -12,15 +12,15 @@ public class BankLoanForm {
     @NonNull
     private String bankName;
     @NonNull
-    private String branchName;
+    private Integer branchName;
     @NonNull
-    private String accountName;
+    private String bankKinds;
     @NonNull
     private String debtorName;
     @NonNull
-    private String loanAmount;
+    private Integer loanAmount;
     @NonNull
-    private String borrowingIncome;
+    private Integer borrowingIncome;
     @NonNull
     private String interestRate;
     @NonNull
@@ -34,19 +34,19 @@ public class BankLoanForm {
     }
 
     // Getter & Setter for branchName
-    public String getBranchName() {
+    public Integer getBranchName() {
         return branchName;
     }
-    public void setBranchName(String branchName) {
+    public void setBranchName(Integer branchName) {
         this.branchName = branchName;
     }
 
     // Getter & Setter for accountName
-    public String getAccountName() {
-        return accountName;
+    public String getBankKinds() {
+        return bankKinds;
     }
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setAccountName(String bankKinds) {
+        this.bankKinds = bankKinds;
     }
 
     // Getter & Setter for bankAccountNum
@@ -66,18 +66,18 @@ public class BankLoanForm {
     }
 
     // Getter & Setter for loanAmount
-    public String getLoanAmount() {
+    public Integer getLoanAmount() {
         return loanAmount;
     }
-    public void setLoanAmount(String loanAmount) {
+    public void setLoanAmount(Integer loanAmount) {
         this.loanAmount = loanAmount;
     }
 
     // Getter & Setter for borrowingIncome
-    public String getBorrowingIncome() {
+    public Integer getBorrowingIncome() {
         return borrowingIncome;
     }
-    public void setBorrowingIncome(String borrowingIncome) {
+    public void setBorrowingIncome(Integer borrowingIncome) {
         this.borrowingIncome = borrowingIncome;
     }
 

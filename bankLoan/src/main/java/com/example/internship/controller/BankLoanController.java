@@ -43,7 +43,7 @@ public class BankLoanController {
     public String confirmation(@ModelAttribute BankLoanForm bankLoanForm, Model model) {
         model.addAttribute("bankName", bankLoanForm.getBankName());
         model.addAttribute("branchName", bankLoanForm.getBranchName());
-        model.addAttribute("accountName", bankLoanForm.getAccountName());
+        model.addAttribute("bankKinds", bankLoanForm.getBankKinds());
         model.addAttribute("bankAccountNum", bankLoanForm.getBankAccountNum());
         model.addAttribute("debtorName", bankLoanForm.getDebtorName());
         model.addAttribute("loanAmount", bankLoanForm.getLoanAmount());
