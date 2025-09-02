@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.sql.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class BankTransferForm {
     @NonNull
     private Integer amount;
     @NonNull
-    private String specifiedDate;
+    private Date specifiedDate;
 
     public String getBankName() {
         return bankName;
@@ -72,11 +74,11 @@ public class BankTransferForm {
         this.amount = amount;
     }
 
-    public String getSpecifiedDate() {
+    public Date getSpecifiedDate() {
         return specifiedDate;
     }
 
-    public void setSpecifiedDate(String specifiedDate) {
+    public void setSpecifiedDate(Date specifiedDate) {
         this.specifiedDate = specifiedDate;
     }
 
