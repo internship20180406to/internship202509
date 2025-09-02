@@ -1,5 +1,10 @@
 package com.example.internship.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,21 +14,35 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankLoanForm {
-    @NonNull
+
+    @NotBlank(message = "銀行を選択してください")
     private String bankName;
-    @NonNull
+
+    @NotNull(message="支店コードを入力してください")
+    @Min(value = 0, message = "支店コードは0以上です")
+    @Max(value = 999, message = "支店コードは3桁以内です")
     private Integer branchName;
-    @NonNull
+
+    @NotBlank(message="科目名を選択してください")
     private String bankKinds;
-    @NonNull
+
+    @NotBlank(message="名前を入力してください")
     private String debtorName;
-    @NonNull
+
+    @NotNull(message="借入金額を入力してください")
+    @Min(value = 1, message = "借入金額は1以上で入力してください")
     private Integer loanAmount;
-    @NonNull
+
+    @NotNull(message="年収を入力してください")
+    @Min(value = 0, message = "年収は0以上で入力してください")
     private Integer borrowingIncome;
-    @NonNull
+
+    @NotBlank(message="金利を入力してください")
     private String interestRate;
-    @NonNull
+
+    @NotNull(message="口座番号を入力してください")
+    @Min(value = 0, message = "口座番号は0以上です")
+    @Max(value = 99999999, message = "口座番号は8桁以内です")
     private Integer bankAccountNum;
 
     public String getBankName() {

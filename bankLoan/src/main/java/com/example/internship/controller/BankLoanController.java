@@ -2,6 +2,9 @@ package com.example.internship.controller;
 
 import com.example.internship.entity.BankLoanForm;
 import com.example.internship.service.ApplyBankLoanService;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +27,13 @@ public class BankLoanController {
     @GetMapping("/bankLoan")
     public String bankTransfer(Model model) {
         List<String> nameOptions = Arrays.asList(
+                "選択してください",
                 "山陰共同銀行",
                 "北海道中央銀行",
                 "東京銀行",
                 "横浜共同銀行");
         List<String> accountOptions = Arrays.asList(
+                "選択してください",
                 "普通預金",
                 "定期預金",
                 "当座預金",
@@ -40,7 +45,10 @@ public class BankLoanController {
     }
 
     @PostMapping("/bankLoanConfirmation")
-    public String confirmation(@ModelAttribute BankLoanForm bankLoanForm, Model model) {
+    public String confirmation(@ModelAttribute BankLoanForm bankLoanForm, Model model,BindingResult result) {
+        if(result.hasErrors()) {
+            return "bankLoanMain";
+        }
         model.addAttribute("bankName", bankLoanForm.getBankName());
         model.addAttribute("branchName", bankLoanForm.getBranchName());
         model.addAttribute("bankKinds", bankLoanForm.getBankKinds());
@@ -54,10 +62,13 @@ public class BankLoanController {
     }
 
 
+
     @PostMapping("/bankLoanCompletion")
     public String completion(@ModelAttribute BankLoanForm bankLoanForm, Model model) {
         applyBankLoanService.applyBankLoan(bankLoanForm);
         return "bankLoanCompletion";
     }
+
+
 
 }

@@ -1,99 +1,340 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8"/>
-    <title>ローン申込情報入力画面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>ローン申込情報入力</title>
+    <!-- 好みで：Webフォント（外部通信NG環境なら削ってOK） -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        justify-content: center;
-        align-items: center;
-        min-height: 85vh;
-        overflow: auto;
-        }
-        .content {
-         background-color: #ffffff;
-         width: 80%;
-         padding: 20px;
-         border-radius: 10px;
-         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-         min-height: 50vh;
-         overflow: auto;
-        }
-        .form-control {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            box-sizing: border-box;
-        }
-        .text-danger {
-        color: red;
-        }
-        .form-control-button {
-        width: 80px;
-        padding: 10px 20px;
-        margin-top: 10px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        }
-        .form-confirmation-button{
-        color: white;
-        background-color: #2185D0;
-        }
-        .form-confirmation-button:hover {
-        background-color: #1678c2;
-        }
-        .form-clear-button{
-        color: black;
-        background-color: #E0E1E2;
-        }
-        .form-clear-button:hover {
-        background-color: #CCCCCC;
+        :root{
+          --bg: #f6f8fb;
+          --card: #ffffff;
+          --text: #222;
+          --muted: #6b7280;
+          --primary: #2563eb;
+          --primary-hover: #1d4ed8;
+          --ring: rgba(37,99,235,.25);
+          --danger: #dc2626;
+          --radius: 14px;
+          --shadow: 0 10px 30px rgba(2,8,23,.08);
         }
 
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+          margin:0;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "游ゴシック体", "Yu Gothic", "メイリオ", Meiryo, sans-serif;
+          color:var(--text);
+          background:
+            radial-gradient(60rem 60rem at 10% 10%, #eef2ff 0%, transparent 60%),
+            radial-gradient(80rem 80rem at 90% 10%, #e0f2fe 0%, transparent 60%),
+            var(--bg);
+          display:flex; align-items:center; justify-content:center;
+          padding:40px 20px;
+        }
+
+        .container{
+          width:min(920px, 100%);
+          padding:16px;
+        }
+
+        .card{
+          background:var(--card);
+          border-radius:var(--radius);
+          box-shadow:var(--shadow);
+          overflow:hidden;
+          border:1px solid #eef2f7;
+        }
+
+        .card-header{
+          padding:22px 24px;
+          border-bottom:1px solid #eef2f7;
+          background:linear-gradient(180deg,#ffffff, #f9fafb);
+        }
+        .title{
+          margin:0;
+          font-size: clamp(20px, 2.2vw, 26px);
+          font-weight:600;
+          letter-spacing:.02em;
+        }
+        .subtitle{
+          margin:.35rem 0 0;
+          color:var(--muted);
+          font-size:14px;
+        }
+
+        form{ padding:24px; }
+
+        .grid{
+          display:grid;
+          gap:18px;
+          grid-template-columns: 1fr;
+        }
+        @media (min-width: 720px){
+          .grid{
+            grid-template-columns: 1fr 1fr;
+          }
+          .grid .full{ grid-column: 1 / -1; }
+        }
+
+        .field{ display:flex; flex-direction:column; gap:8px; }
+        .label{
+          font-size:14px; font-weight:600;
+          display:flex; align-items:center; gap:.5ch;
+        }
+        .req{
+          display:inline-flex; align-items:center; justify-content:center;
+          font-size:10px; line-height:1; color:#fff; background:var(--danger);
+          padding:.25rem .4rem; border-radius:6px;
+        }
+        .hint{ color:var(--muted); font-size:12px; }
+
+        .control{
+          display:flex; align-items:center; position:relative;
+        }
+        .input, .select{
+          appearance:none;
+          width:100%;
+          font-size:16px;
+          padding:12px 14px;
+          border:1px solid #e5e7eb;
+          border-radius:10px;
+          background:#fff;
+          transition: box-shadow .15s ease, border-color .15s ease, transform .02s ease;
+          outline:none;
+        }
+        .select{
+          background-image:
+            linear-gradient(45deg, transparent 50%, #9aa3af 50%),
+            linear-gradient(135deg, #9aa3af 50%, transparent 50%),
+            linear-gradient(to right, #d1d5db, #d1d5db);
+          background-position:
+            calc(100% - 18px) calc(50% - 3px),
+            calc(100% - 13px) calc(50% - 3px),
+            calc(100% - 28px) 50%;
+          background-size: 6px 6px, 6px 6px, 1px 18px;
+          background-repeat:no-repeat;
+          padding-right:40px;
+        }
+        .input:focus, .select:focus{
+          border-color: var(--primary);
+          box-shadow: 0 0 0 6px var(--ring);
+        }
+        .input:active{ transform: translateY(0.5px); }
+
+        /* number の矢印抑制（必要なら） */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+        input[type=number]{ -moz-appearance:textfield; }
+
+        /* サフィックス付き入力（%など） */
+        .suffix{
+          position:absolute; right:12px; top:50%; transform:translateY(-50%);
+          color:var(--muted); font-size:14px; pointer-events:none;
+        }
+        .with-suffix .input{ padding-right:42px; }
+
+        .error{ color:var(--danger); font-size:12px; margin-top:-4px; }
+
+        .actions{
+          display:flex; gap:12px; justify-content:center; padding-top:8px;
+        }
+        .btn{
+          border:0; border-radius:999px; cursor:pointer;
+          padding:12px 20px; font-weight:600; font-size:14px; min-width:120px;
+          transition: transform .02s ease, box-shadow .15s ease, background .15s ease;
+        }
+        .btn:active{ transform: translateY(0.5px); }
+        .btn-primary{
+          background:var(--primary); color:#fff; box-shadow:0 6px 18px rgba(37,99,235,.25);
+        }
+        .btn-primary:hover{ background:var(--primary-hover); }
+        .btn-ghost{
+          background:#f3f4f6; color:#111827;
+        }
+        .btn-ghost:hover{ background:#e5e7eb; }
+
+        /* 必須入力の簡易可視化（HTML5のrequiredと連動） */
+        .input:required:invalid, .select:required:invalid{ border-color:#fca5a5; }
+
+        /* ---- Stepper ---- */
+:root{
+  --accent: #0f5132;          /* 深緑（お好みで） */
+  --accent-weak: #e8f1ed;     /* 薄い緑のトラック */
+}
+.stepper{
+  position: relative;
+  padding: 10px 16px 6px;
+}
+.stepper .track{
+  position: absolute;
+  left: 28px; right: 28px; top: 24px;
+  height: 4px; border-radius: 999px;
+  background: var(--accent-weak);
+}
+.stepper .fill{
+  position: absolute;
+  left: 28px; top: 24px;
+  height: 4px; border-radius: 999px;
+  background: var(--accent);
+  /* 3ステップなので (step-1)*50% で充填幅を計算 */
+  width: calc((var(--step, 1) - 1) * 50%);
+  transition: width .25s ease;
+}
+.stepper .steps{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 0;
+}
+.stepper .step{
+  text-align: center;
+  position: relative;
+}
+.stepper .dot{
+  width: 14px; height: 14px; border-radius: 999px;
+  background: #e5e7eb;
+  display: inline-block;
+  margin: 16px auto 6px;
+  box-shadow: 0 0 0 3px #fff inset; /* トラック上でも見やすく */
+}
+.stepper .label{
+  font-size: 12px; color: var(--muted);
+}
+.stepper .step.is-current .dot,
+.stepper .step.is-complete .dot{ background: var(--accent); }
+.stepper .step.is-current .label{ color: var(--text); font-weight: 600; }
+.stepper .step.is-complete .label{ color: var(--text); }
     </style>
 </head>
 <body>
-<div class="content">
-    <h1>ローン申込情報入力</h1>
-    <form action="#" th:action="@{/bankLoanConfirmation}" th:object="${bankLoanApplication}" method="post">
-        <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankName}" class="form-control">
-                <option th:each="option : ${nameOptions}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-            </select></p>
-        <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{branchName}" class="form-control"/></p>
-        <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankKinds}" class="form-control">
-                <option th:each="option : ${accountOptions}"
-                        th:value="${option}"
-                        th:text="${option}">選択肢
-                </option>
-            </select></p>
-        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
-        <p><label class="ml-1">債務者名: <small class="text-danger ml-1">※</small></label><br>
-            <input th:field="*{debtorName}" class="form-control"/></p>
-        <p><label class="ml-1">借入金額: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{loanAmount}" class="form-control"/></p>
-        <p><label class="ml-1">借入年収: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{borrowingIncome}" class="form-control"/></p>
-        <p><label class="ml-1">金利: <small class="text-danger ml-1">※</small></label><br>
-            <input th:field="*{interestRate}" class="form-control"/></p>
-        <p style="text-align: center;"><input type="submit" value="確認"
-                                              class="form-control-button form-confirmation-button"/>
-            <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
-    </form>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="title">ローン申込情報入力</h1>
+            <p class="subtitle">※ 必須項目を入力してください</p>
+        </div>
+
+        <!-- 進捗ステップ。currentStep が無ければ 1 にする -->
+        <div class="stepper"
+             th:with="step=${currentStep} ?: 1"
+             th:style="'--step:' + ${step} + ';'">
+            <div class="track"></div>
+            <div class="fill"></div>
+            <ol class="steps" role="list" aria-label="申込ステップ">
+                <li class="step"
+                    th:classappend="${step} > 1 ? 'is-complete' : (${step} == 1 ? 'is-current' : '')"
+                    aria-current="${step} == 1 ? 'step' : null">
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="label">ローン申し込み</span>
+                </li>
+                <li class="step"
+                    th:classappend="${step} > 2 ? 'is-complete' : (${step} == 2 ? 'is-current' : '')"
+                    aria-current="${step} == 2 ? 'step' : null">
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="label">申し込み確認</span>
+                </li>
+                <li class="step"
+                    th:classappend="${step} > 3 ? 'is-complete' : (${step} == 3 ? 'is-current' : '')"
+                    aria-current="${step} == 3 ? 'step' : null">
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="label">申し込み完了</span>
+                </li>
+            </ol>
+        </div>
+
+
+        <form action="#" th:action="@{/bankLoanConfirmation}" th:object="${bankLoanApplication}" method="post" >
+            <div class="grid">
+                <!-- 金融機関名 -->
+                <div class="field">
+                    <label class="label">金融機関名 <span class="req">必須</span></label>
+                    <div class="control">
+                        <select th:field="*{bankName}"  class="select" required>
+                            <option value="" disabled selected>選択してください</option>
+                            <option th:each="option : ${nameOptions}" th:value="${option}" th:text="${option}">選択肢</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 支店コード -->
+
+                <div class="field">
+                    <label class="label">支店コード <span class="req">必須</span></label>
+                    <div class="control">
+                        <input type="number" th:field="*{branchName}" th:errorclass="is-invalid" class="input" placeholder="123" required min="100" max="999"/>
+                    </div>
+
+                    <div class="error" th:if="${#fields.hasErrors('branchName')}" th:errors="*{branchName}"></div>
+                </div>
+
+                <!-- 科目名 -->
+                <div class="field">
+                    <label class="label">科目名 <span class="req">必須</span></label>
+                    <div class="control">
+                        <select th:field="*{bankKinds}" class="select" required>
+                            <option value="" disabled selected>選択してください</option>
+                            <option th:each="option : ${accountOptions}" th:value="${option}" th:text="${option}">選択肢</option>
+                        </select>
+                    </div>
+                    <div class="error" th:if="${#fields.hasErrors('bankKinds')}" th:errors="*{bankKinds}"></div>
+                </div>
+
+                <!-- 口座番号 -->
+                <div class="field">
+                    <label class="label">口座番号 <span class="req">必須</span></label>
+                    <div class="control">
+                        <input type="number" th:field="*{bankAccountNum}" class="input" inputmode="numeric" placeholder="1234567" required min="100000" max="99999999"/>
+                    </div>
+                    <div class="error" th:if="${#fields.hasErrors('bankAccountNum')}" th:errors="*{bankAccountNum}"></div>
+                </div>
+
+                <!-- 債務者名 -->
+                <div class="field full">
+                    <label class="label">債務者名（ご本人様） <span class="req">必須</span></label>
+                    <div class="control">
+                        <input th:field="*{debtorName}" class="input" placeholder="山田 太郎" required minlength="2"/>
+                    </div>
+                </div>
+
+                <!-- 借入金額 -->
+                <div class="field">
+                    <label class="label">借入金額 <span class="req">必須</span></label>
+                    <div class="control with-suffix">
+                        <input type="number" th:field="*{loanAmount}" class="input" placeholder="1000000" min="1000" step="1000" required/>
+                        <span class="suffix">円</span>
+                    </div>
+                </div>
+
+                <!-- 借入年収 -->
+                <div class="field">
+                    <label class="label">借入年収 <span class="req">必須</span></label>
+                    <div class="control with-suffix">
+                        <input type="number" th:field="*{borrowingIncome}" class="input" placeholder="5000000" min="0" step="1000" required/>
+                        <span class="suffix">円</span>
+                    </div>
+                </div>
+
+                <!-- 金利 -->
+                <div class="field">
+                    <label class="label">金利 <span class="req">必須</span></label>
+                    <div class="control with-suffix">
+
+                        <input type="number" th:field="*{interestRate}" class="input" placeholder="2.0" min="0" step="0.01" required/>
+                        <span class="suffix">%</span>
+                    </div>
+                    <p class="hint">年率・小数で入力（例: 2.0）</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="submit" value="確認" id="submitButton" class="btn btn-primary"/>
+                <input type="reset" value="クリア" class="btn btn-ghost"/>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
-
 </html>
