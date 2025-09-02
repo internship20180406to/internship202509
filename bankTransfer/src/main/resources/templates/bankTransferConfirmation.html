@@ -9,8 +9,11 @@
 <form action="#" th:action="@{/bankTransferCompletion}" th:object="${bankTransferApplication}" method="post">
     <p>金融機関名: <span th:text="*{bankName}"></span></p>
     <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
+    <p>支店名: <span th:text="*{branchName}"></span></p>
+
     <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
     <input type="hidden" name="bankName" th:value="*{bankName}"/>
+    <input type="hidden" name="branchNane" th:value="*{branchName}"/>
     <p>
         <input type="submit" id="submit" value="振込"/>
         <input type="button" value="キャンセル" onclick="window.location='/bankTransfer';"/>
