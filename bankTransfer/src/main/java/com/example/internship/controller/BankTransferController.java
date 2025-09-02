@@ -30,7 +30,7 @@ public class BankTransferController {
 
     @PostMapping("/bankTransferConfirmation")
     public String confirmation(@ModelAttribute BankTransferForm bankTransferForm, Model model) {
-//        bankTransferForm.setBankName("ながれぼし銀行");
+//        bankTransferForm.setBankName("");
 //        System.out.println(bankTransferForm);
 
         //model.addAttribute("bankTransferApplication", bankTransferForm);←これで一気に渡せるから以下は必要ない

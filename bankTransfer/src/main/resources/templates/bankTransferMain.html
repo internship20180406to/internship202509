@@ -57,6 +57,11 @@
         background-color: #CCCCCC;
         }
 
+        /* プレースホルダーの文字色を薄くする */
+        .form-control::placeholder {
+        color: rgba(0, 0, 0, 0.2);
+        }
+
     </style>
 </head>
 <body>
@@ -65,6 +70,7 @@
     <form action="#" th:action="@{/bankTransferConfirmation}" th:object="${bankTransferApplication}" method="post">
         <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{bankName}" class="form-control">
+                <option value="" hidden></option> <!-- 空白の選択肢、画面に表示しない -->
                 <option th:each="option : ${nameOptions}"
                         th:value="${option}"
                         th:text="${option}">選択肢
@@ -76,6 +82,7 @@
 
         <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{branchName}" class="form-control">
+                <option value="" hidden></option> <!-- 空白の選択肢、画面に表示しない -->
                 <option th:each="option : ${nameOptions2}"
                         th:value="${option}"
                         th:text="${option}">選択肢
@@ -84,11 +91,14 @@
 
         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{subjectName}" class="form-control">
+                <option value="" hidden></option> <!-- 空白の選択肢、画面に表示しない -->
                 <option th:each="option : ${nameOptions3}"
                         th:value="${option}"
                         th:text="${option}">選択肢
                 </option>
             </select></p>
+
+
 
         <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
             <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
@@ -99,8 +109,8 @@
         <p><label class="ml-1">金額: <small class="text-danger ml-1">※</small></label><br>
             <input type="number" th:field="*{money}" class="form-control" placeholder="○○円"/></p>
 
-<!--        <p><label class="ml-1">振込指定日: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <input type="date" th:field="*{bankAccountNum}" class="form-control" placeholder=""/></p>-->
+        <p><label class="ml-1">振込指定日: <small class="text-danger ml-1">※</small></label><br>
+            <input type="date" th:field="*{date}" class="form-control" placeholder=""/></p>
 
 
 
