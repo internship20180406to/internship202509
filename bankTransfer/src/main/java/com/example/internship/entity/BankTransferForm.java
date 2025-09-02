@@ -9,34 +9,39 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankTransferForm {
+
     @NonNull
     private String bankName;
     @NonNull
-    private Integer bankAccountNum;
-
     private String branchName;
+    @NonNull
+    private String subjectName;
+    @NonNull
+    private Integer bankAccountNum;
+    @NonNull
+    private String name;
 
     public String getBankName() {
         return bankName;
     }
-
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
 
 
-    public Integer getBankAccountNum() {
-        return bankAccountNum;
-    }
+    public String getBranchName() {return branchName;}
+    public void setBranchName(String branchName) {this.branchName = branchName;}
+    //エラー出るやつ(勝手に推測してる)
+    //public void setBranchName(Integer bankAccountNum) { this.bankAccountNum = bankAccountNum;}
 
+    public String getSubjectName() {return subjectName;}
+    public void setSubjectName(String subjectName) {this.subjectName = subjectName;}
+
+    public Integer getBankAccountNum() {return bankAccountNum;}
     public void setBankAccountNum(Integer bankAccountNum) {
         this.bankAccountNum = bankAccountNum;
     }
 
-    public String getBranchName() {return branchName;}
-
-    //エラー出るやつ(勝手に推測してる)
-    //public void setBranchName(Integer bankAccountNum) { this.bankAccountNum = bankAccountNum;}
-
-    public void setBranchName(String branchName) {this.branchName = branchName;}
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
 }

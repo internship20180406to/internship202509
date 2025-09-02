@@ -20,21 +20,27 @@ public class BankTransferController {
     public String bankTransfer(Model model) {
         String[] bankname = {"A銀行", "B銀行", "C銀行", "D銀行"};
         String[] branchname = {"A支店", "B支店"};
-//        String[] subjectname = {"普通","定期","当座","貯蓄"};
+        String[] subjectname = {"普通","定期","当座","貯蓄"};
         model.addAttribute("bankTransferApplication", new BankTransferForm());
         model.addAttribute("nameOptions", bankname);
         model.addAttribute("nameOptions2", branchname);
-//        model.addAttribute("nameOptions3", subjectname);
+        model.addAttribute("nameOptions3", subjectname);
         return "bankTransferMain";
     }
 
     @PostMapping("/bankTransferConfirmation")
     public String confirmation(@ModelAttribute BankTransferForm bankTransferForm, Model model) {
-       // bankTransferForm.setBankName("ながれぼし銀行");
-        //System.out.println(bankTransferForm);
-        //model.addAttribute("bankName", bankTransferForm.getBankName());
-        //model.addAttribute("bankAccountNum", bankTransferForm.getBankAccountNum());
-        //model.addAttribute("branchName", bankTransferForm.getBranchName());
+//        bankTransferForm.setBankName("ながれぼし銀行");
+//        System.out.println(bankTransferForm);
+
+        //model.addAttribute("bankTransferApplication", bankTransferForm);←これで一気に渡せるから以下は必要ない
+
+//        model.addAttribute("bankName", bankTransferForm.getBankName());
+//        model.addAttribute("branchName", bankTransferForm.getBranchName());
+//        model.addAttribute("subjectName", bankTransferForm.getSubjectName());
+//        model.addAttribute("bankTransferApplication", bankTransferForm());
+       // model.addAttribute("name", name());
+
         model.addAttribute("bankTransferApplication", bankTransferForm);
         return "bankTransferConfirmation";
     }
