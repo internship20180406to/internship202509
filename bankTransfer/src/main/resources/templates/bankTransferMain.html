@@ -5,7 +5,7 @@
     <title>銀行振込情報入力画面</title>
     <style>
         body {
-        background-color: #f0f0f0;
+        background-color: #00bfff;
         margin: 0;
         padding: 0;
         display: flex;
@@ -58,13 +58,14 @@
         }
 
     </style>
+    <script src="js/branchNameFromBankName.js"></script>
 </head>
 <body>
 <div class="content">
     <h1>銀行振込情報入力</h1>
     <form action="#" th:action="@{/bankTransferConfirmation}" th:object="${bankTransferApplication}" method="post">
         <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankName}" class="form-control">
+            <select th:field="*{bankName}" class="form-control" id = "bank" required="required">
                 <option th:each="option : ${nameOptions}"
                         th:value="${option}"
                         th:text="${option}">選択肢
@@ -72,8 +73,8 @@
             </select></p>
 
         <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{branchName}" class="form-control">
-                <option th:each="option : ${nameOptions2}"
+            <select th:field="*{branchName}" class="form-control" id="branch">
+                <option th:each="option : ${branchName1}"
                         th:value="${option}"
                         th:text="${option}">選択肢
                 </option>
@@ -81,7 +82,7 @@
 
         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{subjectName}" class="form-control">
-                <option th:each="option : ${nameOptions3}"
+                <option th:each="option : ${subjectName}"
                         th:value="${option}"
                         th:text="${option}">選択肢
                 </option>
