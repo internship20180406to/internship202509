@@ -45,6 +45,9 @@ public class BankLoanForm {
     @Max(value = 99999999, message = "口座番号は8桁以内です")
     private Integer bankAccountNum;
 
+    @NonNull
+    private Integer birthday;
+
     public String getBankName() {
         return bankName;
     }
@@ -107,5 +110,14 @@ public class BankLoanForm {
     public void setInterestRate(String interestRate) {
         this.interestRate = interestRate;
     }
+    // Getter & Setter for borrowingIncome
+    public Integer getBirthday() {
+        return birthday;
+    }
+    public void setBirthday(Integer birthday) {
+        this.birthday = birthday;
+    }
 }
+
+
 

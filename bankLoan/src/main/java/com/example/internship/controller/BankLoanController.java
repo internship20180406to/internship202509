@@ -54,6 +54,7 @@ public class BankLoanController {
         model.addAttribute("bankKinds", bankLoanForm.getBankKinds());
         model.addAttribute("bankAccountNum", bankLoanForm.getBankAccountNum());
         model.addAttribute("debtorName", bankLoanForm.getDebtorName());
+        model.addAttribute("birthday", bankLoanForm.getBirthday());
         model.addAttribute("loanAmount", bankLoanForm.getLoanAmount());
         model.addAttribute("borrowingIncome", bankLoanForm.getBorrowingIncome());
         model.addAttribute("interestRate", bankLoanForm.getInterestRate());

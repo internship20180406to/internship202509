@@ -5,22 +5,67 @@
     <title>ローン申込確認画面</title>
     <style>
         h1{border-bottom: 6px double #000;}
+        /* --- Stepper (3段階) --- */
+:root { --accent: #0f5132; --accent-weak:#e8f1ed; --muted:#6b7280; --text:#222; }
+.stepper{ position:relative; padding:10px 16px 6px; margin:16px 0 8px;}
+.stepper .track{ position:absolute; left:28px; right:28px; top:24px; height:4px; border-radius:999px; background:var(--accent-weak);}
+.stepper .fill{ position:absolute; left:28px; top:24px; height:4px; border-radius:999px; background:var(--accent);
+  width:calc((var(--step,1) - 1) * 50%); transition:width .25s ease; }
+.stepper .steps{ display:grid; grid-template-columns:repeat(3,1fr); align-items:start; }
+.stepper .step{ text-align:center; }
+.stepper .dot{ width:14px; height:14px; border-radius:999px; background:#e5e7eb; display:inline-block; margin:16px auto 6px; box-shadow:0 0 0 3px #fff inset;}
+.stepper .label{ font-size:12px; color:var(--muted); }
+.stepper .step.is-current .dot,
+.stepper .step.is-complete .dot{ background:var(--accent); }
+.stepper .step.is-current .label,
+.stepper .step.is-complete .label{ color:var(--text); font-weight:600; }
+
     </style>
 </head>
 <body>
 <h1>ローン申込確認画面</h1>
+<!-- 進捗ステップ。currentStep が無ければ 2（確認）にする -->
+<div class="stepper"
+     th:with="step=${currentStep} ?: 2"
+     th:style="'--step:' + ${step} + ';'">
+    <div class="track"></div>
+    <div class="fill"></div>
+    <ol class="steps" role="list" aria-label="申込ステップ">
+        <li class="step"
+            th:classappend="${step} > 1 ? 'is-complete' : (${step} == 1 ? 'is-current' : '')"
+            aria-current="${step} == 1 ? 'step' : null">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="label">ローン申し込み</span>
+        </li>
+        <li class="step"
+            th:classappend="${step} > 2 ? 'is-complete' : (${step} == 2 ? 'is-current' : '')"
+            aria-current="${step} == 2 ? 'step' : null">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="label">申し込み確認</span>
+        </li>
+        <li class="step"
+            th:classappend="${step} > 3 ? 'is-complete' : (${step} == 3 ? 'is-current' : '')"
+            aria-current="${step} == 3 ? 'step' : null">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="label">申し込み完了</span>
+        </li>
+    </ol>
+</div>
+
 <form action="#" th:action="@{/bankLoanCompletion}" th:object="${bankLoanApplication}" method="post">
     <p>金融機関名: <span th:text="*{bankName}"></span></p>
     <p>支店コード: <span th:text="*{branchName}"></span></p>
     <p>科目名: <span th:text="*{bankKinds}"></span></p>
     <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
     <p>債務者名: <span th:text="*{debtorName}"></span></p>
+    <p>誕生日: <span th:text="*{birthday}"></span></p>
     <p>借入金額: <span th:text="*{loanAmount}"></span></p>
     <p>借入年収: <span th:text="*{borrowingIncome}"></span></p>
     <p>金利: <span th:text="*{interestRate}"></span></p>
     <input type="hidden" name="interestRate" th:value="*{interestRate}"/>
     <input type="hidden" name="borrowingIncome" th:value="*{borrowingIncome}"/>
     <input type="hidden" name="loanAmount" th:value="*{loanAmount}"/>
+    <input type="hidden" name="birthday" th:value="*{birthday}"/>
     <input type="hidden" name="debtorName" th:value="*{debtorName}"/>
     <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
     <input type="hidden" name="bankKinds" th:value="*{bankKinds}"/>
