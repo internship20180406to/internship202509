@@ -1,4 +1,9 @@
 const submitButton = document.getElementById("submit")
     submitButton.addEventListener('click', (e) => {
-      console.log(confirm("操作を実行します"))
+    var result = window.confirm('送信しても宜しいですか？')
+    if(result){
+    }
+    else{
+        e.preventDefault();
+    }
     })
