@@ -88,16 +88,16 @@
             </select></p>
 
         <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
+            <input type="number" required="required" min="1000000" max="9999999" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
 
         <p><label class="ml-1">口座名義: <small class="text-danger ml-1">※</small></label><br>
-            <input type="text" th:field="*{bankAccountName}" class="form-control" placeholder=""/></p>
+            <input type="text" required="required" th:field="*{bankAccountName}" class="form-control" placeholder=""/></p>
 
         <p><label class="ml-1">金額: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{amount}" class="form-control" placeholder=""/></p>
+            <input type="number" required="required" min="1" max="5000000" th:field="*{amount}" class="form-control" placeholder=""/></p>
 
         <p><label class="ml-1">振込指定日: <small class="text-danger ml-1">※</small></label><br>
-            <input type="date" th:field="*{specifiedDate}" class="form-control" placeholder=""/></p>
+            <input type="date" required="required" th:field="*{specifiedDate}" class="form-control" placeholder=""/></p>
 
 
 

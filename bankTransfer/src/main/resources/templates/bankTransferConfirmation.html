@@ -15,9 +15,14 @@
     <p>金額: <span th:text="*{amount}"></span></p>
     <p>振込指定日: <span th:text="*{specifiedDate}"></span></p>
 
-    <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
     <input type="hidden" name="bankName" th:value="*{bankName}"/>
-    <!--ここに追加しよう-->
+    <input type="hidden" name="branchName" th:value="*{branchName}"/>
+    <input type="hidden" name="subjectName" th:value="*{subjectName}"/>
+    <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
+    <input type="hidden" name="bankAccountName" th:value="*{bankAccountName}"/>
+    <input type="hidden" name="amount" th:value="*{amount}"/>
+    <input type="hidden" name="specifiedDate" th:value="*{specifiedDate}"/>
+
     <p>
         <input type="submit" id="submit" value="振込"/>
         <input type="button" value="キャンセル" onclick="window.location='/bankTransfer';"/>
