@@ -2,6 +2,8 @@ package com.example.internship.controller;
 
 import com.example.internship.entity.BankTransferForm;
 import com.example.internship.service.ApplyBankTransferService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +30,18 @@ public class BankTransferController {
         bankBranch.put("山陰共同銀行", branchName1);
         bankBranch.put("海光共同銀行", branchName2);
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonMapBankBranch = "abc";
+        try {
+             jsonMapBankBranch = objectMapper.writeValueAsString(bankBranch);
+             model.addAttribute("bankBranch", jsonMapBankBranch);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace(); // ログ出力やエラー処理を行う
+        }
+        System.out.println(jsonMapBankBranch);
+
         String[] subjectName = {"普通","定期","当座","貯蓄"};
         model.addAttribute("bankTransferApplication", new BankTransferForm());
-        model.addAttribute("bankBranch", bankBranch);
         model.addAttribute("nameOptions", bankName);
 //        model.addAttribute("branchName1", branchName1);
 //        model.addAttribute("branchName2", branchName2);
