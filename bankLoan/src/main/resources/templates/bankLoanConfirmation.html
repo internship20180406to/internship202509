@@ -1,93 +1,272 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>ローン申込確認画面</title>
+    <meta charset="UTF-8" />
+    <title>ローン申込確認</title>
     <style>
-        h1{border-bottom: 6px double #000;}
-        /* --- Stepper (3段階) --- */
-:root { --accent: #0f5132; --accent-weak:#e8f1ed; --muted:#6b7280; --text:#222; }
-.stepper{ position:relative; padding:10px 16px 6px; margin:16px 0 8px;}
-.stepper .track{ position:absolute; left:28px; right:28px; top:24px; height:4px; border-radius:999px; background:var(--accent-weak);}
-.stepper .fill{ position:absolute; left:28px; top:24px; height:4px; border-radius:999px; background:var(--accent);
-  width:calc((var(--step,1) - 1) * 50%); transition:width .25s ease; }
-.stepper .steps{ display:grid; grid-template-columns:repeat(3,1fr); align-items:start; }
-.stepper .step{ text-align:center; }
-.stepper .dot{ width:14px; height:14px; border-radius:999px; background:#e5e7eb; display:inline-block; margin:16px auto 6px; box-shadow:0 0 0 3px #fff inset;}
-.stepper .label{ font-size:12px; color:var(--muted); }
-.stepper .step.is-current .dot,
-.stepper .step.is-complete .dot{ background:var(--accent); }
-.stepper .step.is-current .label,
-.stepper .step.is-complete .label{ color:var(--text); font-weight:600; }
+        :root{
+          --bg: #f6f8fb;
+          --card: #ffffff;
+          --text: #222;
+          --muted: #6b7280;
+          --primary: #2563eb;
+          --primary-hover: #1d4ed8;
+          --ring: rgba(37,99,235,.25);
+          --danger: #dc2626;
+          --radius: 14px;
+          --shadow: 0 10px 30px rgba(2,8,23,.08);
 
+          /* stepper */
+          --accent: #0f5132;
+          --accent-weak: #e8f1ed;
+        }
+
+        *{ box-sizing:border-box }
+        html,body{ height:100% }
+        body{
+          margin:0;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "游ゴシック体", "Yu Gothic", "メイリオ", Meiryo, sans-serif;
+          color:var(--text);
+          background:
+            radial-gradient(60rem 60rem at 10% 10%, #eef2ff 0%, transparent 60%),
+            radial-gradient(80rem 80rem at 90% 10%, #e0f2fe 0%, transparent 60%),
+            var(--bg);
+          display:flex; justify-content:center;
+          padding:40px 20px;
+        }
+
+        .container{ width:min(920px, 100%); padding:16px; }
+
+        .card{
+          background:var(--card);
+          border-radius:var(--radius);
+          box-shadow:var(--shadow);
+          overflow:hidden;
+          border:1px solid #eef2f7;
+        }
+
+        .card-header{
+          padding:22px 24px;
+          border-bottom:1px solid #eef2f7;
+          background:linear-gradient(180deg,#ffffff, #f9fafb);
+        }
+        .title{
+          margin:0;
+          font-size:clamp(20px, 2.2vw, 26px);
+          font-weight:600;
+          letter-spacing:.02em;
+        }
+        .subtitle{ margin:.35rem 0 0; color:var(--muted); font-size:14px; }
+
+        /* Stepper (3段階) */
+        .stepper{ position:relative; padding:10px 16px 6px; }
+        .stepper .track{
+          position:absolute; left:28px; right:28px; top:24px;
+          height:4px; border-radius:999px; background:var(--accent-weak);
+        }
+        .stepper .fill{
+          position:absolute; left:28px; top:24px; height:4px; border-radius:999px; background:var(--accent);
+          width:calc((var(--step,1) - 1) * 50%); transition:width .25s ease;
+        }
+        .stepper .steps{ display:grid; grid-template-columns:repeat(3,1fr); align-items:start; gap:0; }
+        .stepper .step{ text-align:center; position:relative; }
+        .stepper .dot{
+          width:14px; height:14px; border-radius:999px; background:#e5e7eb;
+          display:inline-block; margin:16px auto 6px; box-shadow:0 0 0 3px #fff inset;
+        }
+        .stepper .label{ font-size:12px; color:var(--muted); }
+        .stepper .step.is-current .dot,
+        .stepper .step.is-complete .dot{ background:var(--accent); }
+        .stepper .step.is-current .label{ color:var(--text); font-weight:600; }
+        .stepper .step.is-complete .label{ color:var(--text); }
+
+        form{ padding:24px; }
+
+        .grid{ display:grid; gap:18px; grid-template-columns:1fr; }
+        @media (min-width: 720px){
+          .grid{ grid-template-columns: 1fr 1fr; }
+          .grid .full{ grid-column: 1 / -1; }
+        }
+
+        .field{ display:flex; flex-direction:column; gap:6px; }
+        .label{
+          font-size:13px; font-weight:600; color:var(--muted);
+          display:flex; align-items:center; gap:.5ch;
+        }
+        .value{
+          padding:12px 14px;
+          border:1px solid #e5e7eb;
+          background:#fff;
+          border-radius:10px;
+          line-height:1.4;
+          word-break:break-word;
+        }
+
+        .summary{
+          background:#f9fafb;
+          border:1px dashed #e5e7eb;
+          border-radius:12px;
+          padding:14px 16px;
+          color:var(--muted);
+          font-size:13px;
+        }
+
+        .actions{
+          display:flex; gap:12px; justify-content:center; padding-top:8px; margin-top:8px;
+        }
+        .btn{
+          border:0; border-radius:999px; cursor:pointer;
+          padding:12px 20px; font-weight:600; font-size:14px; min-width:140px;
+          transition: transform .02s ease, box-shadow .15s ease, background .15s ease;
+        }
+        .btn:active{ transform: translateY(0.5px); }
+        .btn-primary{
+          background:var(--primary); color:#fff; box-shadow:0 6px 18px rgba(37,99,235,.25);
+        }
+        .btn-primary:hover{ background:var(--primary-hover); }
+        .btn-ghost{ background:#f3f4f6; color:#111827; }
+        .btn-ghost:hover{ background:#e5e7eb; }
+
+        /* テーブル風2列を少し強調 */
+        .pair{ display:grid; grid-template-columns: 160px 1fr; gap:8px; align-items:start; }
+        @media (max-width: 480px){ .pair{ grid-template-columns:1fr; } }
     </style>
 </head>
-<body>
-<h1>ローン申込確認画面</h1>
-<!-- 進捗ステップ。currentStep が無ければ 2（確認）にする -->
-<div class="stepper"
-     th:with="step=${currentStep} ?: 2"
-     th:style="'--step:' + ${step} + ';'">
-    <div class="track"></div>
-    <div class="fill"></div>
-    <ol class="steps" role="list" aria-label="申込ステップ">
-        <li class="step"
-            th:classappend="${step} > 1 ? 'is-complete' : (${step} == 1 ? 'is-current' : '')"
-            aria-current="${step} == 1 ? 'step' : null">
-            <span class="dot" aria-hidden="true"></span>
-            <span class="label">ローン申し込み</span>
-        </li>
-        <li class="step"
-            th:classappend="${step} > 2 ? 'is-complete' : (${step} == 2 ? 'is-current' : '')"
-            aria-current="${step} == 2 ? 'step' : null">
-            <span class="dot" aria-hidden="true"></span>
-            <span class="label">申し込み確認</span>
-        </li>
-        <li class="step"
-            th:classappend="${step} > 3 ? 'is-complete' : (${step} == 3 ? 'is-current' : '')"
-            aria-current="${step} == 3 ? 'step' : null">
-            <span class="dot" aria-hidden="true"></span>
-            <span class="label">申し込み完了</span>
-        </li>
-    </ol>
-</div>
 
-<form action="#" th:action="@{/bankLoanCompletion}" th:object="${bankLoanApplication}" method="post">
-    <p>金融機関名: <span th:text="*{bankName}"></span></p>
-    <p>支店コード: <span th:text="*{branchName}"></span></p>
-    <p>科目名: <span th:text="*{bankKinds}"></span></p>
-    <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
-    <p>債務者名: <span th:text="*{debtorName}"></span></p>
-    <p>誕生日: <span th:text="*{birthday}"></span></p>
-    <p>住所: <span th:text="*{address}"></span></p>
-    <p>電話番号: <span th:text="*{phoneNumber}"></span></p>
-    <p>メールアドレス: <span th:text="*{mailAddress}"></span></p>
-    <p>職業: <span th:text="*{occupation}"></span></p>
-    <p>勤務先: <span th:text="*{workPlace}"></span></p>
-    <p>お住いの種類: <span th:text="*{housingKinds}"></span></p>
-    <p>借入金額: <span th:text="*{loanAmount}"></span>円</p>
-    <p>借入年収: <span th:text="*{borrowingIncome}"></span>円</p>
-    <p>金利: <span th:text="*{interestRate}"></span>%</p>
-    <input type="hidden" name="interestRate" th:value="*{interestRate}"/>
-    <input type="hidden" name="borrowingIncome" th:value="*{borrowingIncome}"/>
-    <input type="hidden" name="loanAmount" th:value="*{loanAmount}"/>
-    <input type="hidden" name="housingKinds" th:value="*{housingKinds}"/>
-    <input type="hidden" name="workPlace" th:value="*{workPlace}"/>
-    <input type="hidden" name="occupation" th:value="*{occupation}"/>
-    <input type="hidden" name="mailAddress" th:value="*{mailAddress}"/>
-    <input type="hidden" name="phoneNumber" th:value="*{phoneNumber}"/>
-    <input type="hidden" name="address" th:value="*{address}"/>
-    <input type="hidden" name="birthday" th:value="*{birthday}"/>
-    <input type="hidden" name="debtorName" th:value="*{debtorName}"/>
-    <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
-    <input type="hidden" name="bankKinds" th:value="*{bankKinds}"/>
-    <input type="hidden" name="branchName" th:value="*{branchName}"/>
-    <input type="hidden" name="bankName" th:value="*{bankName}"/>
-    <p>
-        <input type="submit" id="submit" value="申込"/>
-        <input type="button" value="キャンセル" onclick="window.location='/bankLoan';"/>
-    </p>
-</form>
+<body>
+<main class="container">
+    <section class="card" role="region" aria-labelledby="page-title">
+        <header class="card-header">
+            <h1 class="title" id="page-title">ローン申込内容の確認</h1>
+            <p class="subtitle">内容にお間違いがないかご確認のうえ「申込」を押してください。</p>
+
+            <!-- 進捗ステップ。currentStep が無ければ 2（確認）にする -->
+            <div class="stepper"
+                 th:with="step=${currentStep} ?: 2"
+                 th:style="'--step:' + ${step} + ';'">
+                <div class="track"></div>
+                <div class="fill"></div>
+                <ol class="steps" role="list" aria-label="申込ステップ">
+                    <li class="step"
+                        th:classappend="${step} > 1 ? 'is-complete' : (${step} == 1 ? 'is-current' : '')"
+                        aria-current="${step} == 1 ? 'step' : null">
+                        <span class="dot" aria-hidden="true"></span>
+                        <span class="label">ローン申し込み</span>
+                    </li>
+                    <li class="step"
+                        th:classappend="${step} > 2 ? 'is-complete' : (${step} == 2 ? 'is-current' : '')"
+                        aria-current="${step} == 2 ? 'step' : null">
+                        <span class="dot" aria-hidden="true"></span>
+                        <span class="label">申し込み確認</span>
+                    </li>
+                    <li class="step"
+                        th:classappend="${step} > 3 ? 'is-complete' : (${step} == 3 ? 'is-current' : '')"
+                        aria-current="${step} == 3 ? 'step' : null">
+                        <span class="dot" aria-hidden="true"></span>
+                        <span class="label">申し込み完了</span>
+                    </li>
+                </ol>
+            </div>
+        </header>
+
+        <form th:action="@{/bankLoanCompletion}" th:object="${bankLoanApplication}" method="post" aria-describedby="confirm-note">
+            <div id="confirm-note" class="summary">
+                この内容は送信後に変更できません。戻る場合はブラウザの戻る、または下の「キャンセル」を選択してください。
+            </div>
+
+            <div class="grid" style="margin-top:16px">
+                <!-- 銀行情報 -->
+                <div class="field">
+                    <div class="label">金融機関名</div>
+                    <div class="value" th:text="*{bankName}">みずほ銀行</div>
+                </div>
+                <div class="field">
+                    <div class="label">支店コード</div>
+                    <div class="value" th:text="*{branchName}">福岡支店(123)</div>
+                </div>
+                <div class="field">
+                    <div class="label">科目名</div>
+                    <div class="value" th:text="*{bankKinds}">普通</div>
+                </div>
+                <div class="field">
+                    <div class="label">口座番号</div>
+                    <div class="value" th:text="*{bankAccountNum}">1234567</div>
+                </div>
+
+                <!-- 申込者情報 -->
+                <div class="field">
+                    <div class="label">債務者名</div>
+                    <div class="value" th:text="*{debtorName}">山田 太郎</div>
+                </div>
+                <div class="field">
+                    <div class="label">誕生日</div>
+                    <div class="value" th:text="*{birthday}">1999-01-01</div>
+                </div>
+                <div class="field full">
+                    <div class="label">住所</div>
+                    <div class="value" th:text="*{address}">福岡県福岡市〇〇…</div>
+                </div>
+                <div class="field">
+                    <div class="label">電話番号</div>
+                    <div class="value" th:text="*{phoneNumber}">090-xxxx-xxxx</div>
+                </div>
+                <div class="field">
+                    <div class="label">メールアドレス</div>
+                    <div class="value" th:text="*{mailAddress}">sample@example.com</div>
+                </div>
+                <div class="field">
+                    <div class="label">職業</div>
+                    <div class="value" th:text="*{occupation}">会社員</div>
+                </div>
+                <div class="field">
+                    <div class="label">勤務先</div>
+                    <div class="value" th:text="*{workPlace}">株式会社〇〇</div>
+                </div>
+                <div class="field">
+                    <div class="label">お住いの種類</div>
+                    <div class="value" th:text="*{housingKinds}">賃貸</div>
+                </div>
+
+                <!-- 借入条件 -->
+                <div class="field">
+                    <div class="label">借入金額</div>
+                    <div class="value"><span th:text="*{loanAmount}">3,000,000</span> 円</div>
+                </div>
+                <div class="field">
+                    <div class="label">借入年収</div>
+                    <div class="value"><span th:text="*{borrowingIncome}">4,500,000</span> 円</div>
+                </div>
+                <div class="field">
+                    <div class="label">金利</div>
+                    <div class="value"><span th:text="*{interestRate}">1.20</span> %</div>
+                </div>
+            </div>
+
+            <!-- hidden fields（POSTで引き継ぎ） -->
+            <input type="hidden" name="interestRate" th:value="*{interestRate}"/>
+            <input type="hidden" name="borrowingIncome" th:value="*{borrowingIncome}"/>
+            <input type="hidden" name="loanAmount" th:value="*{loanAmount}"/>
+            <input type="hidden" name="housingKinds" th:value="*{housingKinds}"/>
+            <input type="hidden" name="workPlace" th:value="*{workPlace}"/>
+            <input type="hidden" name="occupation" th:value="*{occupation}"/>
+            <input type="hidden" name="mailAddress" th:value="*{mailAddress}"/>
+            <input type="hidden" name="phoneNumber" th:value="*{phoneNumber}"/>
+            <input type="hidden" name="address" th:value="*{address}"/>
+            <input type="hidden" name="birthday" th:value="*{birthday}"/>
+            <input type="hidden" name="debtorName" th:value="*{debtorName}"/>
+            <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
+            <input type="hidden" name="bankKinds" th:value="*{bankKinds}"/>
+            <input type="hidden" name="branchName" th:value="*{branchName}"/>
+            <input type="hidden" name="bankName" th:value="*{bankName}"/>
+
+            <div class="actions">
+                <button type="submit" id="submit" class="btn btn-primary">申込</button>
+                <button type="button" class="btn btn-ghost" onclick="window.location='/bankLoan'">キャンセル</button>
+            </div>
+        </form>
+    </section>
+</main>
+
 <script th:inline="javascript" src="/js/bankLoanConfirmation.js"></script>
 </body>
 </html>
