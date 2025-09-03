@@ -38,9 +38,18 @@ public class BankLoanController {
                 "定期預金",
                 "当座預金",
                 "貯蓄預金");
+        List<String> houseOptions = Arrays.asList(
+                "選択してください",
+                "持ち家",
+                "賃貸マンション・借家",
+                "公営住宅",
+                "アパート",
+                "社宅",
+                "寮");
         model.addAttribute("bankLoanApplication", new BankLoanForm());
         model.addAttribute("nameOptions", nameOptions);
         model.addAttribute("accountOptions", accountOptions);
+        model.addAttribute("houseOptions", houseOptions);
         return "bankLoanMain";
     }
 
@@ -55,6 +64,12 @@ public class BankLoanController {
         model.addAttribute("bankAccountNum", bankLoanForm.getBankAccountNum());
         model.addAttribute("debtorName", bankLoanForm.getDebtorName());
         model.addAttribute("birthday", bankLoanForm.getBirthday());
+        model.addAttribute("address", bankLoanForm.getAddress());
+        model.addAttribute("phoneNumber", bankLoanForm.getPhoneNumber());
+        model.addAttribute("mailAddress", bankLoanForm.getMailAddress());
+        model.addAttribute("occupation", bankLoanForm.getOccupation());
+        model.addAttribute("workPlace", bankLoanForm.getWorkPlace());
+        model.addAttribute("housingKinds", bankLoanForm.getHousingKinds());
         model.addAttribute("loanAmount", bankLoanForm.getLoanAmount());
         model.addAttribute("borrowingIncome", bankLoanForm.getBorrowingIncome());
         model.addAttribute("interestRate", bankLoanForm.getInterestRate());

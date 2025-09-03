@@ -59,12 +59,24 @@
     <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
     <p>債務者名: <span th:text="*{debtorName}"></span></p>
     <p>誕生日: <span th:text="*{birthday}"></span></p>
-    <p>借入金額: <span th:text="*{loanAmount}"></span></p>
-    <p>借入年収: <span th:text="*{borrowingIncome}"></span></p>
-    <p>金利: <span th:text="*{interestRate}"></span></p>
+    <p>住所: <span th:text="*{address}"></span></p>
+    <p>電話番号: <span th:text="*{phoneNumber}"></span></p>
+    <p>メールアドレス: <span th:text="*{mailAddress}"></span></p>
+    <p>職業: <span th:text="*{occupation}"></span></p>
+    <p>勤務先: <span th:text="*{workPlace}"></span></p>
+    <p>お住いの種類: <span th:text="*{housingKinds}"></span></p>
+    <p>借入金額: <span th:text="*{loanAmount}"></span>円</p>
+    <p>借入年収: <span th:text="*{borrowingIncome}"></span>円</p>
+    <p>金利: <span th:text="*{interestRate}"></span>%</p>
     <input type="hidden" name="interestRate" th:value="*{interestRate}"/>
     <input type="hidden" name="borrowingIncome" th:value="*{borrowingIncome}"/>
     <input type="hidden" name="loanAmount" th:value="*{loanAmount}"/>
+    <input type="hidden" name="housingKinds" th:value="*{housingKinds}"/>
+    <input type="hidden" name="workPlace" th:value="*{workPlace}"/>
+    <input type="hidden" name="occupation" th:value="*{occupation}"/>
+    <input type="hidden" name="mailAddress" th:value="*{mailAddress}"/>
+    <input type="hidden" name="phoneNumber" th:value="*{phoneNumber}"/>
+    <input type="hidden" name="address" th:value="*{address}"/>
     <input type="hidden" name="birthday" th:value="*{birthday}"/>
     <input type="hidden" name="debtorName" th:value="*{debtorName}"/>
     <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>

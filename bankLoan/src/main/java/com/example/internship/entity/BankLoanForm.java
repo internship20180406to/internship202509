@@ -48,6 +48,24 @@ public class BankLoanForm {
     @NonNull
     private Integer birthday;
 
+    @NonNull
+    private String address;
+
+    @NonNull
+    private String phoneNumber;
+
+    @NonNull
+    private String mailAddress;
+
+    @NonNull
+    private String occupation;
+
+    @NonNull
+    private String workPlace;
+
+    @NonNull
+    private String housingKinds;
+
     public String getBankName() {
         return bankName;
     }
@@ -110,12 +128,37 @@ public class BankLoanForm {
     public void setInterestRate(String interestRate) {
         this.interestRate = interestRate;
     }
-    // Getter & Setter for borrowingIncome
+
+    // Getter & Setter for birthday
     public Integer getBirthday() {
         return birthday;
     }
     public void setBirthday(Integer birthday) {
         this.birthday = birthday;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public String getWorkPlace() {
+        return workPlace;
+    }
+
+    public String getHousingKinds() {
+        return housingKinds;
     }
 }
 
