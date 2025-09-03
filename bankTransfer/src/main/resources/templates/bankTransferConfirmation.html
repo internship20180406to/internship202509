@@ -6,8 +6,71 @@
 </head>
 <body>
 <h1>銀行振込確認画面</h1>
+<!--<style>-->
+<!--　　　body {-->
+<!--background-color: #e0ffff;-->
+<!--margin: 0;-->
+<!--padding: 0;-->
+<!--display: flex;-->
+<!--padding-top: 40px;-->
+<!--padding-bottom: 40px;-->
+<!--justify-content: center;-->
+<!--align-items: center;-->
+<!--min-height: 85vh;-->
+<!--overflow: auto;-->
+<!--}-->
+<!--.content {-->
+<!--background-color: #ffffff;-->
+<!--width: 80%;-->
+<!--padding: 20px;-->
+<!--border-radius: 10px;-->
+<!--box-shadow: 0 4px 8px rgba(0,0,0,0.1);-->
+<!--min-height: 50vh;-->
+<!--overflow: auto;-->
+<!--}-->
+<!--.form-control {-->
+<!--width: 100%;-->
+<!--padding: 8px;-->
+<!--margin: 5px 0;-->
+<!--box-sizing: border-box;-->
+<!--}-->
+<!--.text-danger {-->
+<!--color: red;-->
+<!--}-->
+<!--.form-control-button {-->
+<!--width: 80px;-->
+<!--padding: 10px 20px;-->
+<!--margin-top: 10px;-->
+<!--border: none;-->
+<!--cursor: pointer;-->
+<!--border-radius: 5px;-->
+<!--}-->
+<!--.form-confirmation-button{-->
+<!--color: white;-->
+<!--background-color: #2185D0;-->
+<!--}-->
+<!--.form-confirmation-button:hover {-->
+<!--background-color: #1678c2;-->
+<!--}-->
+<!--.form-clear-button{-->
+<!--color: black;-->
+<!--background-color: #E0E1E2;-->
+<!--}-->
+<!--.form-clear-button:hover {-->
+<!--background-color: #CCCCCC;-->
+<!--}-->
+
+<!--/* プレースホルダーの文字色を薄くする */-->
+<!--.form-control::placeholder {-->
+<!--color: rgba(0, 0, 0, 0.2);-->
+<!--}-->
+
+<!--</style>-->
+<!--<div class="content">-->
 <form action="#" th:action="@{/bankTransferCompletion}" th:object="${bankTransferApplication}" method="post">
     <p>金融機関名: <span th:text="*{bankName}"></span></p>
+<!--    <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>-->
+<!--        <span th:text="*{bankName}"></span></p>-->
     <p>支店名: <span th:text="*{branchName}"></span></p>
     <p>科目名: <span th:text="*{subjectName}"></span></p>
     <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
@@ -31,5 +94,6 @@
     </p>
 </form>
 <script th:inline="javascript" src="/js/bankTransferConfirmation.js"></script>
+<!--</div>-->
 </body>
 </html>
