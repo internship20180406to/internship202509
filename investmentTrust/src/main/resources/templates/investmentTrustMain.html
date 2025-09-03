@@ -195,6 +195,12 @@
           gap: 20px;               /* ボタン間のスペース */
           margin-top: 30px;
         }
+        .warning {
+          color: red;
+          font-size: 14px;
+          margin-left: 10px;
+        }
+
 
 
 
@@ -218,7 +224,7 @@
     <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
         <h2>口座情報</h2>
         <div class="form-row">
-            <label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
+            <label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small><span id="bankWarning" class="warning" style="display:none;">必須</span></label><br>
             <select th:field="*{bankName}" class="form-control" id="bankSelect">
                 <option value="">-- 選択してください --</option>
                 <option th:each="option : ${nameOptions}"
@@ -230,7 +236,7 @@
 
 
         <div class="form-row">
-            <label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
+            <label class="ml-1">支店名: <small class="text-danger ml-1">※</small><span id="branchWarning" class="warning" style="display:none;">必須</span></label><br>
             <select th:field="*{branchName}" class="form-control" id="branchSelect">
                 <option value="">-- 銀行を選択してください --</option>
             </select>
@@ -239,7 +245,7 @@
 
 
         <div class="form-row">
-            <label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
+            <label class="ml-1">科目名: <small class="text-danger ml-1">※</small><span id="typeWarning" class="warning" style="display:none;">必須</span></label><br>
             <select th:field="*{bankAccountType}" class="form-control">
                 <option value="">-- 選択してください --</option>
                 <option value="普通">普通</option>
@@ -252,18 +258,18 @@
 
 
         <div class="form-row">
-            <label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
+            <label class="ml-1">口座番号: <small class="text-danger ml-1">※</small><span id="accountWarning" class="warning" style="display:none;">必須(7桁)</span></label><br>
             <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="例)1234567"/></p>
         </div>
 
 
         <div class="form-row">
-            <label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>
+            <label class="ml-1">購入者名: <small class="text-danger ml-1">※</small><span id="nameWarning" class="warning" style="display:none;">必須</span></label><br>
             <input type="text" th:field="*{name}" class="form-control" placeholder="例)ふくふくたろう"/></p>
         </div>
         <h2>購入情報</h2>
         <div class="form-row">
-            <label class="ml-1">銘柄: <small class="text-danger ml-1">※</small></label><br>
+            <label class="ml-1">銘柄: <small class="text-danger ml-1">※</small><span id="fundWarning" class="warning" style="display:none;">必須</span></label><br>
             <select th:field="*{fundName}" class="form-control">
                 <option value="">-- 選択してください --</option>
                 <option value="鯨・グローバル・インデックス">鯨・グローバル・インデックス</option>
@@ -279,7 +285,7 @@
 
 
         <div class="form-row">
-            <label class="ml-1">購入金額 : <small class="text-danger ml-1">※</small></label><br>
+            <label class="ml-1">購入金額 : <small class="text-danger ml-1">※</small><span id="moneyWarning" class="warning" style="display:none;">必須</span></label><br>
             <input type="number" th:field="*{money}" class="form-control" placeholder="例)1234567"/>
         </div>
 
@@ -292,94 +298,127 @@
 
 
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
-        const bankSelect = document.getElementById("bankSelect");
-        const branchSelect = document.getElementById("branchSelect");
-        const form = document.querySelector("form");
+  const bankSelect = document.getElementById("bankSelect");
+  const branchSelect = document.getElementById("branchSelect");
+  const form = document.querySelector("form");
 
-        bankSelect.addEventListener("change", function () {
-            const selectedBank = this.value;
-            branchSelect.innerHTML = '<option value="">-- 読み込み中 --</option>';
+  // 銀行選択時の支店読み込み
+  bankSelect.addEventListener("change", function () {
+    const selectedBank = this.value;
+    branchSelect.innerHTML = '<option value="">-- 読み込み中 --</option>';
 
-            if (selectedBank) {
-                fetch(`/getBranches?bankName=${encodeURIComponent(selectedBank)}`)
-                    .then(response => response.json())
-                    .then(branches => {
-                        branchSelect.innerHTML = '';
-
-                        if (branches.length > 0) {
-                            branches.forEach(branch => {
-                                const option = document.createElement("option");
-                                option.value = branch;
-                                option.text = branch;
-                                branchSelect.appendChild(option);
-                            });
-                        } else {
-                            branchSelect.innerHTML = '<option value="">支店が見つかりません</option>';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('支店の取得に失敗しました', error);
-                        branchSelect.innerHTML = '<option value="">エラーが発生しました</option>';
-                    });
-            } else {
-                branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
-            }
+    if (selectedBank) {
+      fetch(`/getBranches?bankName=${encodeURIComponent(selectedBank)}`)
+        .then(response => response.json())
+        .then(branches => {
+          branchSelect.innerHTML = '';
+          if (branches.length > 0) {
+            branches.forEach(branch => {
+              const option = document.createElement("option");
+              option.value = branch;
+              option.text = branch;
+              branchSelect.appendChild(option);
+            });
+          } else {
+            branchSelect.innerHTML = '<option value="">支店が見つかりません</option>';
+          }
+        })
+        .catch(error => {
+          console.error('支店の取得に失敗しました', error);
+          branchSelect.innerHTML = '<option value="">エラーが発生しました</option>';
         });
+    } else {
+      branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
+    }
+  });
 
-        // フォームのリセット時に支店名セレクトを初期化
-        form.addEventListener("reset", function () {
-            branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
-        });
+  // フォームリセット時の支店初期化
+  form.addEventListener("reset", function () {
+    branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
+  });
 
-        form.addEventListener("submit", function (e) {
-            let isValid = true;
-            let messages = [];
+  //  バリデーション処理（submit）
+  form.addEventListener("submit", function (e) {
+    let isValid = true;
 
-            const bankName = document.getElementById("bankSelect").value;
-            const branchName = document.getElementById("branchSelect").value;
-            const accountType = document.querySelector('[name="bankAccountType"]').value;
-            const accountNum = document.querySelector('[name="bankAccountNum"]').value;
-            const name = document.querySelector('[name="name"]').value;
-            const fundName = document.querySelector('[name="fundName"]').value;
-            const money = document.querySelector('[name="money"]').value;
+    const bankName = document.getElementById("bankSelect").value;
+    const branchName = document.getElementById("branchSelect").value;
+    const accountType = document.querySelector('[name="bankAccountType"]').value;
+    const accountNum = document.querySelector('[name="bankAccountNum"]').value;
+    const name = document.querySelector('[name="name"]').value;
+    const fundName = document.querySelector('[name="fundName"]').value;
+    const money = document.querySelector('[name="money"]').value;
 
-            if (!bankName) {
-                isValid = false;
-                messages.push("金融機関名を選択してください。");
-            }
-            if (!branchName) {
-                isValid = false;
-                messages.push("支店名を選択してください。");
-            }
-            if (!accountType) {
-                isValid = false;
-                messages.push("科目名を選択してください。");
-            }
-            if (!accountNum) {
-                isValid = false;
-                messages.push("口座番号を入力してください。");
-            }
-            if (!name) {
-                isValid = false;
-                messages.push("購入者名を入力してください。");
-            }
-            if (!fundName) {
-                isValid = false;
-                messages.push("銘柄を選択してください。");
-            }
-            if (!money) {
-                isValid = false;
-                messages.push("購入金額を入力してください。");
-            }
+    const warnings = {
+      bank: document.getElementById("bankWarning"),
+      branch: document.getElementById("branchWarning"),
+      type: document.getElementById("typeWarning"),
+      account: document.getElementById("accountWarning"),
+      name: document.getElementById("nameWarning"),
+      fund: document.getElementById("fundWarning"),
+      money: document.getElementById("moneyWarning")
+    };
 
-            if (!isValid) {
-                e.preventDefault(); // 送信を止める
-                alert(messages.join("\n")); // 注意書きを表示
-            }
-        });
-    });
+    if (bankName === "") {
+      warnings.bank.style.display = "inline";
+      isValid = false;
+    } else {
+      warnings.bank.style.display = "none";
+    }
+
+    if (branchName === "") {
+      warnings.branch.style.display = "inline";
+      isValid = false;
+    } else {
+      warnings.branch.style.display = "none";
+    }
+
+    if (accountType === "") {
+      warnings.type.style.display = "inline";
+      isValid = false;
+    } else {
+      warnings.type.style.display = "none";
+    }
+
+    if (accountNum === "" || accountNum.length < 6 || accountNum.length > 8) {
+      warnings.account.style.display = "inline";
+      isValid = false;
+    } else {
+      warnings.account.style.display = "none";
+    }
+
+    if (name === "") {
+      warnings.name.style.display = "inline";
+      isValid = false;
+    } else {
+      warnings.name.style.display = "none";
+    }
+
+    if (fundName === "") {
+      warnings.fund.style.display = "inline";
+      isValid = false;
+    } else {
+      warnings.fund.style.display = "none";
+    }
+
+    if (money === "") {
+      warnings.money.style.display = "inline";
+      isValid = false;
+    } else {
+      warnings.money.style.display = "none";
+    }
+
+    if (!isValid) {
+      e.preventDefault();
+    }
+  });
+});
+
+
 </script>
+
 
 
 
