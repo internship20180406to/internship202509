@@ -251,10 +251,8 @@
                 <div class="field">
                     <label class="label">金融機関名 <span class="req">必須</span></label>
                     <div class="control">
-                        <select th:field="*{bankName}"  class="select" required>
-                            <option value="" disabled selected>選択してください</option>
+                        <select th:field="*{bankName}"  class="select" id="bank" onchange="handlePlaceChange()">
                             <option th:each="option : ${nameOptions}" th:value="${option}" th:text="${option}">選択肢</option>
-
                         </select>
                     </div>
                 </div>
@@ -274,8 +272,7 @@
                 <div class="field">
                     <label class="label">科目名 <span class="req">必須</span></label>
                     <div class="control">
-                        <select th:field="*{bankKinds}" class="select" required>
-                            <option value="" disabled selected>選択してください</option>
+                        <select th:field="*{bankKinds}" class="select" id="bankKinds" onchange="handlePlaceChange()">
                             <option th:each="option : ${accountOptions}" th:value="${option}" th:text="${option}">選択肢</option>
                         </select>
                     </div>
@@ -345,8 +342,7 @@
                 <div class="field">
                     <label class="label">お住いの種類 <span class="req">必須</span></label>
                     <div class="control">
-                        <select th:field="*{housingKinds}"  class="select" required>
-                            <option value="" disabled selected>選択してください</option>
+                        <select th:field="*{housingKinds}"  class="select" id="housingKinds" onchange="handlePlaceChange()">
                             <option th:each="option : ${houseOptions}" th:value="${option}" th:text="${option}">選択肢</option>
                         </select>
                     </div>
@@ -385,7 +381,7 @@
             </div>
 
             <div class="actions">
-                <input type="submit" value="確認" id="submitButton" class="btn btn-primary"/>
+                <input type="submit" value="確認" id="submitButton" class="btn btn-primary" disabled/>
                 <input type="reset" value="クリア" class="btn btn-ghost"/>
             </div>
         </form>
