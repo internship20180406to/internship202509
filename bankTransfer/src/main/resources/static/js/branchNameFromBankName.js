@@ -1,28 +1,25 @@
 window.onload = function() {
-    bank = document.getElementById("bank");
-    branch = document.getElementById("branch");
-    const currentScript = document.currentScript;
-    const bankBranch = currentScript.dataset.mapBB;
-    const keys = map.keys(bankBranch);
+    const bank = document.getElementById("bank");
+    const branch = document.getElementById("branch");
 
     bank.onchange = changeBank;
 }
 
 function changeBank() {
+    const scriptTag = document.getElementById("bank-branch-script");
+    const bbScript = scriptTag.dataset.mapBB;
+    const bankBranches = JSON.parse(bbScript);
+    console.log(bankBranches);
     var changedBank = bank.value;
     branch.textContent = null;
-    for (const getBankName of keys) {
-        if(changedBank == getBankName) {
-            var branchNames = bankBranch.get(getBankName);
-            for (const branchName of branchNames) {
-                const op = document.createElement("option");
-                op.value = branchName;
-                op.text = branchName;
-                document.getElementById("branchSelect").appendChild(op);
-            }
+    for (const [key, value] of Object.entries(bankBranches)) {
+        if(changedBank == key) {
+            value.forEach(function(value) {
+                var op = document.createElement("option");
+                op.value = value;
+                op.text = value;
+                branch.appendChild(op);
+            });
         }
     }
 }
-
-
-

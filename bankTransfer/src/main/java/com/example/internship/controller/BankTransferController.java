@@ -24,21 +24,27 @@ public class BankTransferController {
     @GetMapping("/bankTransfer")
     public String bankTransfer(Model model) {
         String[] bankName = {"", "山陰共同銀行", "海光共同銀行"};
+        // String[] bankName = {""};
         String[] branchName1 = {"A支店","B支店"};
         String[] branchName2 = {"C支店","D支店"};
+        String[] branchName3 = {"E支店","F支店"};
         Map<String, String[]> bankBranch = new HashMap<>();
         bankBranch.put("山陰共同銀行", branchName1);
         bankBranch.put("海光共同銀行", branchName2);
+        bankBranch.put("A銀行", branchName3);
+
+
+//        for (String key : bankBranch.keySet()) {
+//            bankName = bankName;
+//        }
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonMapBankBranch = "abc";
         try {
-             jsonMapBankBranch = objectMapper.writeValueAsString(bankBranch);
+             String jsonMapBankBranch = objectMapper.writeValueAsString(bankBranch);
              model.addAttribute("bankBranch", jsonMapBankBranch);
         } catch (JsonProcessingException e) {
-            e.printStackTrace(); // ログ出力やエラー処理を行う
+             e.printStackTrace(); // ログ出力やエラー処理を行う
         }
-        System.out.println(jsonMapBankBranch);
 
         String[] subjectName = {"普通","定期","当座","貯蓄"};
         model.addAttribute("bankTransferApplication", new BankTransferForm());
