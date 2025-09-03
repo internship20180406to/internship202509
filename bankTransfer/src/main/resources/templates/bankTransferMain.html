@@ -69,7 +69,7 @@
     <h1>銀行振込情報入力</h1>
     <form action="#" th:action="@{/bankTransferConfirmation}" th:object="${bankTransferApplication}" method="post">
         <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankName}" class="form-control">
+            <select th:field="*{bankName}" class="form-control" required>
                 <option value="" hidden></option> <!-- 空白の選択肢、画面に表示しない -->
                 <option th:each="option : ${nameOptions}"
                         th:value="${option}"
@@ -77,11 +77,8 @@
                 </option>
             </select></p>
 
-        <!--
-        ▶th:action="@{/bankTransferConfirmation}"-->
-
         <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{branchName}" class="form-control">
+            <select th:field="*{branchName}" class="form-control" required>
                 <option value="" hidden></option> <!-- 空白の選択肢、画面に表示しない -->
                 <option th:each="option : ${nameOptions2}"
                         th:value="${option}"
@@ -90,7 +87,7 @@
             </select></p>
 
         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{subjectName}" class="form-control">
+            <select th:field="*{subjectName}" class="form-control" required>
                 <option value="" hidden></option> <!-- 空白の選択肢、画面に表示しない -->
                 <option th:each="option : ${nameOptions3}"
                         th:value="${option}"
@@ -101,16 +98,16 @@
 
 
         <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
+            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567" required/></p>
 
         <p><label class="ml-1">口座名義: <small class="text-danger ml-1">※</small></label><br>
-            <input type="text" th:field="*{name}" class="form-control" placeholder="TAROU YAMADA"/></p>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="TAROU YAMADA" required/></p>
 
         <p><label class="ml-1">金額: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{money}" class="form-control" placeholder="○○円"/></p>
+            <input type="number" th:field="*{money}" class="form-control" placeholder="10000" required/></p>
 
         <p><label class="ml-1">振込指定日: <small class="text-danger ml-1">※</small></label><br>
-            <input type="date" th:field="*{date}" class="form-control" placeholder=""/></p>
+            <input type="date" th:field="*{date}" class="form-control" placeholder="YYYY/MM/DD" required/></p>
 
 
 
