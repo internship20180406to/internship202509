@@ -1,23 +1,28 @@
-const branchData = {
-    '山陰共同銀行': ['山支店', '陰支店', '北支店'],
-    '山陽共同銀行': ['陽支店', '南支店', '西支店'],
-    '山中共同銀行': ['川支店', '中支店', '東支店']
-};
-
 const bankSelect = document.getElementById('bankSelect');
 const branchSelect = document.getElementById('branchSelect');
 
 bankSelect.addEventListener('change', function() {
     const selectedBank = this.value;
+    branchSelect.innerHTML = '<option value="">読み込み中...</option>';
 
-    branchSelect.innerHTML = '<option value="">選択してください</option>';
+    if (selectedBank) {
+        fetch(`/getBranches?bankName=${encodeURIComponent(selectedBank)}`)
+            .then(response => response.json())
+            .then(branches => {
+                branchSelect.innerHTML = '<option value="">選択してください</option>';
 
-    if (selectedBank && branchData[selectedBank]) {
-        branchData[selectedBank].forEach(function(branch) {
-            const option = document.createElement('option');
-            option.value = branch;
-            option.textContent = branch;
-            branchSelect.appendChild(option);
-        });
+                branches.forEach(branch => {
+                    const option = document.createElement('option');
+                    option.value = branch;
+                    option.textContent = branch;
+                    branchSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                branchSelect.innerHTML = '<option value="">エラーが発生しました</option>';
+            });
+    } else {
+        branchSelect.innerHTML = '<option value="">金融機関を選択してください</option>';
     }
 });

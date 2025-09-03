@@ -5,9 +5,7 @@ import com.example.internship.service.OrderInvestmentTrustService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -35,6 +33,17 @@ public class InvestmentTrustController {
         model.addAttribute("branchMap", branchMap);
 
         return "investmentTrustMain";
+    }
+
+    @GetMapping("/getBranches")
+    @ResponseBody
+    public List<String> getBranches(@RequestParam String bankName) {
+        Map<String, List<String>> branchMap = new HashMap<>();
+        branchMap.put("山陰共同銀行", Arrays.asList("山支店", "陰支店", "北支店"));
+        branchMap.put("山陽共同銀行", Arrays.asList("陽支店", "南支店", "西支店"));
+        branchMap.put("山中共同銀行", Arrays.asList("川支店", "中支店", "東支店"));
+
+        return branchMap.getOrDefault(bankName, new ArrayList<>());
     }
 
     @PostMapping("/investmentTrustConfirmation")
