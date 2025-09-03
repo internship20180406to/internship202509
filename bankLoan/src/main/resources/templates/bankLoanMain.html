@@ -218,28 +218,37 @@
     </form>
 
     <script>
+
         function checkForm(){
-            var bankName = document.getElementById("bankName");
-            var branchName = document.getElementById("branchName");
-            var subjectName = document.getElementById("subjectName");
-            var bankAccountNum = document.getElementById("bankAccountNum");
-            var debtorName = document.getElementById("debtorName");
-            var loanAmount = document.getElementById("loanAmount");
-            var borrowingIncome = document.getElementById("borrowingIncome");
-            var interestRate = document.getElementById("interestRate");
+            const fields = [
+                {id:"bankName"},
+                {id:"branchName"},
+                {id:"subjectName"},
+                {id:"bankAccountNum"},
+                {id:"debtorName"},
+                {id:"loanAmount"},
+                {id:"borrowingIncome"},
+                {id:"interestRate"},
+            ];
 
-            var fields=[ bankName, branchName, subjectName, bankAccountNum, debtorName, loanAmount, borrowingIncome, interestRate ];
+            const bankAccountNum=document.getElementById("bankAccountNum").value.trim();
+            if(!/^\d{7}$/.test(bankAccountNum)){
+                alert("口座番号は7桁の数字で入力してください!");
+                document.getElementById("bankAccountNum").focus();
+                return false;
+            }
 
-            for (var i = 0; i < fields.length; i++){
-                if(fields[i] === ""){
+            for(let field of fields){
+                const element = document.getElementById(field.id);
+                if(!element || !element.value.trim()){
                     alert("未入力の必須項目があります!");
-                    fields[i].focus();
+                    element.focus();
                     return false;
                 }
             }
+
             return true;
         }
-
 
 
     </script>
