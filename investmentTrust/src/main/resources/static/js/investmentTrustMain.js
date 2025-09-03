@@ -45,19 +45,19 @@ const bankSelect = document.getElementById("bank");
 
 
 
-const confirmButton = document.getElementById("confirm")
-confirmButton.addEventListener('click', (e) => {
-//    ダイヤログ表示するためのデータ取得
-//    https://qiita.com/hemmhemm/items/1e07d20c330fe8ce53c7
-        const bankName = document.getElementById("bank").value;
-        const shopName = document.getElementById("shop-name").value;
-        const subject = document.getElementById("Subject").value;
-        const bankAccountNum = document.getElementById("bankAccountNum").value;
-        const purchaser = document.getElementById("Purchaser").value;
-        const brandName = document.getElementById("BrandName").value;
-        const amount = document.getElementById("amount").value;
-
-        console.log(bankName, shopName, subject, bankAccountNum, purchaser, brandName, amount)
+//const confirmButton = document.getElementById("confirm")
+//confirmButton.addEventListener('click', (e) => {
+////    ダイヤログ表示するためのデータ取得
+////    https://qiita.com/hemmhemm/items/1e07d20c330fe8ce53c7
+//        const bankName = document.getElementById("bank").value;
+//        const shopName = document.getElementById("shop-name").value;
+//        const subject = document.getElementById("Subject").value;
+//        const bankAccountNum = document.getElementById("bankAccountNum").value;
+//        const purchaser = document.getElementById("Purchaser").value;
+//        const brandName = document.getElementById("BrandName").value;
+//        const amount = document.getElementById("amount").value;
+//
+//        console.log(bankName, shopName, subject, bankAccountNum, purchaser, brandName, amount)
 
 //    console.log(typeof(bankName), typeof(shopName), typeof(subject), typeof(bankAccountNum), typeof(purchaser), typeof(brandName), typeof(amount))
 //    全部string型
@@ -79,6 +79,64 @@ confirmButton.addEventListener('click', (e) => {
 //            window.alert("口座番号は7桁")
 //            e.preventDefault();
 //       }
-       }
-       )
+
+//       })
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const confirmBtn = document.getElementById("confirm");
+
+    confirmBtn.addEventListener("click", function (e) {
+        // 初期化
+        document.querySelectorAll(".error-message").forEach(el => el.remove());
+        document.querySelectorAll(".error-input").forEach(el => el.classList.remove("error-input"));
+
+        let hasError = false;
+
+        // 各入力欄の取得
+        const bankName = document.getElementById("bank");
+        const shopName = document.getElementById("shop-name");
+        const subject = document.getElementById("Subject");
+        const bankAccountNum = document.getElementById("bankAccountNum");
+        const purchaser = document.getElementById("Purchaser");
+        const brandName = document.getElementById("BrandName");
+        const amount = document.getElementById("amount");
+
+        // エラー表示関数
+        function showError(input, message) {
+            const error = document.createElement("div");
+            error.className = "error-message";
+            error.innerText = message;
+            input.classList.add("error-input");
+            input.parentNode.appendChild(error);
+            hasError = true;
+        }
+
+        // バリデーションチェック
+        if (!bankName.value.trim()) showError(bankName, "金融機関名を選択してください");
+        if (!shopName.value.trim()) showError(shopName, "支店名を選択してください");
+        if (!subject.value.trim()) showError(subject, "科目名を選択してください");
+
+        if (!bankAccountNum.value.trim()) {
+            showError(bankAccountNum, "口座番号を入力してください");
+        } else if (bankAccountNum.value.length !== 7) {
+            showError(bankAccountNum, "口座番号は7桁で入力してください");
+        }
+
+        if (!purchaser.value.trim()) showError(purchaser, "購入者名を入力してください");
+        if (!brandName.value.trim()) showError(brandName, "銘柄を選択してください");
+
+        if (!amount.value.trim()) {
+            showError(amount, "購入金額を入力してください");
+        } else if (parseInt(amount.value) <= 0) {
+            showError(amount, "金額は1以上で入力してください");
+        }
+
+        // エラーがあれば送信を止める
+        if (hasError) {
+            e.preventDefault();
+        }
+    });
+});
+
 

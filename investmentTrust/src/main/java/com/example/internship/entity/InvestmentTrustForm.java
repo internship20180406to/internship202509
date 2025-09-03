@@ -23,7 +23,9 @@ public class InvestmentTrustForm {
     private String Subject;
 
     @NotNull(message = "口座番号を入力してください")
-    @Digits(integer = 7, fraction = 0, message = "7ケタで入力してください")
+//    @Digits(integer = 7, fraction = 0, message = "7ケタで入力してください")
+    @Min(value = 1000000, message = "口座番号は7桁で入力してください")
+    @Max(value = 9999999, message = "口座番号は7桁で入力してください")
     private Integer bankAccountNum;
 
     @NotBlank
