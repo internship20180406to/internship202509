@@ -69,8 +69,19 @@ public class BankLoanController {
         model.addAttribute("housingKinds", bankLoanForm.getHousingKinds());
         model.addAttribute("loanAmount", bankLoanForm.getLoanAmount());
         model.addAttribute("borrowingIncome", bankLoanForm.getBorrowingIncome());
+        model.addAttribute("loanPeriod", bankLoanForm.getLoanPeriod());
         model.addAttribute("interestRate", bankLoanForm.getInterestRate());
         model.addAttribute("bankLoanApplication", bankLoanForm);
+
+        double P = bankLoanForm.getLoanAmount();
+        double r = bankLoanForm.getInterestRate() / 100.0 / 12.0; // 月利
+        int n = bankLoanForm.getLoanPeriod() * 12;
+
+        double A = (r == 0) ? (P / n) : (P * r / (1 - Math.pow(1 + r, -n)));
+        double total = A * n;
+
+        model.addAttribute("monthlyPayment", Math.round(A));
+        model.addAttribute("totalPayment", Math.round(total));
         return "bankLoanConfirmation";
     }
 

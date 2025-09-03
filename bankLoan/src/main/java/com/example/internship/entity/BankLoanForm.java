@@ -66,6 +66,9 @@ public class BankLoanForm {
     @NonNull
     private String housingKinds;
 
+    @NonNull
+    private Integer loanPeriod;
+
     public String getBankName() {
         return bankName;
     }
@@ -159,6 +162,10 @@ public class BankLoanForm {
 
     public String getHousingKinds() {
         return housingKinds;
+    }
+
+    public Integer getLoanPeriod() {
+        return loanPeriod;
     }
 }
 

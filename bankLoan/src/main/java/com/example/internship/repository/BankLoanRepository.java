@@ -11,7 +11,7 @@ public class BankLoanRepository {
     JdbcTemplate jdbcTemplate;
 
     public void create(BankLoanForm bankLoanForm) {
-        String sql = "INSERT INTO bankLoan_table(bankName,branchName,bankKinds,bankAccountNum,debtorName,birthday,address,phoneNumber,mailAddress,occupation,workPlace,housingKinds,loanAmount,borrowingIncome,interestRate) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO bankLoan_table(bankName,branchName,bankKinds,bankAccountNum,debtorName,birthday,address,phoneNumber,mailAddress,occupation,workPlace,housingKinds,loanAmount,borrowingIncome,loanPeriod,interestRate) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 bankLoanForm.getBankName(),
                 bankLoanForm.getBranchName(),
@@ -27,7 +27,8 @@ public class BankLoanRepository {
                 bankLoanForm.getHousingKinds(),
                 bankLoanForm.getLoanAmount(),
                 bankLoanForm.getBorrowingIncome(),
-                bankLoanForm.getInterestRate()
+                bankLoanForm.getInterestRate(),
+                bankLoanForm.getLoanPeriod()
         );
     }
 

@@ -285,7 +285,7 @@
                 </div>
 
                 <!-- 債務者名 -->
-                <div class="field full">
+                <div class="field">
                     <label class="label">債務者名（ご本人様） <span class="req">必須</span></label>
                     <div class="control">
                         <input th:field="*{debtorName}" class="input" placeholder="山田 太郎" required minlength="2"/>
@@ -314,7 +314,7 @@
                     </div>
                 </div>
 
-                <div class="field full">
+                <div class="field">
                     <label class="label">メールアドレス <span class="req">必須</span></label>
                     <div class="control">
                         <input type="email" th:field="*{mailAddress}" class="input" required placeholder="bankloan@internship.com"/>
@@ -344,6 +344,7 @@
                         </select>
                     </div>
                 </div>
+                <br>
 
                 <!-- 借入金額 -->
                 <div class="field">
@@ -362,6 +363,17 @@
                         <span class="suffix">円</span>
                     </div>
                 </div>
+
+                <!--借入期間-->
+                <div class="field">
+                    <label class="label">借入期間 <span class="req">必須</span></label>
+                    <div class="control with-suffix">
+                        <input type="number" th:field="*{loanPeriod}" class="input" placeholder="10" min="1" max="35" required/>
+                        <span class="suffix">年</span>
+                    </div>
+                </div>
+
+
 
                 <!-- 金利 -->
                 <div class="field">
