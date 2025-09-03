@@ -230,15 +230,15 @@
                 <!-- 借入条件 -->
                 <div class="field">
                     <div class="label">借入金額</div>
-                    <div class="value"><span th:text="*{loanAmount}">3,000,000</span> 円</div>
+                    <div class="value"><span th:text="${#numbers.formatInteger(loanAmount, 4, 'COMMA')}"></span> 円</div>
                 </div>
                 <div class="field">
                     <div class="label">借入年収</div>
-                    <div class="value"><span th:text="*{borrowingIncome}">4,500,000</span> 円</div>
+                    <div class="value"><span th:text="${#numbers.formatInteger(borrowingIncome, 4, 'COMMA')}"></span> 円</div>
                 </div>
                 <div class="field">
                     <div class="label">金利</div>
-                    <div class="value"><span th:text="*{interestRate}">1.20</span> %</div>
+                    <div class="value"><span th:text="${#numbers.formatDecimal(interestRate, 1,1)}"></span> %</div>
                 </div>
             </div>
 
@@ -261,7 +261,7 @@
 
             <div class="actions">
                 <button type="submit" id="submit" class="btn btn-primary">申込</button>
-                <button type="button" class="btn btn-ghost" onclick="window.location='/bankLoan'">キャンセル</button>
+                <button type="button" class="btn btn-ghost" onclick="history.back()">キャンセル</button>
             </div>
         </form>
     </section>

@@ -27,19 +27,16 @@ public class BankLoanController {
     @GetMapping("/bankLoan")
     public String bankTransfer(Model model) {
         List<String> nameOptions = Arrays.asList(
-                "選択してください",
                 "山陰共同銀行",
                 "北海道中央銀行",
                 "東京銀行",
                 "横浜共同銀行");
         List<String> accountOptions = Arrays.asList(
-                "選択してください",
                 "普通預金",
                 "定期預金",
                 "当座預金",
                 "貯蓄預金");
         List<String> houseOptions = Arrays.asList(
-                "選択してください",
                 "持ち家",
                 "賃貸マンション・借家",
                 "公営住宅",

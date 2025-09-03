@@ -98,7 +98,7 @@
           width:100%;
           font-size:16px;
           padding:12px 14px;
-          border:1px solid #e5e7eb;
+          border:3px solid #e5e7eb;
           border-radius:10px;
           background:#fff;
           transition: box-shadow .15s ease, border-color .15s ease, transform .02s ease;
@@ -214,36 +214,34 @@
         <div class="card-header">
             <h1 class="title">ローン申込情報入力</h1>
             <p class="subtitle">※ 必須項目を入力してください</p>
+            <!-- 進捗ステップ。currentStep が無ければ 1 にする -->
+            <div class="stepper"
+                 th:with="step=${currentStep} ?: 1"
+                 th:style="'--step:' + ${step} + ';'">
+                <div class="track"></div>
+                <div class="fill"></div>
+                <ol class="steps" role="list" aria-label="申込ステップ">
+                    <li class="step"
+                        th:classappend="${step} > 1 ? 'is-complete' : (${step} == 1 ? 'is-current' : '')"
+                        aria-current="${step} == 1 ? 'step' : null">
+                        <span class="dot" aria-hidden="true"></span>
+                        <span class="label">ローン申し込み</span>
+                    </li>
+                    <li class="step"
+                        th:classappend="${step} > 2 ? 'is-complete' : (${step} == 2 ? 'is-current' : '')"
+                        aria-current="${step} == 2 ? 'step' : null">
+                        <span class="dot" aria-hidden="true"></span>
+                        <span class="label">申し込み確認</span>
+                    </li>
+                    <li class="step"
+                        th:classappend="${step} > 3 ? 'is-complete' : (${step} == 3 ? 'is-current' : '')"
+                        aria-current="${step} == 3 ? 'step' : null">
+                        <span class="dot" aria-hidden="true"></span>
+                        <span class="label">申し込み完了</span>
+                    </li>
+                </ol>
+            </div>
         </div>
-
-        <!-- 進捗ステップ。currentStep が無ければ 1 にする -->
-        <div class="stepper"
-             th:with="step=${currentStep} ?: 1"
-             th:style="'--step:' + ${step} + ';'">
-            <div class="track"></div>
-            <div class="fill"></div>
-            <ol class="steps" role="list" aria-label="申込ステップ">
-                <li class="step"
-                    th:classappend="${step} > 1 ? 'is-complete' : (${step} == 1 ? 'is-current' : '')"
-                    aria-current="${step} == 1 ? 'step' : null">
-                    <span class="dot" aria-hidden="true"></span>
-                    <span class="label">ローン申し込み</span>
-                </li>
-                <li class="step"
-                    th:classappend="${step} > 2 ? 'is-complete' : (${step} == 2 ? 'is-current' : '')"
-                    aria-current="${step} == 2 ? 'step' : null">
-                    <span class="dot" aria-hidden="true"></span>
-                    <span class="label">申し込み確認</span>
-                </li>
-                <li class="step"
-                    th:classappend="${step} > 3 ? 'is-complete' : (${step} == 3 ? 'is-current' : '')"
-                    aria-current="${step} == 3 ? 'step' : null">
-                    <span class="dot" aria-hidden="true"></span>
-                    <span class="label">申し込み完了</span>
-                </li>
-            </ol>
-        </div>
-
 
         <form action="#" th:action="@{/bankLoanConfirmation}" th:object="${bankLoanApplication}" method="post" >
             <div class="grid">
@@ -251,32 +249,30 @@
                 <div class="field">
                     <label class="label">金融機関名 <span class="req">必須</span></label>
                     <div class="control">
-                        <select th:field="*{bankName}"  class="select" id="bank" onchange="handlePlaceChange()">
+                        <select th:field="*{bankName}"  class="select" id="bank" onchange="handlePlaceChange()" required>
+                            <option value="" selected></option>
                             <option th:each="option : ${nameOptions}" th:value="${option}" th:text="${option}">選択肢</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- 支店コード -->
-
                 <div class="field">
                     <label class="label">支店コード <span class="req">必須</span></label>
                     <div class="control">
-                        <input type="number" th:field="*{branchName}" th:errorclass="is-invalid" class="input" placeholder="123" required min="100" max="999"/>
+                        <input th:field="*{branchName}" th:errorclass="is-invalid" class="input" placeholder="123" required minlength = "3" maxlength="3"/>
                     </div>
-
-                    <div class="error" th:if="${#fields.hasErrors('branchName')}" th:errors="*{branchName}"></div>
                 </div>
 
                 <!-- 科目名 -->
                 <div class="field">
                     <label class="label">科目名 <span class="req">必須</span></label>
                     <div class="control">
-                        <select th:field="*{bankKinds}" class="select" id="bankKinds" onchange="handlePlaceChange()">
+                        <select th:field="*{bankKinds}" class="select" id="bankKinds" onchange="handlePlaceChange()" required>
+                            <option value="" selected></option>
                             <option th:each="option : ${accountOptions}" th:value="${option}" th:text="${option}">選択肢</option>
                         </select>
                     </div>
-                    <div class="error" th:if="${#fields.hasErrors('bankKinds')}" th:errors="*{bankKinds}"></div>
                 </div>
 
                 <!-- 口座番号 -->
@@ -300,7 +296,7 @@
                 <div class="field">
                     <label class="label">誕生日 <span class="req">必須</span></label>
                     <div class="control">
-                        <input type="number" th:field="*{birthday}" class="input" required placeholder="20021102"/>
+                        <input th:field="*{birthday}" class="input" required placeholder="20021102" minlength = "8" maxlength="8"/>
                     </div>
                 </div>
 
@@ -342,13 +338,12 @@
                 <div class="field">
                     <label class="label">お住いの種類 <span class="req">必須</span></label>
                     <div class="control">
-                        <select th:field="*{housingKinds}"  class="select" id="housingKinds" onchange="handlePlaceChange()">
+                        <select th:field="*{housingKinds}"  class="select" id="housingKinds" onchange="handlePlaceChange()" required>
+                            <option value="" selected></option>
                             <option th:each="option : ${houseOptions}" th:value="${option}" th:text="${option}">選択肢</option>
                         </select>
                     </div>
                 </div>
-
-
 
                 <!-- 借入金額 -->
                 <div class="field">
@@ -373,7 +368,7 @@
                     <label class="label">金利 <span class="req">必須</span></label>
                     <div class="control with-suffix">
 
-                        <input type="number" th:field="*{interestRate}" class="input" placeholder="2.0" min="0" step="0.01" required/>
+                        <input type="number" th:field="*{interestRate}" class="input" placeholder="2.0" step="0.1" min="0" required/>
                         <span class="suffix">%</span>
                     </div>
                     <p class="hint">年率・小数で入力（例: 2.0）</p>
@@ -381,7 +376,7 @@
             </div>
 
             <div class="actions">
-                <input type="submit" value="確認" id="submitButton" class="btn btn-primary" disabled/>
+                <input type="submit" value="確認" id="submitButton" class="btn btn-primary" />
                 <input type="reset" value="クリア" class="btn btn-ghost"/>
             </div>
         </form>

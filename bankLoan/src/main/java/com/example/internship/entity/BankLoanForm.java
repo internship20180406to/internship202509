@@ -21,7 +21,7 @@ public class BankLoanForm {
     @NotNull(message="支店コードを入力してください")
     @Min(value = 0, message = "支店コードは0以上です")
     @Max(value = 999, message = "支店コードは3桁以内です")
-    private Integer branchName;
+    private String branchName;
 
     @NotBlank(message="科目名を選択してください")
     private String bankKinds;
@@ -46,7 +46,7 @@ public class BankLoanForm {
     private Integer bankAccountNum;
 
     @NonNull
-    private Integer birthday;
+    private String birthday;
 
     @NonNull
     private String address;
@@ -74,10 +74,10 @@ public class BankLoanForm {
     }
 
     // Getter & Setter for branchName
-    public Integer getBranchName() {
+    public String getBranchName() {
         return branchName;
     }
-    public void setBranchName(Integer branchName) {
+    public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
 
@@ -130,10 +130,10 @@ public class BankLoanForm {
     }
 
     // Getter & Setter for birthday
-    public Integer getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
-    public void setBirthday(Integer birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
