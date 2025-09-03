@@ -2,6 +2,7 @@ package com.example.internship.controller;
 
 import com.example.internship.entity.BankTransferForm;
 import com.example.internship.service.ApplyBankTransferService;
+import com.example.internship.service.BankAndBranchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -21,29 +24,30 @@ public class BankTransferController {
     @Autowired
     private ApplyBankTransferService applyBankTransferService;
 
+    @Autowired
+    private BankAndBranchService bankAndBranchService;
+
     @GetMapping("/bankTransfer")
     public String bankTransfer(Model model) {
-        String[] bankName = {"", "山陰共同銀行", "海光共同銀行"};
-        // String[] bankName = {""};
-        String[] branchName1 = {"A支店","B支店"};
-        String[] branchName2 = {"C支店","D支店"};
-        String[] branchName3 = {"E支店","F支店"};
+        // String[] bankName = {"", "山陰共同銀行", "海光共同銀行"};
+        //String[] bankName = {""};
+        List<String> bankName = new ArrayList<String>();
         Map<String, String[]> bankBranch = new HashMap<>();
-        bankBranch.put("山陰共同銀行", branchName1);
-        bankBranch.put("海光共同銀行", branchName2);
-        bankBranch.put("A銀行", branchName3);
+        bankBranch.put("山陰共同銀行", new String[] {"A支店","B支店"});
+        bankBranch.put("海光共同銀行", new String[] {"C支店","D支店"});
+        bankBranch.put("A銀行", new String[] {"E支店","F支店"});
 
+        bankAndBranchService.callGetBankAndBranch();
 
-//        for (String key : bankBranch.keySet()) {
-//            bankName = bankName;
-//        }
+        bankName.add("");
+        bankName.addAll(bankBranch.keySet());
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
              String jsonMapBankBranch = objectMapper.writeValueAsString(bankBranch);
              model.addAttribute("bankBranch", jsonMapBankBranch);
         } catch (JsonProcessingException e) {
-             e.printStackTrace(); // ログ出力やエラー処理を行う
+             e.printStackTrace();
         }
 
         String[] subjectName = {"普通","定期","当座","貯蓄"};
