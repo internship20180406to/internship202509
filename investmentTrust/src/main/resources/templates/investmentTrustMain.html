@@ -1,76 +1,27 @@
+<!--テーブルcss参考サイト-->
+<!--https://b-risk.jp/blog/2019/11/form-css/-->
+<!--数字入力を0以上にする-->
+<!--https://teratail.com/questions/227485-->
+<!--セレクトボックス動的表示の参考サイト-->
+<!--https://magazine.techacademy.jp/magazine/27133-->
+<!--ボタンcss参考サイト-->
+<!--https://e-adshin.com/adlab/12741-->
+
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>投資信託注文情報入力画面</title>
     <style>
-
-<!--        cssの参考サイト-->
-<!--        https://b-risk.jp/blog/2019/11/form-css/-->
-
-
-
-<!--        body {-->
-<!--        background-color: #f0f0f0;-->
-<!--        margin: 0;-->
-<!--        padding: 0;-->
-<!--        display: flex;-->
-<!--        padding-top: 40px;-->
-<!--        padding-bottom: 40px;-->
-<!--        justify-content: center;-->
-<!--        align-items: center;-->
-<!--        min-height: 85vh;-->
-<!--        overflow: auto;-->
-<!--        }-->
-<!--        .content {-->
-<!--         background-color: #ffffff;-->
-<!--         width: 80%;-->
-<!--         padding: 20px;-->
-<!--         border-radius: 10px;-->
-<!--         box-shadow: 0 4px 8px rgba(0,0,0,0.1);-->
-<!--         min-height: 50vh;-->
-<!--         overflow: auto;-->
-<!--        }-->
-<!--        .form-control {-->
-<!--            width: 100%;-->
-<!--            padding: 8px;-->
-<!--            margin: 5px 0;-->
-<!--            box-sizing: border-box;-->
-<!--        }-->
-<!--        .text-danger {-->
-<!--        color: red;-->
-<!--        }-->
-<!--        .form-control-button {-->
-<!--        width: 80px;-->
-<!--        padding: 10px 20px;-->
-<!--        margin-top: 10px;-->
-<!--        border: none;-->
-<!--        cursor: pointer;-->
-<!--        border-radius: 5px;-->
-<!--        }-->
-<!--        .form-confirmation-button{-->
-<!--        color: white;-->
-<!--        background-color: #2185D0;-->
-<!--        }-->
-<!--        .form-confirmation-button:hover {-->
-<!--        background-color: #1678c2;-->
-<!--        }-->
-<!--        .form-clear-button{-->
-<!--        color: black;-->
-<!--        background-color: #E0E1E2;-->
-<!--        }-->
-<!--        .form-clear-button:hover {-->
-<!--        background-color: #CCCCCC;-->
-<!--        }-->
-
-
 table {
   border-collapse: collapse;
+  margin: auto;
+  font-weight: normal;
 }
 
 p {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: normal;
   text-align: center;
   margin: 60px auto 40px;
 }
@@ -149,8 +100,11 @@ textarea::placeholder {
 }
 
 .form-table {
-  width: 100%;
+  width: 60%;
+  margin: 0 auto;
+  border-collapse: collapse;
 }
+
 
 .form-table th,
 .form-table td {
@@ -160,113 +114,131 @@ textarea::placeholder {
 }
 
 .form-table th {
-  background: #ffecea;
-  padding-left: 50px;
+  background: #cfe9fa;
   position: relative;
-  text-align: left;
+}
+
+.btn {
+  display: inline-block;
   width: 200px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 60px;
+  outline: none;
+  color: #1B85FB;
+  background-color: #fff;
+  position: relative;
+  border: 1px solid #1B85FB;
+  transition: color 0.5s ease;
+  font-size: 16px;
+  margin: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.btn:hover {
+  color: #fff; /* ホバー時に白文字にする */
+}
+
+.btn:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.btn::before {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #1B85FB;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: all 0.5s ease;
+  transition-property: transform;
+}
+
+/* 以下はレイアウト調整用 */
+body{
+  vertical-align:middle;
+  padding: 50px 0;
+  text-align: center;
 }
     </style>
 </head>
-
-<!--<div class="content">-->
-<!--    <h1>投資信託注文情報入力</h1>-->
-<!--    <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">-->
-<!--        <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <select th:field="*{bankName}" class="form-control">-->
-<!--                <option th:each="option : ${nameOptions}"-->
-<!--                        th:value="${option}"-->
-<!--                        th:text="${option}">選択肢-->
-<!--                </option>-->
-<!--            </select></p>-->
-
-<!--        <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <input type="text" th:field="*{ShopName}" class="form-control" placeholder="●●点"/></p>-->
-
-<!--        <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <select th:field="*{Subject}" class="form-control">-->
-<!--            <option th:each="option : ${SubjectOptions}"-->
-<!--                    th:value="${option}"-->
-<!--                    th:text="${option}">選択肢-->
-<!--            </option>-->
-<!--        </select></p>-->
-
-<!--        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>-->
-
-<!--        <p><label class="ml-1">購入者名: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <input type="text" th:field="*{Purchaser}" class="form-control" placeholder="お名前"/></p>-->
-
-<!--        <p><label class="ml-1">銘柄選択: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <select th:field="*{BrandName}" class="form-control">-->
-<!--                <option th:each="option : ${BrandOptions}"-->
-<!--                        th:value="${option}"-->
-<!--                        th:text="${option}">選択肢-->
-<!--                </option>-->
-<!--            </select></p>-->
-
-<!--        <p><label class="ml-1">購入金額: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <input type="number" th:field="*{amount}" class="form-control" placeholder="●●●●円"/></p>-->
-
-<!--        <p style="text-align: center;"><input type="submit" value="確認"-->
-<!--                                              class="form-control-button form-confirmation-button"/>-->
-<!--            <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>-->
-<!--    </form>-->
-<!--</div>-->
+<body>
 
 <div class="content">
-    <h1>投資信託注文情報入力</h1>
+
+    <h1 style="text-align: center">投資信託注文情報入力</h1>
     <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
         <table class="form-table">
             <tr>
-                <th>金融機関名 <small class="text-danger ml-1">※</small></th>
+                <th>金融機関名 <small class="text-danger ml-1" style="color:red">※必須</small></th>
                 <td>
-                    <select th:field="*{bankName}" class="form-control">
+
+                    <select id="bank" th:field="*{bankName}" class="form-control" name="bank" >
+<!--                        <option hidden>金融機関名を選択してください</option>-->
+<!--                        <option disabled selected>支店名を選択してください</option>-->
                         <option th:each="option : ${nameOptions}" th:value="${option}" th:text="${option}">選択肢</option>
                     </select>
                 </td>
 
             </tr>
             <tr>
-                <th>支店名 <small class="text-danger ml-1">※</small></th>
-                <td><input type="text" th:field="*{ShopName}" class="form-control" placeholder="●●点"/></td>
+                <th>支店名 <small class="text-danger ml-1" style="color:red">※必須</small></th>
+                <td>
+<!--                    <input type="text" th:field="*{ShopName}" class="form-control" placeholder="●●点"/>-->
+
+                    <select th:field="*{ShopName}" class="form-control" id="shop-name" name="shop-name">
+<!--                        <option th:each="option : ${ShopOptions}" th:value="${option}" th:text="${option}">選択肢</option>-->
+                    </select>
+                </td>
             </tr>
             <tr>
-                <th>科目名 <small class="text-danger ml-1">※</small></th>
+                <th>科目名 <small class="text-danger ml-1" style="color:red">※必須</small></th>
                 <td>
-                    <select th:field="*{Subject}" class="form-control">
+                    <select th:field="*{Subject}" class="form-control" id="Subject">
                         <option th:each="option : ${SubjectOptions}" th:value="${option}" th:text="${option}">選択肢</option>
                     </select>
                 </td>
             </tr>
             <tr>
-                <th>口座番号 <small class="text-danger ml-1">※</small></th>
-                <td><input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></td>
+                <th>口座番号<small class="text-danger ml-1" style="color:red"><br>※必須-7ケタ</small></th>
+                <td><input id="bankAccountNum" type="number" min="0" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></td>
             </tr>
             <tr>
-                <th>購入者名 <small class="text-danger ml-1">※</small></th>
-                <td><input type="text" th:field="*{Purchaser}" class="form-control" placeholder="お名前"/></td>
+                <th>購入者名 <small class="text-danger ml-1" style="color:red">※必須</small></th>
+                <td><input id="Purchaser" type="text" th:field="*{Purchaser}" class="form-control" placeholder="お名前"/></td>
             </tr>
             <tr>
-                <th>銘柄選択 <small class="text-danger ml-1">※</small></th>
+                <th>銘柄選択 <small class="text-danger ml-1" style="color:red">※必須</small></th>
                 <td>
-                    <select th:field="*{BrandName}" class="form-control">
-                        <option th:each="option : ${BrandOptions}" th:value="${option}" th:text="${option}">選択肢</option>
+                    <select id="BrandName" th:field="*{BrandName}" class="form-control">
+                        <option th:each="option : ${BrandOptions}" th:value="${option}" th:text="${option}">
+
+                        </option>
                     </select>
+                    <div id="brandDetails" style="margin-top: 10px; color: #555;"></div>
                 </td>
             </tr>
             <tr>
-                <th>購入金額 <small class="text-danger ml-1">※</small></th>
-                <td><input type="number" th:field="*{amount}" class="form-control" placeholder="●●●●円"/></td>
+                <th>購入金額 <small class="text-danger ml-1" style="color:red">※必須</small></th>
+                <td><input id="amount" type="number" min="1" th:field="*{amount}" class="form-control" placeholder="●●●●円"/></td>
             </tr>
         </table>
 
         <p style="text-align: center;">
-            <input type="submit" value="確認" class="form-control-button form-confirmation-button"/>
-            <input type="reset" value="クリア" class="form-control-button form-clear-button"/>
+<!--            <input type="submit" id="confirm" class="form-control-button form-confirmation-button btn" />-->
+<!--            <input type="reset" value="クリア" class="form-control-button form-clear-button"/>-->
+            <button type="submit" class="btn" id="confirm">確認</button>
+            <button type="reset" class="btn">クリア</button>
         </p>
     </form>
 </div>
-
-
+<script th:inline="javascript" src="/js/investmentTrustMain.js"></script>
+</body>
 </html>

@@ -1,33 +1,39 @@
 package com.example.internship.entity;
 
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import lombok.NonNull;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.convert.DataSizeUnit;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvestmentTrustForm {
-    @NonNull
+    @NotBlank
     private String bankName;
 
-    @NonNull
+    @NotBlank
     private String ShopName;
 
-    @NonNull
+    @NotBlank
     private String Subject;
 
-    @NonNull
+    @NotNull(message = "口座番号を入力してください")
+    @Digits(integer = 7, fraction = 0, message = "7ケタで入力してください")
     private Integer bankAccountNum;
 
-    @NonNull
+    @NotBlank
     private String Purchaser;
 
-    @NonNull
+    @NotBlank
     private String BrandName;
 
-    @NonNull
+    @NotNull(message = "購入金額を入力してください")
+    @Min(value = 1, message = "金額は1以上で入力してください")
     private Integer amount;
 
 
