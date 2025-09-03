@@ -1,9 +1,55 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>注文完了画面</title>
+    <meta charset="UTF-8"/>
+    <title>投資信託注文情報入力画面</title>
     <style>
+        html {
+          height:100%;
+        }
+
+        .bg {
+          animation:slide 3s ease-in-out infinite alternate;
+          background-image: linear-gradient(-60deg, #dfe6e9 50%, #74b9ff 50%);
+          bottom:0;
+          left:-50%;
+          opacity:.5;
+          position:fixed;
+          right:-50%;
+          top:0;
+          z-index:-1;
+        }
+
+        .bg2 {
+          animation-direction:alternate-reverse;
+          animation-duration:4s;
+        }
+
+        .bg3 {
+          animation-duration:5s;
+        }
+
+        .content {
+          background-color:rgba(255,255,255,.8);
+          border-radius:.25em;
+          box-shadow:0 0 .25em rgba(0,0,0,.25);
+          box-sizing:border-box;
+          left:50%;
+          padding:10vmin;
+          position:fixed;
+          top:50%;
+          transform:translate(-50%, -50%);
+        }
+
+        @keyframes slide {
+          0% {
+            transform:translateX(-25%);
+          }
+          100% {
+            transform:translateX(25%);
+          }
+        }
+
         body {
         background-color: #4169E1;
         margin: 0;
@@ -18,7 +64,8 @@
         }
         .content {
          font-size: 22px;
-         background-color: #ffffff;
+         background-color: rgba(255, 255, 255, 0.3);
+         backdrop-filter: blur(10px);
          width: 600px;
          padding: 40px;
          padding-top: 0px;
@@ -31,11 +78,14 @@
         }
         .form-control {
             width: 100%;
-            padding: 50px;
+            padding: 8px;
             margin: 5px 0;
             box-sizing: border-box;
             font-size: 20px;
-
+            background-color: rgba(255, 255, 255, 0.1); /* ほんのり白っぽい透明感 */
+            backdrop-filter: blur(4px);                /* 背景をぼかしてガラス風に */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* 枠線も半透明に */
+            color: #000000;
         }
         .text-danger {
         color: blue;
@@ -47,19 +97,18 @@
         border: none;
         cursor: pointer;
         border-radius: 5px;
+
         }
         .form-confirmation-button{
-        color: white;
-        background-color: #2185D0;
-
-
+        color: #fdf6e3;
+        background-color: #1678c2;
         }
         .form-confirmation-button:hover {
-        background-color: #1678c2;
+        background-color: #2a5298
         }
         .form-clear-button{
         color: black;
-        background-color: #E0E1E2;
+        background-color: #EBEBEB;
         }
         .form-clear-button:hover {
         background-color: #CCCCCC;
@@ -70,15 +119,15 @@
             position: relative;
             padding: 0.1em 0.5em;
             text-align: center;
-            background: -webkit-linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
-            background: linear-gradient(to top, rgb(137, 184, 255), #c5ceff);
-            color: #495193;
+            background: -webkit-linear-gradient(to top, #1e3c72, #2a5298);
+            background: linear-gradient(to top, #1e3c72, #2a5298);
+            color: 	#fdf6e3;
             margin-bottom: 0;
         }
 
         .form-row {
           font-size: 20px;
-          width: 600px;
+          width: 500px;
           display: flex;
           align-items: center;
           margin: 0 auto;
@@ -106,16 +155,9 @@
           content: "";
           display: block;
           height: 5px;
-          background: -webkit-linear-gradient(to right, #3a86ff, #FFFFFF);
-          background: linear-gradient(to right, #3a86ff, #FFFFFF);
+          background: -webkit-linear-gradient(to right, ##1e3c72, #1e3c72);
+          background: linear-gradient(to right, #1e3c72, #1e3c72);
 
-        }
-
-        .button-wrapper {
-          display: flex;
-          justify-content: center; /* 横方向の中央揃え */
-          gap: 20px;               /* ボタン間のスペース */
-          margin-top: 30px;
         }
 
         .h3-row {
@@ -135,18 +177,32 @@
         }
 
         .item-blue {
-          background: linear-gradient(to right, #c5ceff, #89b8ff);
-          color: #1e3c72;
+          background: linear-gradient(to top, #1e3c72, #2a5298);
+          color: #fdf6e3;
         }
 
         .item-gray {
           background: linear-gradient(to right, #f5f5f5, #dcdcdc);
-          color: #333;
+          color: #333333; /* 濃いグレーで視認性アップ */
         }
+
+        .button-wrapper {
+          display: flex;
+          justify-content: center; /* 横方向の中央揃え */
+          gap: 20px;               /* ボタン間のスペース */
+          margin-top: 30px;
+        }
+
+
+
 
     </style>
 </head>
 <body>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
 <div class="content">
     <h1>投資信託</h1>
     <div class="h3-row">
