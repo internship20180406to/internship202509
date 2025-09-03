@@ -57,6 +57,45 @@
         background-color: #CCCCCC;
         }
 
+        .Number-action-button {
+        white-space: nowrap;
+        width: auto;
+        padding: 2px 5px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+
+        .placeholder {
+        color: green;
+        }
+
+
+  .suggest-box {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: absolute;
+    width: 300px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .suggest-item {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+  }
+  .suggest-item:last-child {
+    border-bottom: none;
+  }
+  .suggest-item:hover {
+    background-color: #f0f0f0;
+  }
+
     </style>
 </head>
 <body>
@@ -64,14 +103,137 @@
     <h1>投資信託注文情報入力</h1>
     <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
         <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
-            <select th:field="*{bankName}" class="form-control">
+            <select id="BankNameSelect"th:field="*{bankName}" class="form-control">
                 <option th:each="option : ${nameOptions}"
                         th:value="${option}"
                         th:text="${option}">選択肢
                 </option>
             </select></p>
+        <script>
+            // 初期状態を未選択にする
+            document.getElementById("BankNameSelect").selectedIndex = -1;
+
+              const bankSelect = document.getElementById("BankNameSelect");
+  const branchInput = document.getElementById("branchNameInput");
+
+  bankSelect.addEventListener("change", () => {
+    const selectedBank = bankSelect.value;
+    branchInput.disabled = selectedBank === "";
+  });
+        </script>
+
+
         <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
-            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567"/></p>
+            <input type="number"
+                   id="AccountNum"
+                   th:field="*{bankAccountNum}"
+                   class="form-control"
+                   placeholder="1234567"
+                   autocomplete="off" />
+
+        <p><label class="ml-1">支店名・番号: <small class="text-danger ml-1">※</small></label><br>
+<!--            <input type="text" id="BranchName" th:field="*{BranchName}" class="form-control" placeholder="支店名、もしくは支店番号を入力"/></p>-->
+<!--        <div id="branchSuggestBox" class="suggest-box"></div>-->
+            <input list="BranchName" th:field="*{Branches}" type="text" id="BranchInput" disabled />
+        <datalist id="BranchName">
+            <option th:each="option : ${Branch_nameOptions}"
+                    th:value="${option}"
+                    th:text="${option}">選択肢
+            </option>
+<!--            <option value="まぐろ支店">-->
+<!--            <option value="いわし支店">-->
+<!--            <option value="ひらめ支店">-->
+<!--            <option value="いくら支店">-->
+        </datalist>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  const bankSelect = document.getElementById("BankNameSelect");
+                  const branchInput = document.getElementById("BranchInput");
+
+                  bankSelect.addEventListener("change", () => {
+                    const selectedBank = bankSelect.value;
+                    branchInput.disabled = selectedBank === "";
+                  });
+                });
+            </script>
+
+
+
+
+            <!--        <select id="BankNameSelect">-->
+<!--            <option>選択肢</option>-->
+<!--        </select>-->
+
+<!--        <script>-->
+<!--            const branches = [-->
+<!--              { code: "001", name: "まぐろ支店" },-->
+<!--              { code: "002", name: "いわし支店" },-->
+<!--              { code: "003", name: "ひらめ支店" },-->
+<!--              { code: "004", name: "いくら支店" }-->
+<!--            ];-->
+
+<!--            const select = document.getElementById("BankNameSelect");-->
+<!--            branches.forEach(branch => {-->
+<!--              const option = document.createElement("option");-->
+<!--              option.value = branch.code;-->
+<!--              option.textContent = branch.name;-->
+<!--              select.appendChild(option);-->
+<!--            });-->
+<!--        </script>-->
+
+
+
+
+
+        <!--        <p><label class="ml-1">支店番号: <small class="text-danger ml-1">※</small>-->
+<!--&lt;!&ndash;            <button type="button" class="Number-action-button">支店番号から入力</button>&ndash;&gt;-->
+<!--        </label><br>-->
+
+<!--            <input type="text" id="BranchNum" placeholder="例: 1, 2, 3" autocomplete="off" style="width: 300px;">-->
+<!--        <div id="suggestBox" class="suggest-box"></div>-->
+
+<!--            <select id="BranchNumSelect" th:field="*{bankName}" class="form-control">-->
+<!--                <option th:each="option : ${Branch_nameOptions}"-->
+<!--                        th:value="${option}"-->
+<!--                        th:text="${option}">選択肢-->
+<!--                </option>-->
+<!--            </select></p>-->
+
+        <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
+            <select id="BankTypeSelect" th:field="*{BankType}" class="form-control">
+                <option th:each="option : ${BankType_nameOptions}"
+                        th:value="${option}"
+                        th:text="${option}">選択肢
+                </option>
+            </select></p>
+
+        <script>
+            // 初期状態を未選択にする
+            document.getElementById("BankTypeSelect").selectedIndex = -1;
+        </script>
+
+        <p><label class="ml-1">購入者氏名: <small class="text-danger ml-1">※</small></label><br>
+            <input type="text" id="name" th:field="*{CustomerName}" class="form-control" placeholder="氏名を入力してください" autocomplete="off"/></p>
+
+        <p><label class="ml-1">銘柄選択: <small class="text-danger ml-1">※</small></label><br>
+            <select id="StockSelect" th:field="*{StockName}" class="form-control">
+                <option th:each="option : ${Stock_nameOptions}"
+                        th:value="${option}"
+                        th:text="${option}">選択肢
+                </option>
+            </select></p>
+
+        <script>
+            // 初期状態を未選択にする
+            document.getElementById("StockSelect").selectedIndex = -1;
+        </script>
+
+        <p><label class="ml-1">購入金額(円): <small class="text-danger ml-1">※</small></label><br>
+            <input type="number" id="Purchase" th:field="*{PurchaseAmount}" class="form-control"/></p>
+
+
+
         <p style="text-align: center;"><input type="submit" value="確認"
                                               class="form-control-button form-confirmation-button"/>
             <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>

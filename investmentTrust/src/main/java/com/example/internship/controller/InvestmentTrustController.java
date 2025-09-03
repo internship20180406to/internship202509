@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -16,18 +19,84 @@ public class InvestmentTrustController {
     @Autowired
     private OrderInvestmentTrustService orderInvestmentTrustService;
 
+
+
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
+
+        //金融機関名の候補を作成
+        List<String> Banks=new ArrayList<>();
+        Banks.add("山陰共同銀行");
+        Banks.add("海風共同銀行");
+        Banks.add("空雲共同銀行");
+
+        //支店名の候補を作成
+        List<String> Branches=new ArrayList<>();
+        Branches.add("001：まぐろ支店");
+        Branches.add("002：いわし支店");
+        Branches.add("003：ひらめ支店");
+        Branches.add("004：いくら支店");
+        Branches.add("005：かつお支店");
+        Branches.add("006：ほたて支店");
+        Branches.add("007：あなご支店");
+        Branches.add("008：はまち支店");
+        Branches.add("009：うに支店");
+
+//        Map<String, List<String>> BankBranches = new HashMap<>();
+//
+//        BankBranches.put("山陰共同銀行", Arrays.asList(
+//                "001：まぐろ支店",
+//                "002：いくら支店",
+//                "003：うに支店"
+//        ));
+//
+//        BankBranches.put("海風共同銀行", Arrays.asList(
+//                "004：かつお支店",
+//                "005：ほたて支店",
+//                "006：はまち支店"
+//        ));
+//
+//        BankBranches.put("空雲共同銀行", Arrays.asList(
+//                "007：ひらめ支店",
+//                "008：あなご支店",
+//                "009：いわし支店"
+//        ));
+
+
+
+
+
+        List<String> BankType=new ArrayList<>();
+        BankType.add("普通");
+        BankType.add("定期");
+        BankType.add("当座");
+        BankType.add("貯蓄");
+        BankType.add("その他");
+
+        List<String> StockName=new ArrayList<>();
+        StockName.add("M&H 500");
+        StockName.add("G&P 200");
+        StockName.add("J&T 1000");
+
+
         model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
-        model.addAttribute("nameOptions", "山陰共同銀行");
+        model.addAttribute("nameOptions", Banks);
+        model.addAttribute("Branch_nameOptions", Branches);
+        //model.addAttribute("branchList", BankBranches);
+        model.addAttribute("BankType_nameOptions", BankType);
+        model.addAttribute("Stock_nameOptions", StockName);
         return "investmentTrustMain";
     }
 
     @PostMapping("/investmentTrustConfirmation")
     public String confirmation(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
-        investmentTrustForm.setBankName("ながれぼし銀行");
+        //investmentTrustForm.setBankName("ながれぼし銀行");
         model.addAttribute("bankName", investmentTrustForm.getBankName());
         model.addAttribute("bankAccountNum", investmentTrustForm.getBankAccountNum());
+        model.addAttribute("Branches", investmentTrustForm.getBranches());
+        model.addAttribute("CustomerName", investmentTrustForm.getCustomerName());
+        model.addAttribute("StockName", investmentTrustForm.getStockName());
+        model.addAttribute("PurchaseAmount", investmentTrustForm.getPurchaseAmount());
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
         return "investmentTrustConfirmation";
     }
