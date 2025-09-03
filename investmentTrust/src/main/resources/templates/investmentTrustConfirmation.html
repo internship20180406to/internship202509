@@ -1,34 +1,161 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
+
     <meta charset="UTF-8">
     <title>投資信託注文確認画面</title>
+    <style>
+    body {
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    }
+
+    h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 30px;
+    background: linear-gradient(45deg,#75c7f0,#fafafa)!important;
+    padding: 10px 0;
+    }
+
+    .confirm-table {
+    width: 460px;
+    margin: 0 auto 10px;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #d7d7d7;
+    }
+
+    .confirm-table th,
+    .confirm-table td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    }
+
+    .button-group {
+    margin-top: 10px;
+    }
+
+    .btn {
+    display: inline-block;
+    width: 100px;
+    line-height: 30px;
+    font-size: 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid;
+    position: relative;
+    z-index: 1;
+    padding: 4px 8px;
+    transition: color 0.3s ease;
+    }
+
+    .btn::before {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease;
+    }
+
+    .btn:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+    }
+
+    .btn-confirm {
+    border-color: #1B85FB;
+    color: #1B85FB;
+    }
+
+    .btn-confirm::before {
+    background-color: #1B85FB;
+    }
+
+    .btn-confirm:hover {
+    color: #fff;
+    }
+
+    .btn-clear {
+    border-color: #ccc;
+    color: #333;
+    }
+
+    .btn-clear::before {
+    background-color: #e0e0e0;
+    }
+
+    .btn-clear:hover {
+    color: #000;
+    }
+</style>
 </head>
-<body>
+<!--<body>-->
+<!--<h1>投資信託注文確認画面</h1>-->
+<!--<form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">-->
+<!--    <p>金融機関名: <span th:text="*{bankName}"></span></p>-->
+<!--    <p>支店名: <span th:text="*{ShopName}"></span></p>-->
+<!--    <p>科目名: <span th:text="*{Subject}"></span></p>-->
+<!--    <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>-->
+<!--    <p>購入者: <span th:text="*{Purchaser}"></span></p>-->
+<!--    <p>銘柄名: <span th:text="*{BrandName}"></span></p>-->
+<!--    <p>購入金額: <span th:text="*{amount}"></span></p>-->
+
+
+<!--    <input type="hidden" id="bankAccountNum" name="bankAccountNum" th:value="*{bankAccountNum}"/>-->
+<!--    <input type="hidden" id="Subject" name="Subject" th:value="*{Subject}"/>-->
+<!--    <input type="hidden" id="ShopName" name="ShopName" th:value="*{ShopName}"/>-->
+<!--    <input type="hidden" id="bankName" name="bankName" th:value="*{bankName}"/>-->
+<!--    <input type="hidden" id="Purchaser" name="Purchaser" th:value="*{Purchaser}"/>-->
+<!--    <input type="hidden" id="BrandName" name="BrandName" th:value="*{BrandName}"/>-->
+<!--    <input type="hidden" id="amount" name="amount" th:value="*{amount}"/>-->
+
+<!--    <p>-->
+<!--        <input type="submit" id="submit" value="申込"/>-->
+<!--        <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>-->
+<!--    </p>-->
+<!--</form>-->
 <h1>投資信託注文確認画面</h1>
-<form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
-    <p>金融機関名: <span th:text="*{bankName}"></span></p>
-    <p>支店名: <span th:text="*{ShopName}"></span></p>
-    <p>科目名: <span th:text="*{Subject}"></span></p>
-    <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
-    <p>購入者: <span th:text="*{Purchaser}"></span></p>
-    <p>銘柄名: <span th:text="*{BrandName}"></span></p>
-    <p>購入金額: <span th:text="*{amount}"></span></p>
+<form th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
+    <table class="confirm-table">
+        <tr><th>金融機関名</th><td th:text="*{bankName}"></td></tr>
+        <tr><th>支店名</th><td th:text="*{ShopName}"></td></tr>
+        <tr><th>科目名</th><td th:text="*{Subject}"></td></tr>
+        <tr><th>口座番号</th><td th:text="*{bankAccountNum}"></td></tr>
+        <tr><th>購入者</th><td th:text="*{Purchaser}"></td></tr>
+        <tr><th>銘柄名</th><td th:text="*{BrandName}"></td></tr>
+        <tr><th>購入金額</th><td th:text="*{amount} + '円'"></td></tr>
+    </table>
 
+    <!-- hidden inputs -->
+    <input type="hidden" th:field="*{bankAccountNum}"/>
+    <input type="hidden" th:field="*{Subject}"/>
+    <input type="hidden" th:field="*{ShopName}"/>
+    <input type="hidden" th:field="*{bankName}"/>
+    <input type="hidden" th:field="*{Purchaser}"/>
+    <input type="hidden" th:field="*{BrandName}"/>
+    <input type="hidden" th:field="*{amount}"/>
 
-    <input type="hidden" id="bankAccountNum" name="bankAccountNum" th:value="*{bankAccountNum}"/>
-    <input type="hidden" id="Subject" name="Subject" th:value="*{Subject}"/>
-    <input type="hidden" id="ShopName" name="ShopName" th:value="*{ShopName}"/>
-    <input type="hidden" id="bankName" name="bankName" th:value="*{bankName}"/>
-    <input type="hidden" id="Purchaser" name="Purchaser" th:value="*{Purchaser}"/>
-    <input type="hidden" id="BrandName" name="BrandName" th:value="*{BrandName}"/>
-    <input type="hidden" id="amount" name="amount" th:value="*{amount}"/>
-
-    <p>
-        <input type="submit" id="submit" value="申込"/>
-        <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>
-    </p>
+    <div class="button-group">
+        <button type="submit" class="btn btn-confirm">申込</button>
+        <button type="button" class="btn btn-clear" onclick="window.location='/investmentTrust';">キャンセル</button>
+<!--        <form th:action="@{/investmentTrustBack}" method="post">-->
+<!--            <button type="submit" class="btn btn-clear">キャンセル</button>-->
+    </div>
 </form>
+
 <script th:inline="javascript" src="/js/investmentTrustConfirmation.js"></script>
 </body>
 </html>

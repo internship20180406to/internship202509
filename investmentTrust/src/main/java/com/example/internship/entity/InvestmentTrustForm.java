@@ -22,11 +22,16 @@ public class InvestmentTrustForm {
     @NotBlank
     private String Subject;
 
-    @NotNull(message = "口座番号を入力してください")
+    @NotBlank(message = "口座番号を入力してください")
 //    @Digits(integer = 7, fraction = 0, message = "7ケタで入力してください")
-    @Min(value = 1000000, message = "口座番号は7桁で入力してください")
-    @Max(value = 9999999, message = "口座番号は7桁で入力してください")
-    private Integer bankAccountNum;
+//    @Min(value = 1000000, message = "口座番号は7桁で入力してください")
+//    @Max(value = 9999999, message = "口座番号は7桁で入力してください")
+    @Pattern(regexp = "^[0-9]{7}$", message = "口座番号は7桁の数字で入力してください")
+    private String bankAccountNum;
+
+
+//
+//    private String str_bankAccountNum = bankAccountNum.toString();
 
     @NotBlank
     private String Purchaser;
@@ -65,11 +70,11 @@ public class InvestmentTrustForm {
         this.Subject = Subject;
     }
 
-    public Integer getBankAccountNum() {
+    public String getBankAccountNum() {
         return bankAccountNum;
     }
 
-    public void setBankAccountNum(Integer bankAccountNum) {
+    public void setBankAccountNum(String bankAccountNum) {
         this.bankAccountNum = bankAccountNum;
     }
 

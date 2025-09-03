@@ -17,6 +17,7 @@ import java.util.Map;
 
 
 @Controller
+@SessionAttributes("investmentTrustApplication")
 public class InvestmentTrustController {
 
     @Autowired
@@ -53,7 +54,7 @@ public class InvestmentTrustController {
 
         String Subject = investmentTrustForm.getSubject();
 
-        Integer bankAccountNum = investmentTrustForm.getBankAccountNum();
+        String bankAccountNum = investmentTrustForm.getBankAccountNum();
         String Purchaser = investmentTrustForm.getPurchaser();
         String BrandName = investmentTrustForm.getBrandName();
         Integer amount = investmentTrustForm.getAmount();
@@ -106,5 +107,8 @@ public class InvestmentTrustController {
         orderInvestmentTrustService.orderInvestmentTrust(investmentTrustForm);
         return "investmentTrustCompletion";
     }
+
+
+
 
 }
