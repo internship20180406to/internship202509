@@ -1,12 +1,160 @@
+<!--<!doctype html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="UTF-8"/>-->
+<!--    <title>振込完了画面</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>振込完了</h1>-->
+<!--<p><input type="button" value="振込に戻る" onclick="window.location='/bankTransfer';"/></p>-->
+<!--</body>-->
+
+<!--</html>-->
+
 <!doctype html>
 <html>
 <head>
     <meta charset="UTF-8"/>
     <title>振込完了画面</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            justify-content: center;
+            align-items: center;
+            min-height: 65vh;
+            overflow: auto;
+        }
+
+        .content {
+            background-color: #ffffff;
+            width: 40%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-height: 50vh;
+            overflow: auto;
+            text-align: center;
+        }
+
+        .form-control-button {
+            width: auto;
+            min-width: 80px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+
+        .form-clear-button {
+            color: black;
+            background-color: #E0E1E2;
+        }
+
+        .form-clear-button:hover {
+            background-color: #CCCCCC;
+        }
+
+        /* ▼ ステップバー共通 ▼ */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #ccc;
+            z-index: 1;
+        }
+
+        .step.active .circle {
+            background-color: #007bff;
+        }
+
+        .label {
+            margin-top: 8px;
+            font-weight: bold;
+            color: #888;
+        }
+
+        .step.active .label {
+            color: #007bff;
+        }
+
+        .line {
+            height: 2px;
+            background-color: #ccc;
+            flex: 1;
+            z-index: 0;
+            margin: 0 -5px;
+        }
+
+        .step.active + .line {
+            background-color: #007bff;
+        }
+
+        .progress-separator {
+            height: 2px;
+            background-color: #007bff;
+            margin: 10px 0 20px 0;
+            border-radius: 2px;
+        }
+        /* ▲ ステップバー共通 ▲ */
+    </style>
 </head>
 <body>
-<h1>振込完了</h1>
-<p><input type="button" value="振込に戻る" onclick="window.location='/bankTransfer';"/></p>
-</body>
+<div class="content">
 
+    <!-- ▼ ステップバー ▼ -->
+    <div class="progress-container">
+        <!-- 1. 入力 -->
+        <div class="step active">
+            <div class="circle"></div>
+            <div class="label">1. 入力</div>
+        </div>
+        <div class="line active"></div>
+
+        <!-- 2. 確認 -->
+        <div class="step active">
+            <div class="circle"></div>
+            <div class="label">2. 確認</div>
+        </div>
+        <div class="line active"></div>
+
+        <!-- 3. 完了 -->
+        <div class="step active">
+            <div class="circle"></div>
+            <div class="label">3. 完了</div>
+        </div>
+    </div>
+    <div class="progress-separator"></div>
+    <!-- ▲ ステップバー ▲ -->
+
+    <h1>振込完了</h1>
+    <p>お振込が正常に完了しました。</p>
+
+    <input type="button" value="振込に戻る" onclick="window.location='/bankTransfer';" class="form-control-button form-clear-button"/>
+
+</div>
+</body>
 </html>
