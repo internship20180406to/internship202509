@@ -13,20 +13,6 @@ public class InvestmentTrustForm {
     private String bankName;
     @NonNull
     private Integer bankAccountNum;
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public Integer getBankAccountNum() {
-        return bankAccountNum;
-    }
-
-    public void setBankAccountNum(Integer bankAccountNum) {
-        this.bankAccountNum = bankAccountNum;
-    }
+    @NonNull
+    private String branchName;
 }

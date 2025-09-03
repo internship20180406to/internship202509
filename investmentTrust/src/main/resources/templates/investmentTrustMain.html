@@ -67,7 +67,16 @@
             <select th:field="*{bankName}" class="form-control">
                 <option th:each="option : ${nameOptions}"
                         th:value="${option}"
-                        th:text="${option}">選択肢
+                        th:text="${option}"
+                        id="bankName">選択肢
+                </option>
+            </select></p>
+        <p><label class="ml-1">支店名: <small class="text-danger ml-1">※</small></label><br>
+            <select th:field="*{branchName}" class="form-control">
+                <option th:each="option : ${branchOptions}"
+                        th:value="${option}"
+                        th:text="${option}"
+                        id="branchName">選択肢
                 </option>
             </select></p>
         <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
