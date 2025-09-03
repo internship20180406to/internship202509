@@ -220,7 +220,9 @@
         <div class="form-row"><label class="ml-1">購入者名: <span th:text="*{name}"></span></label></div>
         <h2>購入情報</h2>
         <div class="form-row"><label class="ml-1">銘柄選択: <span th:text="*{fundName}"></span></label></div>
-        <div class="form-row"><label class="ml-1">購入金額: <span th:text="*{money}"></span></label></div>
+        <div class="form-row"><label class="ml-1">購入方法: <span th:text="*{methodName}"></span></label></div>
+        <div class="form-row" ><label class="ml-1" th:if="*{money} != null and *{money} != ''">購入金額: <span th:text="*{money}"></span></label></div>
+        <div class="form-row" ><label class="ml-1" th:if="*{unit} != null and *{unit} != ''">購入口数: <span th:text="*{unit}"></span></label></div>
 
         <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
         <input type="hidden" name="bankName" th:value="*{bankName}"/>
@@ -228,7 +230,9 @@
         <input type="hidden" name="bankAccountType" th:value="*{bankAccountType}"/>
         <input type="hidden" name="name" th:value="*{name}"/>
         <input type="hidden" name="fundName" th:value="*{fundName}"/>
+        <input type="hidden" name="methodName" th:value="*{methodName}"/>
         <input type="hidden" name="money" th:value="*{money}"/>
+        <input type="hidden" name="unit" th:value="*{unit}"/>
 
 
         <div class="button-wrapper">

@@ -75,12 +75,13 @@
          padding-bottom: 0px;
          border-radius: 10px;
          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-         height: 850px;
+         height: 93%;
          overflow: auto;
 
         }
         .form-control {
             width: 100%;
+            max-width: 500px;
             padding: 8px;
             margin: 5px 0;
             box-sizing: border-box;
@@ -130,16 +131,19 @@
 
         .form-row {
           font-size: 20px;
+          max-width: 600px;
           width: 100%;
           display: flex;
           align-items: center;
           margin: 0 auto;
           margin-bottom: 14px;
+          flex-direction: row;
         }
 
         .form-row label {
           min-width: 200px; /* ラベルの幅を固定 */
           white-space: nowrap;
+          margin-right: 10px;
         }
 
         .form-row select {
@@ -205,6 +209,8 @@
 
 
 
+
+
     </style>
 </head>
 <body>
@@ -265,7 +271,7 @@
 
         <div class="form-row">
             <label class="ml-1">購入者名: <small class="text-danger ml-1">※</small><span id="nameWarning" class="warning" style="display:none;">必須</span></label><br>
-            <input type="text" th:field="*{name}" class="form-control" placeholder="例)ふくふくたろう"/></p>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="例)ふくのすけ"/></p>
         </div>
         <h2>購入情報</h2>
         <div class="form-row">
@@ -282,12 +288,35 @@
             </select>
         </div>
 
-
-
         <div class="form-row">
-            <label class="ml-1">購入金額 : <small class="text-danger ml-1">※</small><span id="moneyWarning" class="warning" style="display:none;">必須</span></label><br>
-            <input type="number" th:field="*{money}" class="form-control" placeholder="例)1234567"/>
+            <label class="ml-1">購入方法: <small class="text-danger ml-1">※</small><span id="methodWarning" class="warning" style="display:none;">必須</span></label><br>
+            <select th:field="*{methodName}" class="form-control">
+                <option value="">-- 選択してください --</option>
+                <option value="金額指定">金額指定</option>
+                <option value="口数指定">口数指定</option>
+
+            </select>
         </div>
+
+
+        <div class="form-row" id="moneyRow" style="display:none;">
+            <label class="ml-1" >購入金額: <small class="text-danger ml-1">※</small><span id="moneyWarning" class="warning" style="display:none;">必須</span></label>
+            <input type="number" th:field="*{money}" id="money" class="form-control" placeholder="例)10000"/>
+
+        </div>
+
+
+
+        <div class="form-row" id="unitRow" style="display:none;">
+            <label class="ml-1" for="unit">
+                購入口数: <small class="text-danger ml-1">※</small><span id="unitWarning" class="warning" style="display:none;">必須</span>
+            </label>
+            <input type="number" th:field="*{unit}" id="unit" class="form-control" placeholder="例)5000"/>
+
+        </div>
+
+
+
 
         <p style="text-align: center;"><input type="submit" value="確認"
                                               class="form-control-button form-confirmation-button"/>
@@ -298,126 +327,127 @@
 
 
 <script>
-
     document.addEventListener("DOMContentLoaded", function () {
-  const bankSelect = document.getElementById("bankSelect");
-  const branchSelect = document.getElementById("branchSelect");
-  const form = document.querySelector("form");
+      const bankSelect = document.getElementById("bankSelect");
+      const branchSelect = document.getElementById("branchSelect");
+      const form = document.querySelector("form");
+      const methodSelect = document.querySelector('[name="methodName"]');
+      const moneyRow = document.getElementById("moneyRow");
+      const unitRow = document.getElementById("unitRow");
 
-  // 銀行選択時の支店読み込み
-  bankSelect.addEventListener("change", function () {
-    const selectedBank = this.value;
-    branchSelect.innerHTML = '<option value="">-- 読み込み中 --</option>';
+      // 銀行選択時の支店読み込み
+      bankSelect.addEventListener("change", function () {
+        const selectedBank = this.value;
+        branchSelect.innerHTML = '<option value="">-- 読み込み中 --</option>';
 
-    if (selectedBank) {
-      fetch(`/getBranches?bankName=${encodeURIComponent(selectedBank)}`)
-        .then(response => response.json())
-        .then(branches => {
-          branchSelect.innerHTML = '';
-          if (branches.length > 0) {
-            branches.forEach(branch => {
-              const option = document.createElement("option");
-              option.value = branch;
-              option.text = branch;
-              branchSelect.appendChild(option);
+        if (selectedBank) {
+          fetch(`/getBranches?bankName=${encodeURIComponent(selectedBank)}`)
+            .then(response => response.json())
+            .then(branches => {
+              branchSelect.innerHTML = '';
+              if (branches.length > 0) {
+                branches.forEach(branch => {
+                  const option = document.createElement("option");
+                  option.value = branch;
+                  option.text = branch;
+                  branchSelect.appendChild(option);
+                });
+              } else {
+                branchSelect.innerHTML = '<option value="">支店が見つかりません</option>';
+              }
+            })
+            .catch(error => {
+              console.error('支店の取得に失敗しました', error);
+              branchSelect.innerHTML = '<option value="">エラーが発生しました</option>';
             });
+        } else {
+          branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
+        }
+      });
+
+      // 購入方法の選択に応じて入力欄を切り替え
+      methodSelect.addEventListener("change", function () {
+        const selected = this.value;
+        if (selected === "金額指定") {
+          moneyRow.style.display = "flex";
+          unitRow.style.display = "none";
+        } else if (selected === "口数指定") {
+          moneyRow.style.display = "none";
+          unitRow.style.display = "flex";
+        } else {
+          moneyRow.style.display = "none";
+          unitRow.style.display = "none";
+        }
+      });
+
+      // フォームリセット時の支店初期化
+      form.addEventListener("reset", function () {
+        branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
+        moneyRow.style.display = "flex";
+        unitRow.style.display = "none";
+      });
+
+      // バリデーション処理
+      form.addEventListener("submit", function (e) {
+        let isValid = true;
+
+        const bankName = document.getElementById("bankSelect").value;
+        const branchName = document.getElementById("branchSelect").value;
+        const accountType = document.querySelector('[name="bankAccountType"]').value;
+        const accountNum = document.querySelector('[name="bankAccountNum"]').value;
+        const name = document.querySelector('[name="name"]').value;
+        const fundName = document.querySelector('[name="fundName"]').value;
+        const methodName = document.querySelector('[name="methodName"]').value;
+        const money = document.querySelector('[name="money"]').value;
+        const unit = document.querySelector('[name="unit"]').value;
+
+        const warnings = {
+          bank: document.getElementById("bankWarning"),
+          branch: document.getElementById("branchWarning"),
+          type: document.getElementById("typeWarning"),
+          account: document.getElementById("accountWarning"),
+          name: document.getElementById("nameWarning"),
+          fund: document.getElementById("fundWarning"),
+          methodName: document.getElementById("methodWarning"),
+          money: document.getElementById("moneyWarning"),
+          unit: document.getElementById("unitWarning")
+        };
+
+        // 共通項目のバリデーション
+        if (bankName === "") { warnings.bank.style.display = "inline"; isValid = false; } else { warnings.bank.style.display = "none"; }
+        if (branchName === "") { warnings.branch.style.display = "inline"; isValid = false; } else { warnings.branch.style.display = "none"; }
+        if (accountType === "") { warnings.type.style.display = "inline"; isValid = false; } else { warnings.type.style.display = "none"; }
+        if (accountNum === "" || accountNum.length < 6 || accountNum.length > 8) { warnings.account.style.display = "inline"; isValid = false; } else { warnings.account.style.display = "none"; }
+        if (name === "") { warnings.name.style.display = "inline"; isValid = false; } else { warnings.name.style.display = "none"; }
+        if (fundName === "") { warnings.fund.style.display = "inline"; isValid = false; } else { warnings.fund.style.display = "none"; }
+        if (methodName === "") { warnings.methodName.style.display = "inline"; isValid = false; } else { warnings.methodName.style.display = "none"; }
+
+        // 購入方法に応じたバリデーション
+        if (methodName === "金額指定") {
+          if (money === "") {
+            warnings.money.style.display = "inline";
+            isValid = false;
           } else {
-            branchSelect.innerHTML = '<option value="">支店が見つかりません</option>';
+            warnings.money.style.display = "none";
           }
-        })
-        .catch(error => {
-          console.error('支店の取得に失敗しました', error);
-          branchSelect.innerHTML = '<option value="">エラーが発生しました</option>';
-        });
-    } else {
-      branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
-    }
-  });
+          warnings.unit.style.display = "none";
+        } else if (methodName === "口数指定") {
+          if (unit === "") {
+            warnings.unit.style.display = "inline";
+            isValid = false;
+          } else {
+            warnings.unit.style.display = "none";
+          }
+          warnings.money.style.display = "none";
+        }
 
-  // フォームリセット時の支店初期化
-  form.addEventListener("reset", function () {
-    branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
-  });
-
-  //  バリデーション処理（submit）
-  form.addEventListener("submit", function (e) {
-    let isValid = true;
-
-    const bankName = document.getElementById("bankSelect").value;
-    const branchName = document.getElementById("branchSelect").value;
-    const accountType = document.querySelector('[name="bankAccountType"]').value;
-    const accountNum = document.querySelector('[name="bankAccountNum"]').value;
-    const name = document.querySelector('[name="name"]').value;
-    const fundName = document.querySelector('[name="fundName"]').value;
-    const money = document.querySelector('[name="money"]').value;
-
-    const warnings = {
-      bank: document.getElementById("bankWarning"),
-      branch: document.getElementById("branchWarning"),
-      type: document.getElementById("typeWarning"),
-      account: document.getElementById("accountWarning"),
-      name: document.getElementById("nameWarning"),
-      fund: document.getElementById("fundWarning"),
-      money: document.getElementById("moneyWarning")
-    };
-
-    if (bankName === "") {
-      warnings.bank.style.display = "inline";
-      isValid = false;
-    } else {
-      warnings.bank.style.display = "none";
-    }
-
-    if (branchName === "") {
-      warnings.branch.style.display = "inline";
-      isValid = false;
-    } else {
-      warnings.branch.style.display = "none";
-    }
-
-    if (accountType === "") {
-      warnings.type.style.display = "inline";
-      isValid = false;
-    } else {
-      warnings.type.style.display = "none";
-    }
-
-    if (accountNum === "" || accountNum.length < 6 || accountNum.length > 8) {
-      warnings.account.style.display = "inline";
-      isValid = false;
-    } else {
-      warnings.account.style.display = "none";
-    }
-
-    if (name === "") {
-      warnings.name.style.display = "inline";
-      isValid = false;
-    } else {
-      warnings.name.style.display = "none";
-    }
-
-    if (fundName === "") {
-      warnings.fund.style.display = "inline";
-      isValid = false;
-    } else {
-      warnings.fund.style.display = "none";
-    }
-
-    if (money === "") {
-      warnings.money.style.display = "inline";
-      isValid = false;
-    } else {
-      warnings.money.style.display = "none";
-    }
-
-    if (!isValid) {
-      e.preventDefault();
-    }
-  });
-});
-
-
+        if (!isValid) {
+          e.preventDefault();
+        }
+      });
+    });
 </script>
+
 
 
 

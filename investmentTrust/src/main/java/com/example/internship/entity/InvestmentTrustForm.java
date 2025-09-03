@@ -27,6 +27,12 @@ public class InvestmentTrustForm {
     @NonNull
     private String money;
 
+    @NonNull
+    private String methodName;
+
+    @NonNull
+    private String unit;
+
 
     public String getBankName() {
         return bankName;
@@ -78,6 +84,22 @@ public class InvestmentTrustForm {
 
     public void setMoney(String money) {
         this.money = money;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
 

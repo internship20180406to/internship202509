@@ -53,6 +53,8 @@ public class InvestmentTrustController {
         model.addAttribute("name", investmentTrustForm.getName());
         model.addAttribute("fundName", investmentTrustForm.getFundName());
         model.addAttribute("money", investmentTrustForm.getMoney());
+        model.addAttribute("methodName", investmentTrustForm.getMethodName());
+        model.addAttribute("unit", investmentTrustForm.getUnit());
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
         return "investmentTrustConfirmation";
     }
