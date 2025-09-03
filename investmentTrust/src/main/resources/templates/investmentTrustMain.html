@@ -331,8 +331,57 @@
         form.addEventListener("reset", function () {
             branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
         });
+
+        form.addEventListener("submit", function (e) {
+            let isValid = true;
+            let messages = [];
+
+            const bankName = document.getElementById("bankSelect").value;
+            const branchName = document.getElementById("branchSelect").value;
+            const accountType = document.querySelector('[name="bankAccountType"]').value;
+            const accountNum = document.querySelector('[name="bankAccountNum"]').value;
+            const name = document.querySelector('[name="name"]').value;
+            const fundName = document.querySelector('[name="fundName"]').value;
+            const money = document.querySelector('[name="money"]').value;
+
+            if (!bankName) {
+                isValid = false;
+                messages.push("金融機関名を選択してください。");
+            }
+            if (!branchName) {
+                isValid = false;
+                messages.push("支店名を選択してください。");
+            }
+            if (!accountType) {
+                isValid = false;
+                messages.push("科目名を選択してください。");
+            }
+            if (!accountNum) {
+                isValid = false;
+                messages.push("口座番号を入力してください。");
+            }
+            if (!name) {
+                isValid = false;
+                messages.push("購入者名を入力してください。");
+            }
+            if (!fundName) {
+                isValid = false;
+                messages.push("銘柄を選択してください。");
+            }
+            if (!money) {
+                isValid = false;
+                messages.push("購入金額を入力してください。");
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // 送信を止める
+                alert(messages.join("\n")); // 注意書きを表示
+            }
+        });
     });
 </script>
+
+
 
 
 </body>
