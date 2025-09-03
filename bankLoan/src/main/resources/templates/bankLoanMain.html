@@ -190,7 +190,11 @@
                 </option>
             </select></p>
         <p><label class="ml-1">支店名: <small class="text-danger ml-1">※必須</small></label><br>
-            <input type="text" th:field="*{branchName}" class="form-control" id="branchName" placeholder="支店名を記入してください"/></p>
+            <select th:field="*{branchName}" class="form-control" id = "branchName" disabled>
+                <option value="">--選択してください--</option>
+
+
+            </select></p>
         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※必須</small></label><br>
             <select th:field="*{subjectName}" class="form-control" id="subjectName">
                 <option value="">--選択してください--</option>
@@ -218,6 +222,12 @@
     </form>
 
     <script>
+        const branchOptions={
+            "a銀行":["a支店1", "a支店2", "a支店3"],
+            "b銀行":["b支店1", "b支店2"],
+            "c銀行":["c支店1", "c支店2", "c支店3"],
+            "d銀行":["d支店1", "d支店2"]
+        };
 
         function checkForm(){
             const fields = [
@@ -232,7 +242,7 @@
             ];
 
             const bankAccountNum=document.getElementById("bankAccountNum").value.trim();
-            if(!/^\d{7}$/.test(bankAccountNum)){
+            if(bankAccountNum && !/^\d{7}$/.test(bankAccountNum)){
                 alert("口座番号は7桁の数字で入力してください!");
                 document.getElementById("bankAccountNum").focus();
                 return false;
@@ -249,6 +259,30 @@
 
             return true;
         }
+
+        const bankNameSelect = document.getElementById("bankName");
+        const branchNameSelect = document.getElementById("branchName");
+
+        bankNameSelect.addEventListener('change', function(){
+            const selectedBank = this.value;
+
+            branchNameSelect.innerHTML = '<option value="">--選択してください--</option>';
+            if(selectedBank === ""){
+                branchNameSelect.disabled = true;
+                return;
+            }
+
+            const branches = branchOptions[selectedBank] || [];
+
+            branches.forEach(branch => {
+                const option = document.createElement("option");
+                option.value = branch;
+                option.textContent = branch;
+                branchNameSelect.appendChild(option);
+            });
+
+            branchNameSelect.disabled = false;
+        });
 
 
     </script>
