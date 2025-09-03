@@ -303,42 +303,42 @@
                 <div class="field">
                     <label class="label">誕生日 <span class="req">必須</span></label>
                     <div class="control">
-                        <input type="number" th:field="*{birthday}" class="input" placeholder="20021102"/>
+                        <input type="number" th:field="*{birthday}" class="input" required placeholder="20021102"/>
                     </div>
                 </div>
 
                 <div class="field full">
                     <label class="label">住所 <span class="req">必須</span></label>
                     <div class="control">
-                        <input th:field="*{address}" class="input" placeholder="福岡県福岡市中央区天神1丁目1-1"/>
+                        <input th:field="*{address}" class="input" required placeholder="福岡県福岡市中央区天神1丁目1-1"/>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">電話番号 <span class="req">必須</span></label>
                     <div class="control">
-                        <input th:field="*{phoneNumber}" class="input" placeholder="09012345678"/>
+                        <input th:field="*{phoneNumber}" class="input" required placeholder="09012345678"/>
                     </div>
                 </div>
 
                 <div class="field full">
                     <label class="label">メールアドレス <span class="req">必須</span></label>
                     <div class="control">
-                        <input type="email" th:field="*{mailAddress}" class="input" placeholder="bankloan@internship.com"/>
+                        <input type="email" th:field="*{mailAddress}" class="input" required placeholder="bankloan@internship.com"/>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">職業 <span class="req">必須</span></label>
                     <div class="control">
-                        <input th:field="*{occupation}" class="input" placeholder="会社員"/>
+                        <input th:field="*{occupation}" class="input" required placeholder="会社員"/>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">勤務先 <span class="req">必須</span></label>
                     <div class="control">
-                        <input th:field="*{workPlace}" class="input" placeholder="株式会社●●"/>
+                        <input th:field="*{workPlace}" class="input" required placeholder="株式会社●●"/>
                     </div>
                 </div>
 
@@ -391,5 +391,7 @@
         </form>
     </div>
 </div>
+
+<script th:inline="javascript" src="/js/bankLoanMain.js"></script>
 </body>
 </html>
