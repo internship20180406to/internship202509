@@ -20,22 +20,11 @@ public class InvestmentTrustController {
 
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
-//        List<String> list = new ArrayList<String>();
-//        list.add("山陰共同銀行");
-//        list.add("山陽共同銀行");
-//        list.add("山中共同銀行");
-//        model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
-//        model.addAttribute("nameOptions", list);
-//        model.addAttribute("branchOptions", "山支店");
-//        model.addAttribute("branch2Options", "川支店");
-//        model.addAttribute("branch3Options", "空支店");
-        // 銀行リスト
         List<String> bankList = new ArrayList<String>();
         bankList.add("山陰共同銀行");
         bankList.add("山陽共同銀行");
         bankList.add("山中共同銀行");
 
-        // 支店データをマップで管理（オプション1: サーバーサイド）
         Map<String, List<String>> branchMap = new HashMap<>();
         branchMap.put("山陰共同銀行", Arrays.asList("山支店", "陰支店", "北支店"));
         branchMap.put("山陽共同銀行", Arrays.asList("陽支店", "南支店", "西支店"));
