@@ -183,6 +183,7 @@
     onsubmit = "return checkForm()">
         <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※必須</small></label><br>
             <select th:field="*{bankName}" class="form-control" id = "bankName">
+                <option value="">--選択してください--</option>
                 <option th:each="option : ${nameOptions}"
                             th:value="${option}"
                             th:text="${option}">選択肢
@@ -192,6 +193,7 @@
             <input type="text" th:field="*{branchName}" class="form-control" id="branchName" placeholder="支店名を記入してください"/></p>
         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※必須</small></label><br>
             <select th:field="*{subjectName}" class="form-control" id="subjectName">
+                <option value="">--選択してください--</option>
                 <option th:each="option : ${subjectOptions}"
                         th:value="${option}"
                         th:text="${option}">選択肢
@@ -226,13 +228,20 @@
             var borrowingIncome = document.getElementById("borrowingIncome");
             var interestRate = document.getElementById("interestRate");
 
-            if(bankName.value === "" || branchName.value === "" || subjectName.value === "" || bankAccountNum.value === "" ||
-             debtorName.value === "" || loanAmount.value === "" || borrowingIncome.value === "" || interestRate.value === ""){
-                alert("未入力の必須項目があります!");
-                return false;
+            var fields=[ bankName, branchName, subjectName, bankAccountNum, debtorName, loanAmount, borrowingIncome, interestRate ];
+
+            for (var i = 0; i < fields.length; i++){
+                if(fields[i] === ""){
+                    alert("未入力の必須項目があります!");
+                    fields[i].focus();
+                    return false;
+                }
             }
             return true;
         }
+
+
+
     </script>
 </div>
 </body>

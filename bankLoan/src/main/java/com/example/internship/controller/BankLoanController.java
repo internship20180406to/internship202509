@@ -23,13 +23,12 @@ public class BankLoanController {
     public String bankTransfer(Model model) {
         model.addAttribute("bankLoanApplication", new BankLoanForm());
         List<String> nameOptions = new ArrayList<String>();
-        nameOptions.add("選択してください");
-        nameOptions.add("綾鷹銀行");
-        nameOptions.add("ハイチュウ銀行");
-        nameOptions.add("アルフォート銀行");
+        nameOptions.add("a銀行");
+        nameOptions.add("b銀行");
+        nameOptions.add("c銀行");
+        nameOptions.add("d銀行");
 
         List<String> subjectOptions = new ArrayList<String>();
-        subjectOptions.add("選択してください");
         subjectOptions.add("普通");
         subjectOptions.add("定期");
         subjectOptions.add("当座");
