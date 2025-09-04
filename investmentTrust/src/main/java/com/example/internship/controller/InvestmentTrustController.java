@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,11 +24,24 @@ public class InvestmentTrustController {
     @Autowired
     private OrderInvestmentTrustService orderInvestmentTrustService;
 
+    @ModelAttribute("investmentTrustApplication")
+    public InvestmentTrustForm setupForm() {
+        return new InvestmentTrustForm();
+    }
+
+
     @GetMapping("/investmentTrust")
-    public String bankTransfer(Model model) {
-        model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
-        List<String> nameOptions = Arrays.asList("N銀行", "E銀行", "W銀行", "S銀行");
-        model.addAttribute("nameOptions", nameOptions);
+//    public String bankTransfer(Model model) {
+
+
+    public String bankTransfer(@ModelAttribute("investmentTrustApplication") InvestmentTrustForm form, Model model) {
+
+//        model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
+//        model.addAttribute("SubjectOptions", Arrays.asList("普通", "貯蓄", "当座"));
+
+        model.addAttribute("currentStep", 1);
+//        List<String> nameOptions = Arrays.asList("N銀行", "E銀行", "W銀行", "S銀行");
+//        model.addAttribute("nameOptions", nameOptions);
 
 //        Map<String, List<String>> shopOptionsMap = new HashMap<>();
 //        shopOptionsMap.put("N銀行", Arrays.asList("N1支店", "N2支店", "N3支店", "N4支店"));
@@ -37,17 +51,17 @@ public class InvestmentTrustController {
 //        model.addAttribute("shopOptionsMap", shopOptionsMap);
 
 
-        model.addAttribute("nameOptions", nameOptions);
-        List<String> SubjectOptions = Arrays.asList("普通", "貯蓄", "当座", "定期");
+//        model.addAttribute("nameOptions", nameOptions);
+        List<String> SubjectOptions = Arrays.asList("普通", "貯蓄", "当座");
         model.addAttribute("SubjectOptions", SubjectOptions);
-        List<String> BrandOptions = Arrays.asList("PONY", "任天丼", "パナソ肉");
-        model.addAttribute("BrandOptions", BrandOptions);
+//        List<String> BrandOptions = Arrays.asList("PONY", "任天丼", "パナソ肉");
+//        model.addAttribute("BrandOptions", BrandOptions);
         return "investmentTrustMain";
     }
 
     @PostMapping("/investmentTrustConfirmation")
     public String confirmation(@ModelAttribute @Validated InvestmentTrustForm investmentTrustForm, Model model) {
-
+        model.addAttribute("currentStep", 2);
         String bankName = investmentTrustForm.getBankName();
 
         String ShopName = investmentTrustForm.getShopName();
@@ -102,11 +116,26 @@ public class InvestmentTrustController {
         return "investmentTrustConfirmation";
     }
 
-    @PostMapping("/investmentTrustCompletion")
-    public String completion(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
-        orderInvestmentTrustService.orderInvestmentTrust(investmentTrustForm);
-        return "investmentTrustCompletion";
-    }
+//    @PostMapping("/investmentTrustCompletion")
+//    public String completion(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
+////    public String complete(@ModelAttribute("investmentTrustApplication") InvestmentTrustForm form,
+////                           SessionStatus status,
+////                           Model model) {
+//        model.addAttribute("currentStep", 3);
+//        orderInvestmentTrustService.orderInvestmentTrust(investmentTrustForm);
+////        status.setComplete();
+//        return "investmentTrustCompletion";
+//    }
+
+@PostMapping("/investmentTrustCompletion")
+public String completion(@ModelAttribute("investmentTrustApplication") InvestmentTrustForm investmentTrustForm,
+                         SessionStatus status,
+                         Model model) {
+    model.addAttribute("currentStep", 3);
+    orderInvestmentTrustService.orderInvestmentTrust(investmentTrustForm);
+    status.setComplete(); // セッションをクリア！
+    return "investmentTrustCompletion";
+}
 
 
 

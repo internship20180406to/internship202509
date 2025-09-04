@@ -13,13 +13,13 @@
     text-align: center;
     }
 
-    h1 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 30px;
-    background: linear-gradient(45deg,#75c7f0,#fafafa)!important;
-    padding: 10px 0;
-    }
+<!--    h1 {-->
+<!--    margin-top: 0;-->
+<!--    margin-bottom: 20px;-->
+<!--    font-size: 30px;-->
+<!--    background: linear-gradient(45deg,#75c7f0,#fafafa)!important;-->
+<!--    padding: 10px 0;-->
+<!--    }-->
 
     .confirm-table {
     width: 460px;
@@ -100,9 +100,62 @@
     .btn-clear:hover {
     color: #000;
     }
+
+.step.is-complete {
+  background-color: #1B85FB;
+  color: #fff;
+}
+
+.step.is-complete::after {
+  border-left-color: #1B85FB;
+}
+
+.app-header {
+margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between; /* 左右に分ける */
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #75c7f0, #fafafa)!important;
+}
+
+
+.app-header h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 24px;
+  background: none; /* ← これが重要！ */
+  padding: 0;
+  z-index: 1;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 4px;
+  white-space: nowrap;
+  background: none;
+  margin-left: auto;
+}
+
+
+.step {
+  position: relative;
+  padding: 6px 16px;
+  background-color: #e0e0e0;
+  color: #333;
+  clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+  font-size: 12px;
+}
+
+.step.is-complete {
+  background-color: #1B85FB;
+  color: #fff;
+}
 </style>
 </head>
-<!--<body>-->
+<body>
 <!--<h1>投資信託注文確認画面</h1>-->
 <!--<form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">-->
 <!--    <p>金融機関名: <span th:text="*{bankName}"></span></p>-->
@@ -127,7 +180,14 @@
 <!--        <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>-->
 <!--    </p>-->
 <!--</form>-->
-<h1>投資信託注文確認画面</h1>
+<div class="app-header">
+    <h1 style="text-align: center">投資信託注文確認画面</h1>
+    <div class="progress-bar">
+        <div class="step" th:classappend="${currentStep >= 1} ? 'is-complete'">入力</div>
+        <div class="step" th:classappend="${currentStep >= 2} ? 'is-complete'">確認</div>
+        <div class="step" th:classappend="${currentStep == 3} ? 'is-complete'">完了</div>
+    </div>
+</div>
 <form th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
     <table class="confirm-table">
         <tr><th>金融機関名</th><td th:text="*{bankName}"></td></tr>

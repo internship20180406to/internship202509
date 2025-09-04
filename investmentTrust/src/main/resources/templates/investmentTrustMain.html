@@ -122,8 +122,8 @@ textarea::placeholder {
 }
 
 .form-table td {
-  border-top: 1px solid #d7d7d7;
-  border-bottom: 1px solid #d7d7d7;
+  border-top: 2px solid #d7d7d7;
+  border-bottom: 2px solid #d7d7d7;
   padding: 10px 15px;
   text-align: left;
   vertical-align: middle;
@@ -132,8 +132,8 @@ textarea::placeholder {
 }
 
 .form-table th {
-  border-top: 1px solid #d7d7d7;
-  border-bottom: 1px solid #d7d7d7;
+  border-top: 2px solid #d7d7d7;
+  border-bottom: 2px solid #d7d7d7;
   padding: 10px 15px;
   text-align: left;
   vertical-align: middle;
@@ -236,13 +236,82 @@ body{
   margin: 0;
   text-align: center;
 }
-h1 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 30px;
-    background: linear-gradient(45deg,#75c7f0,#fafafa)!important;
-    padding: 10px 0;
-    }
+<!--h1 {-->
+<!--    margin-top: 0;-->
+<!--    margin-bottom: 20px;-->
+<!--    font-size: 30px;-->
+<!--    background: linear-gradient(45deg,#75c7f0,#fafafa)!important;-->
+<!--    padding: 10px 0;-->
+<!--    }-->
+
+<!--.step {-->
+<!--  background-color: #e0e0e0;-->
+<!--  color: #333;-->
+<!--}-->
+
+.step.is-complete {
+  background-color: #1B85FB;
+  color: #fff;
+}
+
+.step.is-complete::after {
+  border-left-color: #1B85FB;
+}
+
+.app-header {
+margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between; /* 左右に分ける */
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #75c7f0, #fafafa)!important;
+}
+
+
+<!--.app-header h1 {-->
+<!--  margin: 0;-->
+<!--  font-size: 24px;-->
+<!--  text-align: center;-->
+<!--  flex: 1;-->
+<!--  background: none;-->
+<!--  padding: 0;-->
+<!--}-->
+
+.app-header h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 24px;
+  background: none; /* ← これが重要！ */
+  padding: 0;
+  z-index: 1;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 4px;
+  white-space: nowrap;
+  background: none;
+  margin-left: auto;
+}
+
+
+.step {
+  position: relative;
+  padding: 6px 16px;
+  background-color: #e0e0e0;
+  color: #333;
+  clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+  font-size: 12px;
+}
+
+.step.is-complete {
+  background-color: #1B85FB;
+  color: #fff;
+}
+
+
 
 
     </style>
@@ -251,17 +320,26 @@ h1 {
 
 <div class="content">
 
-    <h1 style="text-align: center">投資信託注文情報入力</h1>
+    <div class="app-header">
+        <h1 style="text-align: center">投資信託注文情報入力</h1>
+
+        <div class="progress-bar">
+            <div class="step" th:classappend="${currentStep >= 1} ? 'is-complete'">入力</div>
+            <div class="step" th:classappend="${currentStep >= 2} ? 'is-complete'">確認</div>
+            <div class="step" th:classappend="${currentStep == 3} ? 'is-complete'">完了</div>
+        </div>
+    </div>
+
     <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
         <table class="form-table">
             <tr>
                 <th>金融機関名 <small class="text-danger ml-1" style="color:red">※必須</small></th>
                 <td>
 
-                    <select id="bank" th:field="*{bankName}" class="form-control" name="bank" >
-                        <option value="" disabled selected>金融機関名を選択してください</option>
+                    <select id="bank" th:field="*{bankName}" th:attr="data-selected=*{bankName}" class="form-control" name="bank" >
+<!--                        <option value="" disabled selected>金融機関名を選択してください</option>-->
 <!--                        <option disabled selected>支店名を選択してください</option>-->
-                        <option th:each="option : ${nameOptions}" th:value="${option}" th:text="${option}">選択肢</option>
+<!--                        <option th:each="option : ${nameOptions}" th:value="${option}" th:text="${option}">選択肢</option>-->
                     </select>
                 </td>
 
@@ -271,7 +349,7 @@ h1 {
                 <td>
 <!--                    <input type="text" th:field="*{ShopName}" class="form-control" placeholder="●●点"/>-->
 
-                    <select th:field="*{ShopName}" class="form-control" id="shop-name" name="shop-name">
+                    <select th:field="*{ShopName}" th:attr="data-selected=*{ShopName}" class="form-control" id="shop-name" name="shop-name">
 <!--                        <option th:each="option : ${ShopOptions}" th:value="${option}" th:text="${option}">選択肢</option>-->
                     </select>
                 </td>
@@ -295,7 +373,7 @@ h1 {
             <tr>
                 <th>銘柄選択 <small class="text-danger ml-1" style="color:red">※必須</small></th>
                 <td>
-                    <select id="BrandName" th:field="*{BrandName}" th:classappend="${#fields.hasErrors('BrandName')} ? 'error-input'" class="form-control">
+                    <select id="BrandName" th:field="*{BrandName}" th:attr="data-selected=*{BrandName}"th:classappend="${#fields.hasErrors('BrandName')} ? 'error-input'" class="form-control">
                         <option th:each="option : ${BrandOptions}" th:value="${option}" th:text="${option}">
                         <option value="" disabled selected>銘柄を選択してください</option>
                         </option>

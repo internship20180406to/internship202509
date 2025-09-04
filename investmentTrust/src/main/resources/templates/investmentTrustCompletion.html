@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>注文完了画面</title>
@@ -12,13 +12,13 @@
             text-align: center;
         }
 
-        h1 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 30px;
-            background: linear-gradient(45deg,#75c7f0,#fafafa)!important;
-            padding: 10px 0;
-        }
+<!--        h1 {-->
+<!--            margin-top: 0;-->
+<!--            margin-bottom: 20px;-->
+<!--            font-size: 30px;-->
+<!--            background: linear-gradient(45deg,#75c7f0,#fafafa)!important;-->
+<!--            padding: 10px 0;-->
+<!--        }-->
 
         .complete-box {
             background-color: #fff;
@@ -77,10 +77,77 @@
         .btn-back:hover {
             color: #000;
         }
+
+<!--        .step {-->
+<!--  background-color: #e0e0e0;-->
+<!--  color: #333;-->
+<!--}-->
+
+.step.is-complete {
+  background-color: #1B85FB;
+  color: #fff;
+}
+
+.step.is-complete::after {
+  border-left-color: #1B85FB;
+}
+
+.app-header {
+margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between; /* 左右に分ける */
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #75c7f0, #fafafa)!important;
+}
+
+
+.app-header h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 24px;
+  background: none; /* ← これが重要！ */
+  padding: 0;
+  z-index: 1;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 4px;
+  white-space: nowrap;
+  background: none;
+  margin-left: auto;
+}
+
+
+.step {
+  position: relative;
+  padding: 6px 16px;
+  background-color: #e0e0e0;
+  color: #333;
+  clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+  font-size: 12px;
+}
+
+.step.is-complete {
+  background-color: #1B85FB;
+  color: #fff;
+}
+
     </style>
 </head>
 <body>
-<h1>注文完了</h1>
+<div class="app-header">
+    <h1>注文完了</h1>
+    <div class="progress-bar">
+        <div class="step" th:classappend="${currentStep >= 1} ? 'is-complete'">入力</div>
+        <div class="step" th:classappend="${currentStep >= 2} ? 'is-complete'">確認</div>
+        <div class="step" th:classappend="${currentStep == 3} ? 'is-complete'">完了</div>
+    </div>
+</div>
+
 <div class="complete-box">
     ご注文ありがとうございました。<br>
     内容を確認のうえ、処理を進めさせていただきます。

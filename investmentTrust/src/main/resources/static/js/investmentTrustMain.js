@@ -41,9 +41,19 @@ const shopoptions = {
 const setShopOptions = function(selectedbank){
       const selectshopName = document.getElementById('shop-name');
 
+       // 初期化
+       selectshopName.innerHTML = ''; // 一旦空にする
 
-      selectshopName.innerHTML = '<option disabled selected>支店名を選択してください</option>';
-      selectshopName.disabled = false;
+       // プレースホルダー追加
+//       const placeholder = document.createElement('option');
+//       placeholder.value = '';
+//      selectshopName.innerHTML = '<option disabled selected>支店名を選択してください</option>';
+      selectshopName.innerText = '--支店名を選択してください--';
+//      selectshopName.disabled = false;
+//
+//      placeholder.disabled = true;
+//      placeholder.selected = true;
+//      selectshopName.appendChild(placeholder);
 
       shopoptions[selectedbank].forEach((shop) => {
         const option = document.createElement('option');
@@ -76,6 +86,28 @@ const bankSelect = document.getElementById("bank");
     })
 
 document.addEventListener("DOMContentLoaded", function () {
+const bankSelect = document.getElementById("bank");
+    const selectedBank = bankSelect.getAttribute("data-selected") || bankSelect.value;
+
+    if (selectedBank) {
+        // 支店と銘柄の選択肢を再生成
+        setShopOptions(selectedBank);
+        setBrandOptions(selectedBank);
+
+        // 選択済みの支店名と銘柄名を復元
+        const shopSelect = document.getElementById("shop-name");
+        const brandSelect = document.getElementById("BrandName");
+
+        const selectedShop = shopSelect.getAttribute("data-selected");
+        const selectedBrand = brandSelect.getAttribute("data-selected");
+
+        if (selectedShop) shopSelect.value = selectedShop;
+        if (selectedBrand) brandSelect.value = selectedBrand;
+
+        if (bankSelect.getAttribute("data-selected")) {
+                    bankSelect.value = bankSelect.getAttribute("data-selected");
+                }
+    }
     const form = document.querySelector("form");
     const confirmBtn = document.getElementById("confirm");
 
