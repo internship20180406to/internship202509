@@ -358,8 +358,15 @@ margin-bottom: 20px;
                 <th>科目名 <small class="text-danger ml-1" style="color:red">※必須</small></th>
                 <td>
                     <select th:field="*{Subject}" class="form-control" id="Subject">
-                        <option th:each="option : ${SubjectOptions}" th:value="${option}" th:text="${option}">選択肢</option>
+<!--                        <option th:each="option : ${SubjectOptions}" th:value="${option}" th:text="${option}">選択肢</option>-->
+                        <option value="" disabled selected>--科目名を選択してください--</option>
+
+                        <option value="普通">普通</option>
+                        <option value="貯蓄">貯蓄</option>
+                        <option value="当座">当座</option>
+
                     </select>
+
                 </td>
             </tr>
             <tr>
@@ -391,7 +398,7 @@ margin-bottom: 20px;
 <!--            <input type="submit" id="confirm" class="form-control-button form-confirmation-button btn" />-->
 <!--            <input type="reset" value="クリア" class="form-control-button form-clear-button"/>-->
             <button type="submit" class="btn btn-confirm" id="confirm">確認</button>
-            <button type="reset" class="btn btn-clear">クリア</button>
+            <button type="button" class="btn btn-clear" id="reset">クリア</button>
         </p>
     </form>
 </div>
