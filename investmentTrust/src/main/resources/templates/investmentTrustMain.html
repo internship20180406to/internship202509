@@ -101,14 +101,15 @@
 <body>
 <div class="content">
     <h1>投資信託注文情報入力</h1>
-    <form action="#" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post">
+    <form action="#" id= "informationInput" th:action="@{/investmentTrustConfirmation}" th:object="${investmentTrustApplication}" method="post" onsubmit="return validateForm();">
         <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
             <select id="BankNameSelect"th:field="*{bankName}" class="form-control">
                 <option th:each="option : ${nameOptions}"
                         th:value="${option}"
                         th:text="${option}">選択肢
                 </option>
-            </select></p>
+            </select>
+        </p>
         <script>
             // 初期状態を未選択にする
             document.getElementById("BankNameSelect").selectedIndex = -1;
@@ -136,18 +137,47 @@
 <!--        <div id="branchSuggestBox" class="suggest-box"></div>-->
             <input list="BranchName" th:field="*{Branches}" type="text" id="BranchInput" disabled />
         <datalist id="BranchName">
-            <option th:each="option : ${Branch_nameOptions}"
-                    th:value="${option}"
-                    th:text="${option}">選択肢
-            </option>
-<!--            <option value="まぐろ支店">-->
-<!--            <option value="いわし支店">-->
-<!--            <option value="ひらめ支店">-->
-<!--            <option value="いくら支店">-->
+<!--            <option th:each="option : ${Branch_nameOptions}"-->
+<!--                    th:value="${option}"-->
+<!--                    th:text="${option}">選択肢-->
+<!--            </option>-->
         </datalist>
 
-            <script>
-                document.addEventListener("DOMContentLoaded", () => {
+        <script th:inline="javascript">
+            let bankBranches = [[${Branch_nameOptions}]];
+        </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              const bankSelect = document.getElementById("BankNameSelect");
+              const branchInput = document.getElementById("BranchInput");
+              const datalist = document.getElementById("BranchName");
+
+              bankSelect.addEventListener("change", () => {
+                const selectedBank = bankSelect.value;
+
+                // 入力欄の有効・無効
+                branchInput.disabled = selectedBank === "";
+
+                // 候補の更新
+                datalist.innerHTML = "";
+
+                const countDisplay = document.getElementById("BranchCountDisplay");
+                                if (selectedBank && bankBranches[selectedBank]) {
+                  const count = bankBranches[selectedBank].length;
+<!--                  countDisplay.textContent = `支店の数: ${count}`;-->
+                  let  A=0;
+                                  bankBranches[selectedBank].forEach(branch => {
+                                    const option = document.createElement("option");
+                                    option.value = branch;
+                                    datalist.appendChild(option);
+                                    A++;
+                  });
+                                    countDisplay.textContent = `ループ回数: ${A}`;
+                }
+              });
+            });
+                            document.addEventListener("DOMContentLoaded", () => {
                   const bankSelect = document.getElementById("BankNameSelect");
                   const branchInput = document.getElementById("BranchInput");
 
@@ -156,49 +186,22 @@
                     branchInput.disabled = selectedBank === "";
                   });
                 });
-            </script>
+        </script>
+        <p id="BranchCountDisplay">支店の数: 0</p>
 
 
 
+<!--        <script>//銀行名が選ばれるまで、支店名を表示させない-->
+<!--                document.addEventListener("DOMContentLoaded", () => {-->
+<!--                  const bankSelect = document.getElementById("BankNameSelect");-->
+<!--                  const branchInput = document.getElementById("BranchInput");-->
 
-            <!--        <select id="BankNameSelect">-->
-<!--            <option>選択肢</option>-->
-<!--        </select>-->
-
-<!--        <script>-->
-<!--            const branches = [-->
-<!--              { code: "001", name: "まぐろ支店" },-->
-<!--              { code: "002", name: "いわし支店" },-->
-<!--              { code: "003", name: "ひらめ支店" },-->
-<!--              { code: "004", name: "いくら支店" }-->
-<!--            ];-->
-
-<!--            const select = document.getElementById("BankNameSelect");-->
-<!--            branches.forEach(branch => {-->
-<!--              const option = document.createElement("option");-->
-<!--              option.value = branch.code;-->
-<!--              option.textContent = branch.name;-->
-<!--              select.appendChild(option);-->
-<!--            });-->
-<!--        </script>-->
-
-
-
-
-
-        <!--        <p><label class="ml-1">支店番号: <small class="text-danger ml-1">※</small>-->
-<!--&lt;!&ndash;            <button type="button" class="Number-action-button">支店番号から入力</button>&ndash;&gt;-->
-<!--        </label><br>-->
-
-<!--            <input type="text" id="BranchNum" placeholder="例: 1, 2, 3" autocomplete="off" style="width: 300px;">-->
-<!--        <div id="suggestBox" class="suggest-box"></div>-->
-
-<!--            <select id="BranchNumSelect" th:field="*{bankName}" class="form-control">-->
-<!--                <option th:each="option : ${Branch_nameOptions}"-->
-<!--                        th:value="${option}"-->
-<!--                        th:text="${option}">選択肢-->
-<!--                </option>-->
-<!--            </select></p>-->
+<!--                  bankSelect.addEventListener("change", () => {-->
+<!--                    const selectedBank = bankSelect.value;-->
+<!--                    branchInput.disabled = selectedBank === "";-->
+<!--                  });-->
+<!--                });-->
+<!--            </script>-->
 
         <p><label class="ml-1">科目名: <small class="text-danger ml-1">※</small></label><br>
             <select id="BankTypeSelect" th:field="*{BankType}" class="form-control">
@@ -234,10 +237,52 @@
 
 
 
-        <p style="text-align: center;"><input type="submit" value="確認"
-                                              class="form-control-button form-confirmation-button"/>
-            <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
-    </form>
+        <p style="text-align: center;">
+            <input type="submit" value="確認"  class="form-control-button form-confirmation-button"/>
+            <input type="button" id= "clearBtn" value="クリア" class="form-control-button form-clear-button"/></p>
+
+  </form>
+    <script>
+        document.getElementById("clearBtn").addEventListener("click", function () {
+                const result = confirm("入力内容を削除してもよろしいでしょうか？");
+              if (result) {
+                    document.getElementById("informationInput").reset();
+                    document.getElementById("BankNameSelect").selectedIndex = -1;
+                    document.getElementById("BankTypeSelect").selectedIndex = -1;
+                    document.getElementById("StockSelect").selectedIndex = -1;
+
+              }
+        });
+
+
+              window.addEventListener("DOMContentLoaded", () => {
+                const bankSelect = document.getElementById("BankNameSelect");
+                const branchInput = document.getElementById("branchNameInput");
+
+                // 初期状態：支店名を無効化
+                branchInput.disabled = true;
+
+                // 金融機関名の選択に応じて支店名の入力欄を有効化
+                bankSelect.addEventListener("change", () => {
+                  branchInput.disabled = bankSelect.value === "";
+                });
+              });
+
+              // フォーム送信時のバリデーション
+              function validateForm() {
+                const bankSelect = document.getElementById("BankNameSelect");
+                const selectedBank = bankSelect.value;
+
+                if (selectedBank === "") {
+                  alert("金融機関名を選択してください。");
+                  bankSelect.focus();
+                  return false;
+                }
+
+                return true;
+              }
+    </script>
+
 </div>
 </body>
 

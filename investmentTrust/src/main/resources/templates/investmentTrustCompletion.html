@@ -5,7 +5,24 @@
     <title>注文完了画面</title>
 </head>
 <body>
-<h1>注文完了</h1>
+<h1>注文が完了しました</h1>
+<p>注文の詳細は以下のようになります</p>
+<p id="displayDateTime">読み込み中...</p>
+
+<script>
+    if(document.referrer){
+    const now = new Date();
+    const dateTimeString = now.toLocaleString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    document.getElementById("displayDateTime").textContent = `取引時間：${dateTimeString}`;
+    }
+</script>
 <p><input type="button" value="注文に戻る" onclick="window.location='/investmentTrust';"/></p>
 </body>
 

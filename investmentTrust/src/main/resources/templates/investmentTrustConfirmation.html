@@ -5,65 +5,103 @@
     <title>投資信託注文確認画面</title>
 
     <style>
-        .row {
-          display: flex;
-          margin-bottom: 8px;
+        body {
+          font-family: sans-serif;
+          padding: 20px;
         }
 
-        .label {
-          width: 140px;         /* ラベルの固定幅 */
-          text-align: right;    /* 右揃え */
-          font-weight: bold;
-          padding-right: 8px;   /* ラベルと値の間の余白 */
-        }
+.row {
+  display: flex;
+  margin-bottom: 8px;
+}
 
-        .value {
-          flex: 1;              /* 値の部分は残りの幅を使う */
-        }
+.label {
+  width: 140px;
+  text-align: right;
+  font-weight: bold;
+  padding-right: 2px;
+}
+
+.colon {
+  margin: 0 2px; /* 左右に同じ余白 */
+  font-weight: bold;
+}
+
+.value {
+  flex: 1;
+  padding-left: 2px; /* コロンの右側に余白を追加 */
+}
+
+
+
     </style>
 </head>
 <body>
 <h1>投資信託注文確認画面</h1>
-<form action="#" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
-<!--    <p>金融機関名: <span th:text="*{bankName}"></span></p>-->
-<!--    <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>-->
-<!--    <p>支店名・番号: <span th:text="*{Branches}"></span></p>-->
-<!--    <p>購入者氏名: <span th:text="*{CustomerName}"></span></p>-->
-<!--    <p>銘柄選択: <span th:text="*{StockName}"></span></p>-->
-<!--    <p>購入金額: <span th:text="*{PurchaseAmount}"></span></p>-->
+<form action="#" id="myForm" th:action="@{/investmentTrustCompletion}" th:object="${investmentTrustApplication}" method="post">
 
     <div class="row">
-        <div class="label">金融機関名:</div>
+        <div class="label">金融機関名</div>
+        <div class="colon">:</div>
         <div class="value" th:text="*{bankName}"></div>
     </div>
+
     <div class="row">
-        <div class="label">口座番号:</div>
+        <div class="label">口座番号</div>
+        <div class="colon">:</div>
         <div class="value" th:text="*{bankAccountNum}"></div>
     </div>
+
     <div class="row">
-        <div class="label">支店名・番号:</div>
+        <div class="label">支店名・番号</div>
+        <div class="colon">:</div>
         <div class="value" th:text="*{Branches}"></div>
     </div>
+
     <div class="row">
-        <div class="label">購入者氏名:</div>
+        <div class="label">科目名</div>
+        <div class="colon">:</div>
+        <div class="value" th:text="*{BankType}"></div>
+    </div>
+
+    <div class="row">
+        <div class="label">購入者氏名</div>
+        <div class="colon">:</div>
         <div class="value" th:text="*{CustomerName}"></div>
     </div>
+
     <div class="row">
-        <div class="label">銘柄選択:</div>
+        <div class="label">銘柄選択</div>
+        <div class="colon">:</div>
         <div class="value" th:text="*{StockName}"></div>
     </div>
+
     <div class="row">
-        <div class="label">購入金額:</div>
+        <div class="label">購入金額</div>
+        <div class="colon">:</div>
         <div class="value" th:text="*{PurchaseAmount}"></div>
     </div>
 
+
     <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
     <input type="hidden" name="bankName" th:value="*{bankName}"/>
+    <input type="hidden" name="Branches" th:value="*{Branches}"/>
+    <input type="hidden" name="BankType" th:value="*{BankType}"/>
+    <input type="hidden" name="CustomerName" th:value="*{CustomerName}"/>
+    <input type="hidden" name="StockName" th:value="*{StockName}"/>
+    <input type="hidden" name="PurchaseAmount" th:value="*{PurchaseAmount}"/>
+
     <p>
-        <input type="submit" id="submit" value="申込"/>
-        <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>
+    <div class="row">
+    <div class="label"><input type="submit" id="submit" value="申込" style="background-color: #007BFF; color: white;"/></div>
+    <div class="colon">:</div>
+    <div class="value"> <input type="button" value="キャンセル" onclick="window.location='/investmentTrust';"/>
+    </div>
+    </div>
     </p>
+
 </form>
 <script th:inline="javascript" src="/js/investmentTrustConfirmation.js"></script>
+
 </body>
 </html>

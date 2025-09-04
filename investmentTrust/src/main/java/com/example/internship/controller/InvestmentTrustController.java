@@ -24,47 +24,43 @@ public class InvestmentTrustController {
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
 
-        //金融機関名の候補を作成
-        List<String> Banks=new ArrayList<>();
-        Banks.add("山陰共同銀行");
-        Banks.add("海風共同銀行");
-        Banks.add("空雲共同銀行");
-
-        //支店名の候補を作成
-        List<String> Branches=new ArrayList<>();
-        Branches.add("001：まぐろ支店");
-        Branches.add("002：いわし支店");
-        Branches.add("003：ひらめ支店");
-        Branches.add("004：いくら支店");
-        Branches.add("005：かつお支店");
-        Branches.add("006：ほたて支店");
-        Branches.add("007：あなご支店");
-        Branches.add("008：はまち支店");
-        Branches.add("009：うに支店");
-
-//        Map<String, List<String>> BankBranches = new HashMap<>();
+//        //金融機関名の候補を作成
+//        List<String> Banks=new ArrayList<>();
+//        Banks.add("山陰共同銀行");
+//        Banks.add("海風共同銀行");
+//        Banks.add("空雲共同銀行");
 //
-//        BankBranches.put("山陰共同銀行", Arrays.asList(
-//                "001：まぐろ支店",
-//                "002：いくら支店",
-//                "003：うに支店"
-//        ));
-//
-//        BankBranches.put("海風共同銀行", Arrays.asList(
-//                "004：かつお支店",
-//                "005：ほたて支店",
-//                "006：はまち支店"
-//        ));
-//
-//        BankBranches.put("空雲共同銀行", Arrays.asList(
-//                "007：ひらめ支店",
-//                "008：あなご支店",
-//                "009：いわし支店"
-//        ));
+//        //支店名の候補を作成
+//        List<String> Branches=new ArrayList<>();
+//        Branches.add("001：まぐろ支店");
+//        Branches.add("002：いわし支店");
+//        Branches.add("003：ひらめ支店");
+//        Branches.add("004：いくら支店");
+//        Branches.add("005：かつお支店");
+//        Branches.add("006：ほたて支店");
+//        Branches.add("007：あなご支店");
+//        Branches.add("008：はまち支店");
+//        Branches.add("009：うに支店");
 
+        Map<String,List<String>> Banks=new HashMap<>();
 
+        Banks.put("山陰共同銀行",new ArrayList<>(List.of(
+                "001：まぐろ支店",
+                "002：いわし支店",
+                "003：ひらめ支店"
+        )));
 
+        Banks.put("海風共同銀行",new ArrayList<>(List.of(
+                "004：いくら支店",
+                "005：かつお支店",
+                "006：ほたて支店"
+        )));
 
+        Banks.put("空雲共同銀行",new ArrayList<>(List.of(
+                "007：あなご支店",
+                "008：はまち支店",
+                "009：うに支店"
+        )));
 
         List<String> BankType=new ArrayList<>();
         BankType.add("普通");
@@ -80,9 +76,8 @@ public class InvestmentTrustController {
 
 
         model.addAttribute("investmentTrustApplication", new InvestmentTrustForm());
-        model.addAttribute("nameOptions", Banks);
-        model.addAttribute("Branch_nameOptions", Branches);
-        //model.addAttribute("branchList", BankBranches);
+        model.addAttribute("nameOptions", new ArrayList<>(Banks.keySet()));
+        model.addAttribute("Branch_nameOptions", Banks);
         model.addAttribute("BankType_nameOptions", BankType);
         model.addAttribute("Stock_nameOptions", StockName);
         return "investmentTrustMain";
@@ -99,7 +94,7 @@ public class InvestmentTrustController {
         model.addAttribute("PurchaseAmount", investmentTrustForm.getPurchaseAmount());
         model.addAttribute("investmentTrustApplication", investmentTrustForm);
         return "investmentTrustConfirmation";
-    }
+    }//確認画面で表示される情報
 
     @PostMapping("/investmentTrustCompletion")
     public String completion(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
