@@ -25,10 +25,10 @@ public class BankLoanController {
     @GetMapping("/bankLoan")
     public String bankTransfer(Model model) {
         List<String> nameOptions = Arrays.asList(
-                "山陰共同銀行",
-                "北海道中央銀行",
-                "東京銀行",
-                "横浜共同銀行");
+                "新潟信用銀行",
+                "富山中央銀行",
+                "金沢銀行",
+                "福井恐竜銀行");
         List<String> accountOptions = Arrays.asList(
                 "普通預金",
                 "定期預金",
@@ -41,10 +41,19 @@ public class BankLoanController {
                 "アパート",
                 "社宅",
                 "寮");
+        List<String> occupationOptions = Arrays.asList(
+                "会社員・上場",
+                "会社員・非上場",
+                "公務員",
+                "自営業",
+                "年金",
+                "パート・アルバイト",
+                "その他");
         model.addAttribute("bankLoanApplication", new BankLoanForm());
         model.addAttribute("nameOptions", nameOptions);
         model.addAttribute("accountOptions", accountOptions);
         model.addAttribute("houseOptions", houseOptions);
+        model.addAttribute("occupationOptions",occupationOptions);
         return "bankLoanMain";
     }
 

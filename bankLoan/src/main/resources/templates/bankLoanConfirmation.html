@@ -199,7 +199,7 @@
                     <div class="value" th:text="*{debtorName}">山田 太郎</div>
                 </div>
                 <div class="field">
-                    <div class="label">誕生日</div>
+                    <div class="label">生年月日</div>
                     <div class="value" th:text="*{birthday}">1999-01-01</div>
                 </div>
                 <div class="field full">
@@ -230,11 +230,11 @@
                 <!-- 借入条件 -->
                 <div class="field">
                     <div class="label">借入金額</div>
-                    <div class="value"><span th:text="${#numbers.formatInteger(loanAmount, 4, 'COMMA')}"></span> 円</div>
+                    <div class="value"><span th:text="${#numbers.formatInteger(loanAmount, 3, 'COMMA')}"></span> 円</div>
                 </div>
                 <div class="field">
                     <div class="label">借入年収</div>
-                    <div class="value"><span th:text="${#numbers.formatInteger(borrowingIncome, 4, 'COMMA')}"></span> 円</div>
+                    <div class="value"><span th:text="${#numbers.formatInteger(borrowingIncome, 3, 'COMMA')}"></span> 円</div>
                 </div>
                 <div class="field">
                     <div class="label">借入期間</div>
@@ -245,14 +245,14 @@
                     <div class="value"><span th:text="${#numbers.formatDecimal(interestRate, 1,1)}"></span> %</div>
                 </div>
                 <br>
-                <div class="results">
-                    <div class="stat">
-                        <div class="k">毎月の返済額</div>
-                        <div class="v" th:text="${#numbers.formatInteger(monthlyPayment, 3, 'COMMA')} + ' 円'">—</div>
+                <div class="results" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px;margin-top:12px">
+                    <div style="background:#f9fafb;border:1px solid #eef2f7;border-radius:12px;padding:14px">
+                        <div style="color:#6b7280;font-size:13px;margin-bottom:6px">毎月の返済額</div>
+                        <div class="v" th:text="${#numbers.formatInteger(monthlyPayment, 3, 'COMMA')} + ' 円'" style="font-size:20px;font-weight:800">—</div>
                     </div>
-                    <div class="stat">
-                        <div class="k">合計返済額</div>
-                        <div class="v" th:text="${#numbers.formatInteger(totalPayment, 3, 'COMMA')} + ' 円'">—</div>
+                    <div style="background:#f9fafb;border:1px solid #eef2f7;border-radius:12px;padding:14px">
+                        <div style="color:#6b7280;font-size:13px;margin-bottom:6px">合計返済額</div>
+                        <div class="v" th:text="${#numbers.formatInteger(totalPayment, 3, 'COMMA')} + ' 円'" style="font-size:20px;font-weight:800">—</div>
                     </div>
                 </div>
 
