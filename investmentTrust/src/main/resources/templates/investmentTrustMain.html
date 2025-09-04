@@ -276,7 +276,7 @@
         <h2>購入情報</h2>
         <div class="form-row">
             <label class="ml-1">銘柄: <small class="text-danger ml-1">※</small><span id="fundWarning" class="warning" style="display:none;">必須</span></label><br>
-            <select th:field="*{fundName}" class="form-control">
+            <select th:field="*{fundName}" class="form-control" id="fundSelect">
                 <option value="">-- 選択してください --</option>
                 <option value="鯨・グローバル・インデックス">鯨・グローバル・インデックス</option>
                 <option value="イカロジック・テックセレクト">イカロジック・テックセレクト</option>
@@ -284,8 +284,13 @@
                 <option value="フクロウ・インサイト・ファンド">フクロウ・インサイト・ファンド</option>
                 <option value="熊・ディフェンシブ・バリュー">熊・ディフェンシブ・バリュー</option>
                 <option value="モグラ・アンダーグラウンド・ストラテジー">モグラ・アンダーグラウンド・ストラテジー</option>
-
+                <option th:each="fund : ${fundOptions}" th:value="${fund}" th:text="${fund}"></option>
             </select>
+        </div>
+
+        <div class="form-row">
+            <label class="ml-1">基準価額: <small class="text-danger ml-1">※</small><span id="navWarning" class="warning" style="display:none;">必須</span></label><br>
+            <input type="text" th:field="*{nav}" class="form-control" id="navDisplay" readonly />
         </div>
 
         <div class="form-row">
@@ -330,6 +335,7 @@
     document.addEventListener("DOMContentLoaded", function () {
       const bankSelect = document.getElementById("bankSelect");
       const branchSelect = document.getElementById("branchSelect");
+      const fundSelect = document.getElementById("fundSelect");
       const form = document.querySelector("form");
       const methodSelect = document.querySelector('[name="methodName"]');
       const moneyRow = document.getElementById("moneyRow");
@@ -365,6 +371,29 @@
         }
       });
 
+      // 銘柄選択時のnav読み込み
+      fundSelect.addEventListener("change", function () {
+          const selectedFund = this.value;
+          const navDisplay = document.getElementById("navDisplay");
+
+          navDisplay.value = "読み込み中...";
+
+          if (selectedFund) {
+            fetch(`/getNav?fundName=${encodeURIComponent(selectedFund)}`)
+              .then(response => response.text())
+              .then(nav => {
+                navDisplay.value = nav;
+              })
+              .catch(error => {
+                console.error("NAVの取得に失敗しました", error);
+                navDisplay.value = "取得失敗";
+              });
+          } else {
+            navDisplay.value = "";
+          }
+        });
+
+
       // 購入方法の選択に応じて入力欄を切り替え
       methodSelect.addEventListener("change", function () {
         const selected = this.value;
@@ -385,6 +414,14 @@
         branchSelect.innerHTML = '<option value="">-- 銀行を選択してください --</option>';
         moneyRow.style.display = "flex";
         unitRow.style.display = "none";
+        methodSelect.value = "";
+
+          // 金額・口数の欄を非表示にする
+          moneyRow.style.display = "none";
+          unitRow.style.display = "none";
+
+          // NAV表示欄もクリア
+          document.getElementById("navDisplay").value = "";
       });
 
       // バリデーション処理
@@ -397,6 +434,7 @@
         const accountNum = document.querySelector('[name="bankAccountNum"]').value;
         const name = document.querySelector('[name="name"]').value;
         const fundName = document.querySelector('[name="fundName"]').value;
+        const nav = document.querySelector('[name="nav"]').value;
         const methodName = document.querySelector('[name="methodName"]').value;
         const money = document.querySelector('[name="money"]').value;
         const unit = document.querySelector('[name="unit"]').value;
@@ -408,6 +446,7 @@
           account: document.getElementById("accountWarning"),
           name: document.getElementById("nameWarning"),
           fund: document.getElementById("fundWarning"),
+          nav: document.getElementById("navWarning"),
           methodName: document.getElementById("methodWarning"),
           money: document.getElementById("moneyWarning"),
           unit: document.getElementById("unitWarning")
@@ -420,6 +459,7 @@
         if (accountNum === "" || accountNum.length < 6 || accountNum.length > 8) { warnings.account.style.display = "inline"; isValid = false; } else { warnings.account.style.display = "none"; }
         if (name === "") { warnings.name.style.display = "inline"; isValid = false; } else { warnings.name.style.display = "none"; }
         if (fundName === "") { warnings.fund.style.display = "inline"; isValid = false; } else { warnings.fund.style.display = "none"; }
+        if (nav === "") { warnings.nav.style.display = "inline"; isValid = false; } else { warnings.nav.style.display = "none"; }
         if (methodName === "") { warnings.methodName.style.display = "inline"; isValid = false; } else { warnings.methodName.style.display = "none"; }
 
         // 購入方法に応じたバリデーション

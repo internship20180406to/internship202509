@@ -28,6 +28,16 @@ public class InvestmentTrustController {
             "海陰共同銀行", List.of("さんま支店", "いくら支店", "くじら支店")
     );
 
+    private static final Map<String, String> navMap = Map.of(
+            "鯨・グローバル・インデックス", "12,345",
+            "イカロジック・テックセレクト", "12,345",
+            "亀・ロングライフ・バランス", "12,345",
+            "フクロウ・インサイト・ファンド", "12,345",
+            "熊・ディフェンシブ・バリュー", "12,345",
+            "モグラ・アンダーグラウンド・ストラテジー", "12,345"
+
+    );
+
 
     @GetMapping("/investmentTrust")
     public String bankTransfer(Model model) {
@@ -43,6 +53,12 @@ public class InvestmentTrustController {
         return branchMap.getOrDefault(bankName, List.of());
     }
 
+    @GetMapping("/getNav")
+    @ResponseBody
+    public String getNav(@RequestParam String fundName) {
+        return navMap.getOrDefault(fundName, "取得不可");
+    }
+
     @PostMapping("/investmentTrustConfirmation")
     public String confirmation(@ModelAttribute InvestmentTrustForm investmentTrustForm, Model model) {
         //investmentTrustForm.setBankName("ながれぼし銀行");
@@ -52,6 +68,7 @@ public class InvestmentTrustController {
         model.addAttribute("bankAccountNum", investmentTrustForm.getBankAccountNum());
         model.addAttribute("name", investmentTrustForm.getName());
         model.addAttribute("fundName", investmentTrustForm.getFundName());
+        model.addAttribute("nav", investmentTrustForm.getNav());
         model.addAttribute("money", investmentTrustForm.getMoney());
         model.addAttribute("methodName", investmentTrustForm.getMethodName());
         model.addAttribute("unit", investmentTrustForm.getUnit());

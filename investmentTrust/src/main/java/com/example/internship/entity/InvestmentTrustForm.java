@@ -34,6 +34,11 @@ public class InvestmentTrustForm {
     private String unit;
 
 
+    @NonNull
+    private String nav;
+
+
+
     public String getBankName() {
         return bankName;
     }
@@ -103,5 +108,9 @@ public class InvestmentTrustForm {
     }
 
 
+    public String getNav(){ return nav; }
+    public void setNav(String nav) {
+        this.nav = nav;
+    }
 
 }
