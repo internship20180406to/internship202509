@@ -127,6 +127,8 @@
         .btn-ghost{ background:#f3f4f6; color:#111827; }
         .btn-ghost:hover{ background:#e5e7eb; }
 
+        .hint{ color:var(--muted); font-size:12px; }
+
         /* テーブル風2列を少し強調 */
         .pair{ display:grid; grid-template-columns: 160px 1fr; gap:8px; align-items:start; }
         @media (max-width: 480px){ .pair{ grid-template-columns:1fr; } }
@@ -245,6 +247,8 @@
                     <div class="value"><span th:text="${#numbers.formatDecimal(interestRate, 1,1)}"></span> %</div>
                 </div>
                 <br>
+                <div class="field">
+                    <div class="label">シミュレーション</div>
                 <div class="results" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px;margin-top:12px">
                     <div style="background:#f9fafb;border:1px solid #eef2f7;border-radius:12px;padding:14px">
                         <div style="color:#6b7280;font-size:13px;margin-bottom:6px">毎月の返済額</div>
@@ -255,6 +259,9 @@
                         <div class="v" th:text="${#numbers.formatInteger(totalPayment, 3, 'COMMA')} + ' 円'" style="font-size:20px;font-weight:800">—</div>
                     </div>
                 </div>
+                </div>
+                <br>
+                <p class="hint">固定金利型として計算しています。</p>
 
             </div>
 

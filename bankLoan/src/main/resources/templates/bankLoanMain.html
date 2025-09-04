@@ -353,10 +353,10 @@
                 <div class="field">
                     <label class="label">借入金額 <span class="req">必須</span></label>
                     <div class="control with-suffix">
-                        <input type="number" th:field="*{loanAmount}" class="input" placeholder="1000" min="100" step="10" required/>
+                        <input type="number" th:field="*{loanAmount}" class="input" placeholder="1000" min="100" max ="10000" step="10" required/>
                         <span class="suffix">万円</span>
                     </div>
-                    <p class="hint">「借入金額」は100万円以上、10万円単位で入力ください。</p>
+                    <p class="hint">「借入金額」は100万円以上・10000万円以下、10万円単位で入力ください。</p>
                 </div>
 
                 <!-- 借入年収 -->
@@ -366,7 +366,7 @@
                         <input type="number" th:field="*{borrowingIncome}" class="input" placeholder="400" min="1" step="1" required/>
                         <span class="suffix">万円</span>
                     </div>
-                    <p class="hint">「借入年収」はご自身の年収を１万円単位で入力してください。</p>
+                    <p class="hint">「借入年収」はご自身の年収を1万円単位で入力してください。</p>
                 </div>
 
                 <!--借入期間-->
