@@ -230,11 +230,11 @@
                 <!-- 借入条件 -->
                 <div class="field">
                     <div class="label">借入金額</div>
-                    <div class="value"><span th:text="${#numbers.formatInteger(loanAmount, 3, 'COMMA')}"></span> 円</div>
+                    <div class="value"><span th:text="${#numbers.formatInteger(loanAmount, 3, 'COMMA')}"></span> 万円</div>
                 </div>
                 <div class="field">
                     <div class="label">借入年収</div>
-                    <div class="value"><span th:text="${#numbers.formatInteger(borrowingIncome, 3, 'COMMA')}"></span> 円</div>
+                    <div class="value"><span th:text="${#numbers.formatInteger(borrowingIncome, 3, 'COMMA')}"></span> 万円</div>
                 </div>
                 <div class="field">
                     <div class="label">借入期間</div>
@@ -284,70 +284,6 @@
     </section>
 </main>
 
-<script>
-    (function(){
-      const id = (s)=>document.getElementById(s);
-      const fmt = new Intl.NumberFormat('ja-JP', { maximumFractionDigits: 0 });
-
-      function num(v){ const n = Number(v); return Number.isFinite(n) ? n : NaN; }
-
-      function calc() {
-        const P  = num(id('loanAmount')?.value);
-        const ap = num(id('interestRate')?.value); // 年利[%]
-        const y  = num(id('loanPeriod')?.value);   // 年数
-
-        const err = id('loanError');
-        err.style.display = 'none'; err.textContent = '';
-
-        if (!(P>0) || !(y>0) || !(ap>=0)) {
-          err.textContent = '入力を確認してください（金額>0、年利≥0、年数>0）。';
-          err.style.display = 'block';
-          id('monthlyPayment').textContent = '—';
-          id('totalPayment').textContent   = '—';
-          return;
-        }
-
-        const n = Math.round(y * 12);             // 返済回数（月）
-        const r = (ap / 100) / 12;                // 月利（実数）
-
-        let A; // 毎月の返済額
-        if (r === 0) {
-          A = P / n;
-        } else {
-          A = P * r / (1 - Math.pow(1 + r, -n));
-        }
-        const total = A * n;
-
-        // 円単位で表示（必要なら小数表示に変更可）
-        id('monthlyPayment').textContent = fmt.format(Math.round(A)) + ' 円';
-        id('totalPayment').textContent   = fmt.format(Math.round(total)) + ' 円';
-      }
-
-      function bindAutoRecalc(){
-        ['loanAmount','interestRate','loanPeriod'].forEach(k=>{
-          const el = id(k);
-          if (!el) return;
-          el.addEventListener('input', calc);
-          el.addEventListener('change', calc);
-        });
-      }
-
-      document.addEventListener('DOMContentLoaded', function(){
-        // 値は既に入っている想定 → 初回即計算
-        calc();
-        // 値が後から変わる場合にも自動再計算
-        bindAutoRecalc();
-      });
-    })();
-
-    const submitButton = document.getElementById("submit")
-    submitButton.addEventListener('click', (e) => {
-      if (!confirm('操作を実行しますか？')) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-    })
-
-</script>
+<script th:inline="javascript" src="/js/bankLoanConfirmation.js"></script>
 </body>
 </html>

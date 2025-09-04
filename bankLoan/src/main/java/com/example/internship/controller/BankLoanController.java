@@ -80,7 +80,7 @@ public class BankLoanController {
         model.addAttribute("interestRate", bankLoanForm.getInterestRate());
         model.addAttribute("bankLoanApplication", bankLoanForm);
 
-        double P = bankLoanForm.getLoanAmount();
+        double P = bankLoanForm.getLoanAmount() * 10000;
         double r = bankLoanForm.getInterestRate() / 100.0 / 12.0; // 月利
         int n = bankLoanForm.getLoanPeriod() * 12;
 
