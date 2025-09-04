@@ -2,9 +2,7 @@ package com.example.internship.controller;
 
 import com.example.internship.entity.BankLoanForm;
 import com.example.internship.service.ApplyBankLoanService;
-import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

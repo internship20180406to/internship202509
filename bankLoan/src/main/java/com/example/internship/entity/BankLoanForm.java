@@ -37,8 +37,8 @@ public class BankLoanForm {
     @Min(value = 0, message = "年収は0以上で入力してください")
     private Integer borrowingIncome;
 
-    @NotBlank(message="金利を入力してください")
-    private String interestRate;
+    @NonNull
+    private Double interestRate;
 
     @NotNull(message="口座番号を入力してください")
     @Min(value = 0, message = "口座番号は0以上です")
@@ -125,10 +125,10 @@ public class BankLoanForm {
     }
 
     // Getter & Setter for interestRate
-    public String getInterestRate() {
+    public Double getInterestRate() {
         return interestRate;
     }
-    public void setInterestRate(String interestRate) {
+    public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
     }
 
