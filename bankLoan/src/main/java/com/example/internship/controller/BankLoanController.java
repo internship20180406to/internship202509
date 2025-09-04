@@ -34,8 +34,14 @@ public class BankLoanController {
         subjectOptions.add("当座");
         subjectOptions.add("貯蓄");
 
+        List<String> loanOptions = new ArrayList<String>();
+        loanOptions.add("自動車ローン");
+        loanOptions.add("住宅ローン");
+        loanOptions.add("学費ローン");
+
         model.addAttribute("nameOptions",nameOptions);
         model.addAttribute("subjectOptions",subjectOptions);
+        model.addAttribute("loanOptions",loanOptions);
         return "bankLoanMain";
     }
 
@@ -48,10 +54,14 @@ public class BankLoanController {
         model.addAttribute("bankAccountNum", bankLoanForm.getBankAccountNum());
         model.addAttribute("debtorName", bankLoanForm.getDebtorName());
         model.addAttribute("loanAmount", bankLoanForm.getLoanAmount());
+        model.addAttribute("loanType", bankLoanForm.getLoanType());
         model.addAttribute("borrowingIncome", bankLoanForm.getBorrowingIncome());
         model.addAttribute("interestRate", bankLoanForm.getInterestRate());
+        model.addAttribute("loanTerm", bankLoanForm.getLoanTerm());
         model.addAttribute("bankLoanApplication", bankLoanForm);
-        System.out.println(bankLoanForm.getBranchName());
+
+
+
         return "bankLoanConfirmation";
     }
 

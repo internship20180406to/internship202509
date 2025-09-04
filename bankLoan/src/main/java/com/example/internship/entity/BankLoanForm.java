@@ -20,9 +20,13 @@ public class BankLoanForm {
     @NonNull
     private String debtorName;
     @NonNull
+    private String loanType;
+    @NonNull
     private String loanAmount;
     @NonNull
     private String borrowingIncome;
+    @NonNull
+    private String loanTerm;
     @NonNull
     private String interestRate;
     public String getBankName() {
@@ -58,6 +62,14 @@ public class BankLoanForm {
         this.debtorName = debtorName;
     }
 
+    public String getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(String loanType) {
+        this.loanType = loanType;
+    }
+
     public String getLoanAmount() {
         return loanAmount;
     }
@@ -72,6 +84,14 @@ public class BankLoanForm {
 
     public void setBorrowingIncome(String borrowingIncome) {
         this.borrowingIncome = borrowingIncome;
+    }
+
+    public String getLoanTerm() {
+        return loanTerm;
+    }
+
+    public void setLoanTerm(String loanTerm) {
+        this.loanTerm = loanTerm;
     }
 
 

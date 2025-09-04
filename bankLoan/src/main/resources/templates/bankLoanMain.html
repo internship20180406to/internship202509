@@ -6,7 +6,7 @@
     <style>
 
         body {
-            background-color: #f7f9fc;
+            background-color: #eaf7ef;
             margin: 0;
             padding: 0;
             display: flex;
@@ -47,7 +47,7 @@
             left: -50%;
             width: 100%;
             height: 2px;
-            background-color: #dcdcdc;
+            background-color: #cde4d3;
             z-index: 0;
         }
 
@@ -69,7 +69,7 @@
         }
 
         .step.active .circle {
-            background-color: #3498db;
+            background-color: #6cbf84;
         }
 
         .step .label {
@@ -80,7 +80,7 @@
 
         .step.active .label {
             font-weight: bold;
-            color: #3498db;
+            color: #6cbf84;
         }
 
 
@@ -88,14 +88,14 @@
             font-size: 24px;
             text-align: center;
             margin-bottom: 25px;
-            color: #333;
+            color: #4e9a6e;
         }
 
         label {
             font-weight: bold;
             display: block;
             margin-bottom: 5px;
-            color: #333;
+            color: #336655;
         }
 
         .form-control {
@@ -106,12 +106,14 @@
             border-radius: 6px;
             box-sizing: border-box;
             font-size: 14px;
+            background-color: #fafffc;
+            transition: box-shadow 0.3s ease;
         }
 
         .form-control:focus {
-            border-color: #3498db;
+            border-color: #6cbf84;
             outline: none;
-            box-shadow: 0 0 3px rgba(52, 152, 219, 0.5);
+            box-shadow: 0 0 4px rgba(108, 191, 132, 0.6);
         }
 
         .text-danger {
@@ -131,25 +133,33 @@
             border-radius: 6px;
             font-size: 14px;
             cursor: pointer;
-            min-width: 100px;
+            min-width: 120px;
+            transition: all 0.3s ease;
         }
 
         .form-confirmation-button {
-            background-color: #3498db;
+            background: linear-gradient(to right, #6cbf84, #91d6a9);
             color: white;
+            box-shadow: 0.4px 8px rgba(108, 191, 132, 0.4);
         }
 
         .form-confirmation-button:hover {
-            background-color: #2c80b4;
+            background: linear-gradient(to right, #5cae73, #83c49c);
+            box-shadow: 0.6px 12px rgba(108, 191, 132, 0.6);
         }
 
         .form-clear-button {
-            background-color: #e0e1e2;
-            color: #333;
+            background: linear-gradient(to right, #d7f0e1, #c2e4d0);
+            color: #2c3e5O;
+            box-shadow: 0.4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
         .form-clear-button:hover {
-            background-color: #cccccc;
+            background: linear-gradient(to right, #c2e4d0, #b0d9c3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            color: #1a1a1a;
+
         }
 
         @media (max-width: 600px) {
@@ -208,82 +218,186 @@
         <p><label class="ml-1">債務者名: <small class="text-danger ml-1">※必須</small></label><br>
             <input type="text" th:field="*{debtorName}" class="form-control" id="debtorName" placeholder="債務者名を記入してください"/></p>
 
+        <p><label class="ml-1">ローンの種類: <small class="text-danger ml-1">※必須</small></label><br>
+            <select th:field="*{loanType}" class="form-control" id = "loanType">
+                <option value="">--選択してください--</option>
+                <option th:each="option : ${loanOptions}"
+                        th:value="${option}"
+                        th:text="${option}">選択肢
+                </option>
+            </select></p>
+
         <p><label class="ml-1">借入金額: <small class="text-danger ml-1">※必須</small></label><br>
-            <input type="text" th:field="*{loanAmount}" class="form-control" id="loanAmount" placeholder="借入金額を記入してください"/></p>
+            <input type="text" th:field="*{loanAmount}" class="form-control" maxlength="11" id="loanAmount" placeholder="借入金額を記入してください"/></p>
 
         <p><label class="ml-1">借入年収: <small class="text-danger ml-1">※必須</small></label><br>
             <input type="text" th:field="*{borrowingIncome}" class="form-control" id="borrowingIncome" placeholder="借入年収を記入してください"/></p>
 
+        <p><label class="ml-1">借入年数: <small class="text-danger ml-1">※必須</small></label><br>
+            <select th:field="*{loanTerm}" class="form-control" id = "loanTerm" disabled >
+                <option value="">--選択してください--</option>
+            </select></p>
+
         <p><label class="ml-1">金利: <small class="text-danger ml-1">※必須</small></label><br>
-            <input type="text" th:field="*{interestRate}" class="form-control" id="interestRate" placeholder="金利を記入してください"/></p>
+            <select th:field="*{interestRate}" class="form-control" id = "interestRate" disabled>
+                <option value="">--選択してください--</option>
+            </select></p>
+
+
         <p style="text-align: center;"><input type="submit" value="確認"
                                               class="form-control-button form-confirmation-button"/>
             <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
     </form>
-
     <script>
-        const branchOptions={
-            "a銀行":["a支店1", "a支店2", "a支店3"],
-            "b銀行":["b支店1", "b支店2"],
-            "c銀行":["c支店1", "c支店2", "c支店3"],
-            "d銀行":["d支店1", "d支店2"]
-        };
+        const loanAmountInput = document.getElementById("loanAmount");
 
-        function checkForm(){
-            const fields = [
-                {id:"bankName"},
-                {id:"branchName"},
-                {id:"subjectName"},
-                {id:"bankAccountNum"},
-                {id:"debtorName"},
-                {id:"loanAmount"},
-                {id:"borrowingIncome"},
-                {id:"interestRate"},
-            ];
+          loanAmountInput.addEventListener("input", function () {
 
-            const bankAccountNum=document.getElementById("bankAccountNum").value.trim();
-            if(bankAccountNum && !/^\d{7}$/.test(bankAccountNum)){
-                alert("口座番号は7桁の数字で入力してください!");
-                document.getElementById("bankAccountNum").focus();
-                return false;
+            let rawValue = this.value.replace(/[^\d]/g, '');
+
+            if (rawValue) {
+
+              this.value = Number(rawValue).toLocaleString();
+            } else {
+
+              this.value = '';
             }
+          });
 
-            for(let field of fields){
-                const element = document.getElementById(field.id);
-                if(!element || !element.value.trim()){
-                    alert("未入力の必須項目があります!");
-                    element.focus();
+
+
+
+        const branchOptions={
+                "a銀行":["a支店1", "a支店2", "a支店3"],
+                "b銀行":["b支店1", "b支店2"],
+                "c銀行":["c支店1", "c支店2", "c支店3"],
+                "d銀行":["d支店1", "d支店2"]
+            };
+
+            const loanTermOptions={
+                "自動車ローン":["3年", "4年", "5年", "6年", "7年"],
+                "住宅ローン":["15年", "16年", "17年", "18年", "19年", "20年", "21年", "22年", "23年", "24年", "25年",
+                "26年", "27年", "28年", "29年", "30年", "31年", "32年", "33年", "34年", "35年"],
+                "学費ローン":["10年", "11年", "12年", "13年", "14年", "15年", "16年", "17年", "18年", "19年", "20年"]
+            };
+
+            const interestOptions={
+                "3年":["2.0%"],"4年":["3.5%"],"5年":["5.0%"],"6年":["6.5%"],"7年":["8.0%"],
+                "10年":["3.0%"],"11年":["3.0%"],"12年":["2.0%"],"13年":["2.0%"],"14年":["3.0%"],
+                "15年":["1.0%"],"16年":["1.0%"],"17年":["1.0%"],"18年":["1.0%"],"19年":["1.0%"],"20年":["1.0%"],
+                "21年":["1.5%"],"22年":["1.5%"],"23年":["1.5%"],"24年":["1.5%"],"25年":["1.5%"],
+                "26年":["2.0%"],"27年":["2.0%"],"28年":["2.0%"],"29年":["2.0%"],"30年":["2.0%"],
+                "31年":["2.5%"],"32年":["2.5%"],"33年":["2.5%"],"34年":["2.5%"],"35年":["2.5%"],
+            };
+
+            function checkForm(){
+                const fields = [
+                    {id:"bankName"},
+                    {id:"branchName"},
+                    {id:"subjectName"},
+                    {id:"bankAccountNum"},
+                    {id:"debtorName"},
+                    {id:"loanType"},
+                    {id:"loanAmount"},
+                    {id:"borrowingIncome"},
+                    {id:"loanTerm"},
+                    {id:"interestRate"},
+                ];
+
+
+
+                const bankAccountNum=document.getElementById("bankAccountNum").value.trim();
+                if(bankAccountNum && !/^\d{7}$/.test(bankAccountNum)){
+                    alert("口座番号は7桁の数字で入力してください!");
+                    document.getElementById("bankAccountNum").focus();
                     return false;
                 }
+
+
+
+                for(let field of fields){
+                    const element = document.getElementById(field.id);
+                    if(!element || !element.value.trim()){
+                        alert("未入力の必須項目があります!");
+                        element.focus();
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
-            return true;
-        }
+            const bankNameSelect = document.getElementById("bankName");
+            const branchNameSelect = document.getElementById("branchName");
 
-        const bankNameSelect = document.getElementById("bankName");
-        const branchNameSelect = document.getElementById("branchName");
+            bankNameSelect.addEventListener('change', function(){
+                const selectedBank = this.value;
 
-        bankNameSelect.addEventListener('change', function(){
-            const selectedBank = this.value;
+                branchNameSelect.innerHTML = '<option value="">--選択してください--</option>';
+                if(selectedBank === ""){
+                    branchNameSelect.disabled = true;
+                    return;
+                }
 
-            branchNameSelect.innerHTML = '<option value="">--選択してください--</option>';
-            if(selectedBank === ""){
-                branchNameSelect.disabled = true;
-                return;
-            }
+                const branches = branchOptions[selectedBank] || [];
 
-            const branches = branchOptions[selectedBank] || [];
+                branches.forEach(branch => {
+                    const option = document.createElement("option");
+                    option.value = branch;
+                    option.textContent = branch;
+                    branchNameSelect.appendChild(option);
+                });
 
-            branches.forEach(branch => {
-                const option = document.createElement("option");
-                option.value = branch;
-                option.textContent = branch;
-                branchNameSelect.appendChild(option);
+                branchNameSelect.disabled = false;
             });
 
-            branchNameSelect.disabled = false;
-        });
+            const loanTypeSelect = document.getElementById("loanType");
+            const loanTermSelect = document.getElementById("loanTerm");
+            const interestRateSelect = document.getElementById("interestRate");
 
+            loanTypeSelect.addEventListener('change',function(){
+                const selectedLoan = this.value;
+
+                loanTermSelect.innerHTML = '<option value="">--選択してください--</option>';
+                interestRate.innerHTML = '<option value="">--選択してください--</option>';
+                if(selectedLoan === ""){
+                    interestRateSelect.disabled = true;
+                    return;
+                }
+
+                const terms = loanTermOptions[selectedLoan] || [];
+
+                terms.forEach(term => {
+                    const option = document.createElement("option");
+                    option.value = term;
+                    option.textContent = term;
+                    loanTermSelect.appendChild(option);
+                });
+
+                loanTermSelect.disabled = false;
+            });
+
+
+          loanTermSelect.addEventListener('change',function(){
+                const selectedTerm = this.value;
+
+                interestRateSelect.innerHTML = '<option value="">--選択してください--</option>';
+                if(selectedTerm === ""){
+                    interestRateSelect.disabled = true;
+                    return;
+                }
+
+                const rates = interestOptions[selectedTerm] || [];
+
+                rates.forEach(rate => {
+                    const option = document.createElement("option");
+                    option.value = rate;
+                    option.textContent = rate;
+                    interestRateSelect.appendChild(option);
+                });
+
+                interestRateSelect.disabled = false;
+            });
 
     </script>
 </div>
