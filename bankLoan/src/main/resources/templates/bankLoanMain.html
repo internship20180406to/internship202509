@@ -249,20 +249,27 @@
             <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>
     </form>
     <script>
-        const loanAmountInput = document.getElementById("loanAmount");
+        function formatWithComma(input) {
+            // 数字以外の文字を削除
+            let rawValue = input.value.replace(/[^\d]/g, '');
 
+            // カンマ付きの文字列に変換（空なら空文字に）
+            input.value = rawValue ? Number(rawValue).toLocaleString() : '';
+          }
+
+          // 借入金額（loanAmount）の入力イベント処理
+          const loanAmountInput = document.getElementById("loanAmount");
           loanAmountInput.addEventListener("input", function () {
-
-            let rawValue = this.value.replace(/[^\d]/g, '');
-
-            if (rawValue) {
-
-              this.value = Number(rawValue).toLocaleString();
-            } else {
-
-              this.value = '';
-            }
+            formatWithComma(this);
           });
+
+          // 借入年収（borrowingIncome）の入力イベント処理
+          const borrowingIncomeInput = document.getElementById("borrowingIncome");
+          borrowingIncomeInput.addEventListener("input", function () {
+            formatWithComma(this);
+        });
+
+
 
 
 
