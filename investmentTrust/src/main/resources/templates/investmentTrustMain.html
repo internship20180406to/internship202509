@@ -372,6 +372,8 @@ margin-bottom: 20px;
             <tr>
                 <th>口座番号<small class="text-danger ml-1" style="color:red">※必須-7ケタ</small></th>
                 <td><input id="bankAccountNum" type="number" min="0" th:field="*{bankAccountNum}" th:classappend="${#fields.hasErrors('bankAccountNum')} ? 'error-input'" class="form-control" placeholder="1234567"/></td>
+<!--                <td><input id="bankAccountNum" type="number" th:field="*{bankAccountNum}" th:classappend="${#fields.hasErrors('bankAccountNum')} ? 'error-input'" class="form-control" placeholder="1234567"/></td>-->
+
             </tr>
             <tr>
                 <th>購入者名 <small class="text-danger ml-1" style="color:red">※必須</small></th>
