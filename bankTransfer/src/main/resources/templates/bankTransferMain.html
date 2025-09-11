@@ -5,178 +5,157 @@
     <title>銀行振込情報入力画面</title>
     <style>
         body {
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        justify-content: center;
-        align-items: center;
-        min-height: 65vh;
-        overflow: auto;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            padding-top: 5px;
+            padding-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 65vh;
+            overflow: auto;
         }
+
         .content {
-         background-color: #ffffff;
-         width: 40%;
-         padding: 20px;
-         border-radius: 10px;
-         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-         min-height: 50vh;
-         overflow: auto;
+            background-color: #ffffff;
+            width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-height: 40vh;
+            overflow: auto;
         }
-        /* 統一された form-control のスタイル */
+
         .form-control:-webkit-autofill {
-  box-shadow: 0 0 0px 1000px white inset !important;
-  -webkit-text-fill-color: #000 !important;
-}
+            box-shadow: 0 0 0px 1000px white inset !important;
+            -webkit-text-fill-color: #000 !important;
+        }
 
         .form-control {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    box-sizing: border-box;
-    border: 1px solid #007bff;  /* 枠線の色をここで指定 */
-    outline: none;
-    box-shadow: none;
-    }
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #007bff;
+            outline: none;
+            box-shadow: none;
+            border-radius: 4px;
+        }
 
-    /* プレースホルダーの文字色を薄くする */
-    .form-control::placeholder {
-    color: rgba(0, 0, 0, 0.2);
-    }
+        /* プレースホルダーの文字色を薄くする */
+            .form-control::placeholder {
+            color: rgba(0, 0, 0, 0.2);
+        }
 
-    /* フォーカス時の枠線と影 */
-    .form-control:focus,
-    .form-control:-webkit-autofill {
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-    outline: none;
-}
+        /* フォーカス時の枠線と影 */
+        .form-control:focus,
+        .form-control:-webkit-autofill {
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
 
-
+        select.form-control:focus,
+        input.form-control:focus {
+            border-color: #007bff;  /* フォーカス時の枠線の色 */
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* フォーカス時の青い影 */
+            outline: none; /* 余計なアウトラインを消す */
+        }
 
         .text-danger {
-        color: red;
+            color: red;
         }
+
         .form-control-button {
-        width: 80px;
-        padding: 10px 20px;
-        margin-top: 10px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
+            width: 80px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
         }
+
         .form-confirmation-button{
-        color: white;
-        background-color: #2185D0;
+            color: white;
+            background-color: #2185D0;
         }
         .form-confirmation-button:hover {
-        background-color: #1678c2;
+            background-color: #1678c2;
         }
         .form-clear-button{
-        color: black;
-        background-color: #E0E1E2;
+            color: black;
+            background-color: #E0E1E2;
         }
         .form-clear-button:hover {
-        background-color: #CCCCCC;
+            background-color: #CCCCCC;
         }
 
-select.form-control:focus,
-input.form-control:focus {
-  border-color: #007bff;  /* フォーカス時の枠線の色 */
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* フォーカス時の青い影 */
-  outline: none; /* 余計なアウトラインを消す */
-}
+      /* ステップバー */
+    .progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 10px 0;
+            position: relative;
+　　}
 
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        position: relative;
+    }
 
-<!--  .form-control {-->
-<!--  background-color: #e6f7ff;-->
-<!--  border: 2px solid #007bff; /* これでborder-styleはsolidになっているはず */-->
-<!--  border-radius: 4px;-->
-<!--  padding: 6px 10px;-->
-<!--  box-sizing: border-box;-->
-<!--}-->
+        .circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: #ccc;
+        z-index: 1;
+    }
 
+    .step.active .circle {
+        background-color: #007bff;
+    }
 
-<!--.form-control:focus {-->
-<!--  border-color: #0056b3;-->
-<!--  outline: none;-->
-<!--  background-color: #f8f8ff;-->
-<!--}-->
+   　.label {
+        margin-top: 8px;
+        font-weight: bold;
+        color: #888;
+    }
 
-      /* 進捗バー全体のコンテナ */
-.progress-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    padding: 10px 0;
-    position: relative;
-}
+    .step.active .label {
+        color: #007bff;
+    }
 
-/* ステップ（1つずつ） */
-.step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    position: relative;
-}
+    .line {
+        height: 2px;
+        background-color: #ccc;
+        flex: 1;
+        z-index: 0;
+        margin: 0 -5px;
+    }
 
-/* 丸（ステップのアイコン） */
-.circle {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: #ccc;
-    z-index: 1;
-}
+    .step.active + .line {
+        background-color: #007bff;
+    }
 
-/* アクティブな丸 */
-.step.active .circle {
-    background-color: #007bff;
-}
-
-/* ラベル */
-.label {
-    margin-top: 8px;
-    font-weight: bold;
-    color: #888;
-}
-
-/* アクティブなラベル */
-.step.active .label {
-    color: #007bff;
-}
-
-/* ステップ間の横棒 */
-.line {
-    height: 2px;
-    background-color: #ccc;
-    flex: 1;
-    z-index: 0;
-    margin: 0 -5px;
-}
-
-/* アクティブステップの前までの線を青に */
-.step.active + .line {
-    background-color: #007bff;
-}
-
-.progress-separator {
-    height: 2px;
-    background-color: #007bff; /* 明るめの水色 */
-    margin: 10px 0 20px 0;     /* 上下の余白 */
-    border-radius: 2px;
-}
-
+    .progress-separator {
+        height: 2px;
+        background-color: #007bff; /* 明るめの水色 */
+        margin: 10px 0 20px 0;     /* 上下の余白 */
+        border-radius: 2px;
+    }
 
     </style>
 </head>
 <body>
 <div class="content">
-    <!-- ステップバーをここに追加  -->
+
+    <!-- ステップバー  -->
     <div class="progress-container">
         <div class="step active">
             <div class="circle"></div>
@@ -193,11 +172,10 @@ input.form-control:focus {
             <div class="label">3. 完了</div>
         </div>
     </div>
-
-    <!-- ▲▲▲ ステップバーここまで ▲▲▲ -->
     <div class="progress-separator"></div>
 
     <h1>銀行振込情報入力</h1>
+
     <form action="#" th:action="@{/bankTransferConfirmation}" th:object="${bankTransferApplication}" method="post">
         <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
             <select th:field="*{bankName}" class="form-control" required>
@@ -226,12 +204,7 @@ input.form-control:focus {
                 </option>
             </select></p>
 
-
-
-<!--        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>-->
-<!--            <input type="number" th:field="*{bankAccountNum}" class="form-control" placeholder="1234567" required/></p>-->
-        <p>
-            <label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
+        <p><label class="ml-1">口座番号: <small class="text-danger ml-1">※</small></label><br>
             <input
                     type="text"
                     th:field="*{bankAccountNum}"
@@ -274,35 +247,26 @@ input.form-control:focus {
             </p>
         </form>
 
-        <!--        <p style="text-align: center;"><input type="submit" value="確認"-->
-<!--                                              class="form-control-button form-confirmation-button"/>-->
-<!--            <input type="reset" value="クリア" class="form-control-button form-clear-button"/></p>-->
-
     </form>
 </div>
 <script>
     window.addEventListener('load', () => {
-      // .form-controlクラスが付いた全ての入力欄を取得
-      const inputs = document.querySelectorAll('.form-control');
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            if (input.value) {
+                input.classList.add('has-value');
+            }
 
-      inputs.forEach(input => {
-        // ページ読み込み時に値が入っていたら has-value を付ける
-        if (input.value) {
-          input.classList.add('has-value');
-        }
-
-        // 入力値が変わった時のイベントリスナー
         input.addEventListener('input', () => {
-          if (input.value) {
-            input.classList.add('has-value');
-          } else {
-            input.classList.remove('has-value');
-          }
+            if (input.value) {
+                input.classList.add('has-value');
+            } else {
+                input.classList.remove('has-value');
+            }
         });
-      });
+        });
     });
 </script>
 
 </body>
-
 </html>

@@ -3,238 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <title>銀行振込確認画面</title><!--追加-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>銀行振込確認画面</h1>-->
+    <style>
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            justify-content: center;
+            align-items: center;
+            min-height: 65vh;
+            overflow: auto;
+        }
 
-<!--<style>-->
-<!--　　　body {-->
-<!--background-color: #e0ffff;-->
-<!--margin: 0;-->
-<!--padding: 0;-->
-<!--display: flex;-->
-<!--padding-top: 40px;-->
-<!--padding-bottom: 40px;-->
-<!--justify-content: center;-->
-<!--align-items: center;-->
-<!--min-height: 85vh;-->
-<!--overflow: auto;-->
-<!--}-->
-<!--.content {-->
-<!--background-color: #ffffff;-->
-<!--width: 80%;-->
-<!--padding: 20px;-->
-<!--border-radius: 10px;-->
-<!--box-shadow: 0 4px 8px rgba(0,0,0,0.1);-->
-<!--min-height: 50vh;-->
-<!--overflow: auto;-->
-<!--}-->
-<!--.form-control {-->
-<!--width: 100%;-->
-<!--padding: 8px;-->
-<!--margin: 5px 0;-->
-<!--box-sizing: border-box;-->
-<!--}-->
-<!--.text-danger {-->
-<!--color: red;-->
-<!--}-->
-<!--.form-control-button {-->
-<!--width: 80px;-->
-<!--padding: 10px 20px;-->
-<!--margin-top: 10px;-->
-<!--border: none;-->
-<!--cursor: pointer;-->
-<!--border-radius: 5px;-->
-<!--}-->
-<!--.form-confirmation-button{-->
-<!--color: white;-->
-<!--background-color: #2185D0;-->
-<!--}-->
-<!--.form-confirmation-button:hover {-->
-<!--background-color: #1678c2;-->
-<!--}-->
-<!--.form-clear-button{-->
-<!--color: black;-->
-<!--background-color: #E0E1E2;-->
-<!--}-->
-<!--.form-clear-button:hover {-->
-<!--background-color: #CCCCCC;-->
-<!--}-->
+        .content {
+            background-color: #ffffff;
+            width: 40%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            min-height: 50vh;
+            overflow: auto;
+        }
 
-<!--/* プレースホルダーの文字色を薄くする */-->
-<!--.form-control::placeholder {-->
-<!--color: rgba(0, 0, 0, 0.2);-->
-<!--}-->
+        .form-control-button {
+            width: auto;
+            min-width: 80px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
 
-<!--</style>-->
-<!--</head>&lt;!&ndash;追加&ndash;&gt;-->
-<!--<body>-->
-<!--<div class="content">-->
-<!--    <h1>銀行振込確認画面</h1>&lt;!&ndash;追加&ndash;&gt;-->
-<!--<form action="#" th:action="@{/bankTransferCompletion}" th:object="${bankTransferApplication}" method="post">-->
-<!--&lt;!&ndash;    <p>金融機関名: <span th:text="*{bankName}"></span></p>&ndash;&gt;-->
-<!--    <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>-->
-<!--        <span th:text="*{bankName}"></span></p>-->
-<!--    <p>支店名: <span th:text="*{branchName}"></span></p>-->
-<!--    <p>科目名: <span th:text="*{subjectName}"></span></p>-->
-<!--    <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>-->
-<!--    <p>口座名義: <span th:text="*{name}"></span></p>-->
-<!--    <p>金額: <span th:text="*{money}"></span></p>-->
-<!--    <p>振込指定日: <span th:text="*{date}"></span></p>-->
+        .form-confirmation-button {
+            color: white;
+            background-color: #2185D0;
+        }
 
-<!--    <input type="hidden" name="bankName" th:value="*{bankName}"/>-->
-<!--    <input type="hidden" name="branchName" th:value="*{branchName}"/>-->
-<!--    <input type="hidden" name="subjectName" th:value="*{subjectName}"/>-->
-<!--    <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>-->
-<!--    <input type="hidden" name="name" th:value="*{name}"/>-->
-<!--    <input type="hidden" name="money" th:value="*{money}"/>-->
-<!--    <input type="hidden" name="date" th:value="*{date}"/>-->
+        .form-confirmation-button:hover {
+            background-color: #1678c2;
+        }
 
+        .form-clear-button {
+            color: black;
+            background-color: #E0E1E2;
+        }
 
-<!--    <p style="text-align: center;"><input type="submit" id="submit" value="振込" class="form-control-button form-confirmation-button"//>-->
-<!--        <input type="button" value="キャンセル" onclick="window.location='/bankTransfer';" class="form-control-button form-clear-button"/>-->
-<!--    </p>-->
-<!--</form>-->
-<!--<script th:inline="javascript" src="/js/bankTransferConfirmation.js"></script>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
+        .form-clear-button:hover {
+            background-color: #CCCCCC;
+        }
 
-    <!doctype html>
-    <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>銀行振込確認画面</title>
-        <style>
-            body {
-                background-color: #f5f5f5;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                padding-top: 40px;
-                padding-bottom: 40px;
-                justify-content: center;
-                align-items: center;
-                min-height: 65vh;
-                overflow: auto;
-            }
-            .content {
-                background-color: #ffffff;
-                width: 40%;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                min-height: 50vh;
-                overflow: auto;
-            }
-            .form-control-button {
-                width: auto;           /* 固定幅を外し、中身に合わせる */
-    min-width: 80px;       /* 最低限の幅は確保 */
-    padding: 10px 20px;
-    margin-top: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    white-space: nowrap;   /* ボタン内の文字を折り返さない */
-            }
-            .form-confirmation-button {
-                color: white;
-                background-color: #2185D0;
-            }
-            .form-confirmation-button:hover {
-                background-color: #1678c2;
-            }
-            .form-clear-button {
-                color: black;
-                background-color: #E0E1E2;
-            }
-            .form-clear-button:hover {
-                background-color: #CCCCCC;
-            }
-            .text-danger {
-                color: red;
-            }
+        .text-danger {
+            color: red;
+        }
 
-            /* ステップバー共通CSS */
-            .progress-container {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 30px;
-                padding: 10px 0;
-                position: relative;
-            }
+        /* ステップバー */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 10px 0;
+            position: relative;
+        }
 
-            .step {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                flex: 1;
-                position: relative;
-            }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
 
-            .circle {
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                background-color: #ccc;
-                z-index: 1;
-            }
+        .circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #ccc;
+            z-index: 1;
+        }
 
-            .step.active .circle {
-                background-color: #007bff;
-            }
+        .step.active .circle {
+            background-color: #007bff;
+        }
 
-            .label {
-                margin-top: 8px;
-                font-weight: bold;
-                color: #888;
-            }
+        .label {
+            margin-top: 8px;
+            font-weight: bold;
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif; /* 入力画面と同じフォントに */
+            color: #888;
+        }
 
-            .step.active .label {
-                color: #007bff;
-            }
+        .step.active .label {
+            color: #007bff;
+        }
 
-            .line {
-                height: 2px;
-                background-color: #ccc;
-                flex: 1;
-                z-index: 0;
-                margin: 0 -5px;
-            }
+        .line {
+            height: 2px;
+            background-color: #ccc;
+            flex: 1;
+            z-index: 0;
+            margin: 0 -5px;
+        }
 
-            .step.active + .line {
-                background-color: #007bff;
-            }
+        .step.active + .line {
+            background-color: #007bff;
+        }
 
-            .progress-separator {
-                height: 2px;
-                background-color: #007bff;
-                margin: 10px 0 20px 0;
-                border-radius: 2px;
-            }
+        .progress-separator {
+            height: 2px;
+            background-color: #007bff;
+            margin: 10px 0 20px 0;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .form-value {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            background-color: #e9ecef;
+            color: #212529;
+            box-sizing: border-box;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-label {
+            display: block;
+            font-weight: normal;
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+            .form-value {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #007bff;       /* 同じ枠線色 */
+            border-radius: 4px;              /* 入力欄と同じ角丸 */
+            background-color: white;         /* 入力欄と一致 */
+            color: #000;                     /* 入力欄と一致 */
+            font-size: 14px;                 /* 入力欄に合わせるなら追加 */
+        }
         </style>
     </head>
     <body>
     <div class="content">
 
-        <!-- ▼▼▼ ステップバー ▼▼▼ -->
+        <!-- ステップバー -->
         <div class="progress-container">
-            <!-- 1. 入力 -->
-            <div class="step active"> <!-- ← active を追加 -->
+            <div class="step active">
                 <div class="circle"></div>
                 <div class="label">1. 入力</div>
             </div>
-            <div class="line active"></div> <!-- ← active を追加 -->
+            <div class="line active"></div>
 
-            <!-- 2. 確認 -->
             <div class="step active">
                 <div class="circle"></div>
                 <div class="label">2. 確認</div>
             </div>
-            <div class="line"></div> <!-- ここはまだ非アクティブ -->
+            <div class="line"></div>
 
-            <!-- 3. 完了 -->
             <div class="step">
                 <div class="circle"></div>
                 <div class="label">3. 完了</div>
@@ -243,35 +187,60 @@
 
         <div class="progress-separator"></div>
 
-        <!-- ▲▲▲ ステップバーここまで ▲▲▲ -->
-
         <h1>銀行振込確認画面</h1>
 
-        <form action="#" th:action="@{/bankTransferCompletion}" th:object="${bankTransferApplication}" method="post">
-            <p><label class="ml-1">金融機関名: <small class="text-danger ml-1">※</small></label><br>
-                <span th:text="*{bankName}"></span></p>
-            <p>支店名: <span th:text="*{branchName}"></span></p>
-            <p>科目名: <span th:text="*{subjectName}"></span></p>
-            <p>口座番号: <span th:text="*{bankAccountNum}"></span></p>
-            <p>口座名義: <span th:text="*{name}"></span></p>
-            <p>金額: <span th:text="*{money}"></span></p>
-            <p>振込指定日: <span th:text="*{date}"></span></p>
+        <form action="#" th:action="@{/bankTransferCompletion}" th:object="${bankTransferApplication}" method="post"
+              onsubmit="return confirm('本当に振込を実行しますか？');">
 
-            <!-- 隠しフィールド -->
-            <input type="hidden" name="bankName" th:value="*{bankName}"/>
-            <input type="hidden" name="branchName" th:value="*{branchName}"/>
-            <input type="hidden" name="subjectName" th:value="*{subjectName}"/>
-            <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}"/>
-            <input type="hidden" name="name" th:value="*{name}"/>
-            <input type="hidden" name="money" th:value="*{money}"/>
-            <input type="hidden" name="date" th:value="*{date}"/>
+        <div class="form-group">
+                <label class="form-label ml-1">金融機関名: <small class="text-danger ml-1">※</small></label>
+                <div class="form-value" th:text="*{bankName}">B銀行</div>
+            </div>
 
-            <!-- ボタン -->
-            <p style="text-align: center;">
-                <input type="submit" value="振込" class="form-control-button form-confirmation-button"/>
-                <input type="button" value="キャンセル" onclick="window.location='/bankTransfer';" class="form-control-button form-clear-button"/>
-            </p>
+            <div class="form-group">
+                <label class="form-label">支店名: <small class="text-danger">※</small></label>
+                <div class="form-value" th:text="*{branchName}">B支店</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">科目名: <small class="text-danger">※</small></label>
+                <div class="form-value" th:text="*{subjectName}">定期</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">口座番号: <small class="text-danger">※</small></label>
+                <div class="form-value" th:text="*{bankAccountNum}">1231231</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">口座名義: <small class="text-danger">※</small></label>
+                <div class="form-value" th:text="*{name}">Ajigjirei</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">金額: <small class="text-danger">※</small></label>
+                <div class="form-value" th:text="*{money}">123456</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">振込指定日: <small class="text-danger">※</small></label>
+                <div class="form-value" th:text="*{date}">2025-09-08</div>
+            </div>
+
+            <!-- 隠し fields -->
+            <input type="hidden" name="bankName" th:value="*{bankName}" />
+            <input type="hidden" name="branchName" th:value="*{branchName}" />
+            <input type="hidden" name="subjectName" th:value="*{subjectName}" />
+            <input type="hidden" name="bankAccountNum" th:value="*{bankAccountNum}" />
+            <input type="hidden" name="name" th:value="*{name}" />
+            <input type="hidden" name="money" th:value="*{money}" />
+            <input type="hidden" name="date" th:value="*{date}" />
+
+            <div style="text-align: center; margin-top: 20px;">
+                <input type="submit" value="申込" class="form-control-button form-confirmation-button" />
+                <input type="button" value="キャンセル" onclick="window.location='/bankTransfer';" class="form-control-button form-clear-button" />
+            </div>
         </form>
     </div>
     </body>
-    </html>
+</html>

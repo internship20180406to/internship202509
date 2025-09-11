@@ -37,8 +37,6 @@ public class BankTransferForm {
 
     public String getBranchName() {return branchName;}
     public void setBranchName(String branchName) {this.branchName = branchName;}
-    //エラー出るやつ(勝手に推測してる)
-    //public void setBranchName(Integer bankAccountNum) { this.bankAccountNum = bankAccountNum;}
 
     public String getSubjectName() {return subjectName;}
     public void setSubjectName(String subjectName) {this.subjectName = subjectName;}
